@@ -18,7 +18,7 @@
   --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
   --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
   --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
-  --animate-meteor: meteor 6s linear infinite;
+  --animate-meteor: meteor 6s linear infinite backwards;
 
   @keyframes pulse-subtle {
     0%, 100% { opacity: 1; }
@@ -29,7 +29,8 @@
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes meteor {
-    0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+    0% { transform: rotate(215deg) translateX(120px); opacity: 0; }
+    5% { opacity: 1; }
     70% { opacity: 1; }
     100% { transform: rotate(215deg) translateX(-500px); opacity: 0; }
   }
@@ -123,8 +124,9 @@
 }
 
 @utility meteor {
-  @apply absolute rounded-full;
+  @apply absolute rounded-full opacity-0;
   background: linear-gradient(90deg, hsl(var(--primary) / 0.8), transparent);
+  transform: rotate(215deg) translateX(120px);
 }
 
 #root {
