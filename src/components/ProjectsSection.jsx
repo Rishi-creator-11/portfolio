@@ -50,8 +50,8 @@ export const ProjectsSection = () => {
               <div className="p-6 md:p-7 pl-7 md:pl-8">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
                   <div className="space-y-2">
-                    <h3 className="text-xl font-semibold tracking-tight">{project.title}</h3>
-                    <p className="text-base font-medium text-primary">{project.role}</p>
+                    <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
+                    <p className="text-sm font-medium text-primary">{project.role}</p>
                   </div>
                   <span className="date-badge">
                     <Calendar size={14} />
@@ -83,7 +83,7 @@ export const ProjectsSection = () => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-base text-muted-foreground hover:text-primary transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Github size={16} />
                     Source

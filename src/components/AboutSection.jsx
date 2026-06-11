@@ -16,7 +16,7 @@ export const AboutSection = () => {
           </div>
 
           <div className="space-y-5 text-left">
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               Software engineer focused on AI agents, distributed systems, and
               developer tooling. Recently built{" "}
               <span className="text-foreground font-medium">AlphaBrief</span>, a
@@ -24,14 +24,14 @@ export const AboutSection = () => {
               generates evidence-backed investment theses.
             </p>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               At <span className="text-foreground font-medium">Pencil Spaces</span>,
               I contributed to Mario, a real-time synchronization SDK that powers
               collaborative applications through low-latency shared state
               synchronization.
             </p>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               Interested in AI agents, workflow orchestration, distributed
               systems, and developer tooling.
             </p>

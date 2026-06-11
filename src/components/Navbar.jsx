@@ -27,7 +27,7 @@ export const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        <a href="#hero" className="text-xl font-semibold text-foreground hover:text-primary transition-colors">
+        <a href="#hero" className="text-lg font-semibold text-foreground hover:text-primary transition-colors">
           Rishi Kumar
         </a>
 
@@ -36,7 +36,7 @@ export const Navbar = () => {
             <a
               key={item.name}
               href={item.href}
-              className="text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.name}
             </a>
@@ -60,7 +60,7 @@ export const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-lg text-muted-foreground hover:text-foreground"
+                className="text-base text-muted-foreground hover:text-foreground"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}

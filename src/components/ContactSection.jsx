@@ -81,18 +81,18 @@ export const ContactSection = () => {
                   <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-base font-medium">{label}</p>
+                  <p className="text-sm font-medium">{label}</p>
                   {href ? (
                     <a
                       href={href}
                       target={external ? "_blank" : undefined}
                       rel={external ? "noopener noreferrer" : undefined}
-                      className="text-base text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                       {value}
                     </a>
                   ) : (
-                    <p className="text-base text-muted-foreground">{value}</p>
+                    <p className="text-sm text-muted-foreground">{value}</p>
                   )}
                 </div>
               </div>
@@ -101,16 +101,16 @@ export const ContactSection = () => {
 
           <form className="surface-card p-6 space-y-4 text-left" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-base font-medium mb-1.5">Name</label>
-              <input id="name" name="name" required className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-base focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Your name" />
+              <label htmlFor="name" className="block text-sm font-medium mb-1.5">Name</label>
+              <input id="name" name="name" required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Your name" />
             </div>
             <div>
-              <label htmlFor="email" className="block text-base font-medium mb-1.5">Email</label>
-              <input id="email" name="email" type="email" required className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-base focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="you@email.com" />
+              <label htmlFor="email" className="block text-sm font-medium mb-1.5">Email</label>
+              <input id="email" name="email" type="email" required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="you@email.com" />
             </div>
             <div>
-              <label htmlFor="message" className="block text-base font-medium mb-1.5">Message</label>
-              <textarea id="message" name="message" required rows={4} className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-base resize-none focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Hi Rishi..." />
+              <label htmlFor="message" className="block text-sm font-medium mb-1.5">Message</label>
+              <textarea id="message" name="message" required rows={4} className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Hi Rishi..." />
             </div>
             <button type="submit" disabled={isSubmitting} className={cn("cosmic-button w-full")}>
               {isSubmitting ? "Sending..." : "Send Message"}

@@ -82,8 +82,8 @@ export const ExperienceSection = () => {
                   <div className="p-6 md:p-7 pl-7 md:pl-8">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
                       <div className="space-y-2">
-                        <h3 className="text-xl font-semibold tracking-tight">{exp.title}</h3>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-base">
+                        <h3 className="text-lg font-semibold tracking-tight">{exp.title}</h3>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
                           <span className="font-medium text-primary">{exp.company}</span>
                           <span className="inline-flex items-center gap-1 text-muted-foreground">
                             <MapPin size={14} className="shrink-0" />
