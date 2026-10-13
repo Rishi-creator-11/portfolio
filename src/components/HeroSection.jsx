@@ -1,8 +1,8 @@
-import { Github, Mail, MapPin, GraduationCap } from "lucide-react";
-import { links, identity } from "@/data/content";
+import { Github, Mail } from "lucide-react";
+import { links } from "@/data/content";
 
 export const HeroSection = () => (
-  <section id="hero" className="bg-navy-900 text-white on-dark pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden">
+  <section id="hero" className="bg-navy-900 text-white on-dark pt-24 pb-12 md:pt-28 md:pb-16 overflow-hidden">
     <div className="container grid items-center gap-8 lg:grid-cols-[1fr_1.1fr]">
       <div>
         <div className="flex items-center gap-3">
@@ -13,23 +13,21 @@ export const HeroSection = () => (
             height="48"
             className="size-12 rounded-full object-cover ring-2 ring-teal-glow/60"
           />
-          <div className="text-sm text-slate-300">
-            <p className="text-base font-semibold text-white">{identity.name}</p>
-            <p className="flex items-center gap-1.5">
-              <MapPin size={13} aria-hidden="true" /> {identity.where}
-            </p>
-          </div>
+          <p className="text-lg font-semibold">Hrishit (Rishi) Kumar</p>
         </div>
-
-        <h1 className="mt-6 text-4xl md:text-5xl xl:text-[54px] font-semibold tracking-tight leading-[1.08]">
-          I build AI applications and reliable business workflows.
+        <h1 className="mt-6 text-4xl md:text-5xl xl:text-[52px] font-semibold tracking-tight leading-[1.08]">
+          I build AI products and automate business workflows.
         </h1>
-        <p className="mt-4 max-w-xl text-lg md:text-xl text-slate-300 leading-relaxed">
-          Hands-on experience with ChatGPT, OpenAI APIs, Claude Code, RAG, automation, and production software.
+        <p className="mt-4 max-w-xl text-lg text-slate-300 leading-relaxed">
+          I've built document research tools, travel-planning software, and research-and-drafting
+          automation. My professional experience includes delivering a business platform and
+          building collaborative applications used across 10+ apps.
         </p>
-
+        <p className="mt-3 max-w-xl text-base text-slate-400 leading-relaxed">
+          Interested in bringing practical AI and reliable engineering to aviation and luxury hospitality.
+        </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href="#work" className="btn btn-teal">Explore projects</a>
+          <a href="#work" className="btn btn-teal">View live products</a>
           <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light">
             <Github size={16} aria-hidden="true" /> GitHub
             <span className="sr-only"> (opens in a new tab)</span>
@@ -38,27 +36,21 @@ export const HeroSection = () => (
             <Mail size={16} aria-hidden="true" /> Contact
           </a>
         </div>
-        <p className="mt-5 flex items-start gap-2 text-sm text-slate-300">
-          <GraduationCap size={16} className="mt-0.5 shrink-0" aria-hidden="true" /> {identity.edu}
-        </p>
       </div>
 
-      <figure>
-        <div className="shot-shadow overflow-hidden rounded-xl border border-white/15 bg-navy-950 lg:-mr-24">
-          <div className="flex items-center gap-1.5 border-b border-white/10 bg-navy-800 px-3 py-2" aria-hidden="true">
-            <span className="size-2.5 rounded-full bg-white/25" />
-            <span className="size-2.5 rounded-full bg-white/25" />
-            <span className="size-2.5 rounded-full bg-white/25" />
-            <span className="ml-3 text-xs text-slate-400">secfrontend.vercel.app</span>
-          </div>
-          <img
-            src="/projects/alphabrief-hero.png"
-            alt="AlphaBrief live app: a scoped question about Apple's fiscal 2025 net sales, a cited answer, and the retrieved filing passage in an evidence panel."
-            className="w-full h-auto"
-          />
+      <div className="shot-shadow overflow-hidden rounded-xl border border-white/15 bg-navy-950 lg:-mr-24">
+        <div className="flex items-center gap-1.5 border-b border-white/10 bg-navy-800 px-3 py-2" aria-hidden="true">
+          <span className="size-2.5 rounded-full bg-white/25" />
+          <span className="size-2.5 rounded-full bg-white/25" />
+          <span className="size-2.5 rounded-full bg-white/25" />
+          <span className="ml-3 text-xs text-slate-400">secfrontend.vercel.app</span>
         </div>
-        <figcaption className="mt-2 text-sm text-slate-400">AlphaBrief, a live app I built.</figcaption>
-      </figure>
+        <img
+          src="/projects/alphabrief-hero.png"
+          alt="AlphaBrief live app: a scoped question about Apple's fiscal 2025 net sales, a cited answer, and the retrieved filing passage in an evidence panel."
+          className="w-full h-auto"
+        />
+      </div>
     </div>
   </section>
 );
