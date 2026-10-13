@@ -15,7 +15,7 @@ export const identity = {
   edu: "B.S. Computer Science (AI & Data Science), Stony Brook University, May 2026",
 };
 
-// ---------- Featured independent work ----------
+// Tool kinds: "api" = runtime model/API integration, "dev" = development assistance, "stack" = built with.
 export const featured = [
   {
     id: "alphabrief",
@@ -23,29 +23,33 @@ export const featured = [
     dates: "April 2026 – Present",
     title: "AlphaBrief",
     headline: "Answers backed by retrievable evidence.",
-    image: {
-      src: "/projects/alphabrief-evidence.png",
-      alt: "AlphaBrief showing an answer with a citation marker beside an evidence panel that quotes the retrieved 10-K passage and links to the SEC filing.",
-      caption: "Live app: every answer is paired with the filing passage behind it.",
-    },
-    points: [
-      { label: "AI used", text: "Retrieval-augmented generation over SEC 10-K filings: OpenAI embeddings and Pinecone, BM25 keyword search, rank fusion and Cohere reranking. The answer model sees only retrieved text and declines when the filings don't support an answer." },
-      { label: "What I built", text: "The full app: company and fiscal-year scope controls, numbered citations, an evidence panel that links to the SEC filing, and an evaluation set with LLM-assisted relevance judging." },
-      { label: "Result", text: "Users can inspect the source passages behind an answer. Live over 92 companies and 274 filings; retrieval benchmarked on 125 questions." },
-    ],
     tools: [
-      { label: "Models and APIs", items: ["OpenAI (embeddings, answers, relevance judging)", "Cohere Rerank", "Pinecone"] },
-      { label: "Built with", items: ["Python", "FastAPI", "Next.js", "TypeScript", "BM25"] },
-      { label: "AI-assisted development", items: ["Claude Code"] },
+      { kind: "api", name: "OpenAI API" },
+      { kind: "api", name: "Cohere Rerank" },
+      { kind: "api", name: "Pinecone" },
+      { kind: "dev", name: "Claude Code" },
+      { kind: "stack", name: "Python · FastAPI · Next.js" },
     ],
+    image: {
+      src: "/projects/alphabrief-panel.png",
+      alt: "AlphaBrief evidence panel showing a retrieved 10-K passage with highlighted terms, a 'Cited in answer' tag and a link to the SEC filing.",
+      caption: "The evidence panel: each answer shows the filing passage it came from.",
+    },
+    bullets: [
+      "Integrated AI retrieval and generation into a live, citation-backed research application.",
+      "Scoped evidence by company and year and exposed source passages for verification.",
+      "Evaluated retrieval on 125 questions to measure quality and identify failures.",
+    ],
+    result: "Live over 92 companies and 274 filings · 125-question retrieval benchmark",
     details: [
+      "Pipeline: OpenAI embeddings and Pinecone dense search, BM25 keyword search, Reciprocal Rank Fusion and Cohere reranking. The answer model (gpt-5-nano) sees only retrieved filing text and declines when the filings do not support an answer. Frontend: Next.js and TypeScript on Vercel; backend: Python and FastAPI.",
       "Scope filtering: company and fiscal-year filters are applied before retrieval, not after. An unsupported year returns a clear error instead of silently widening scope. Comparison questions retrieve each scope separately, then share one rerank.",
       "Ingestion and tests: resumable SEC EDGAR ingestion with index-parity checks; 362 backend tests, including structural tests for cross-year and cross-company isolation.",
-      "Evaluation: relevance judgments are produced by an LLM that sees each question and its pooled candidates without retriever names, ranks or scores; they are model-assisted, not human-labeled.",
+      "Relevance judging: an LLM judges candidate passages without seeing retriever names, ranks or scores. The judgments are model-assisted, not human-labeled.",
       "Current benchmark (benchmark_v3_repool, run 2026-09-29): 125 questions covering 8 of the 92 companies, scored on the current corpus (92 companies, 274 filings, 45,252 chunks). MRR 0.86, Recall@10 0.66, Precision@5 0.60. These are retrieval scores, not answer accuracy.",
       "Earlier version (separate measurement: 10 companies, 31 filings, 4,262 chunks, 320 tests): MRR 0.88, Recall@10 0.70, Precision@5 0.62. The current scores are lower on a roughly 10x larger corpus.",
       "Latency (résumé-reported for the earlier version; no matching report found in the repository): median generation 7.6s to 2.0s, end-to-end p95 19.5s to 5.4s.",
-      "Also produced a launch film and logo mark for the product. Known limitation: same-year numeric precision for filers that restate a metric in several tables. No user or time-savings results are claimed.",
+      "Known limitation: same-year numeric precision for filers that restate a metric in several tables. Also produced a launch film and logo mark. No user or time-savings results are claimed.",
     ],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app/", primary: true },
@@ -58,26 +62,30 @@ export const featured = [
     id: "jobscout",
     kind: "Personal Automation",
     title: "Job Scout",
-    headline: "Research and personalized drafts, with approval before action.",
-    workflow: [
-      { icon: "search", step: "Find", text: "A scheduled scan collects new listings through an Apify scraper." },
-      { icon: "gauge", step: "Assess", text: "An LLM scores each listing 0–100 against my résumé and preferences, with a one-line reason." },
-      { icon: "file", step: "Prepare", text: "It drafts a tailored résumé and outreach message. Rules forbid inventing experience, and gaps are listed." },
-      { icon: "check", step: "Review", text: "I approve or skip from chat. Nothing is submitted or sent automatically.", gate: true },
-    ],
-    points: [
-      { label: "AI used", text: "LLM scoring with hard rules (seniority, visa fit), résumé tailoring that may reorder but never invent, and outreach drafting. The wrapper supports OpenAI (gpt-4o-mini) or Anthropic (Claude Sonnet)." },
-      { label: "What I built", text: "A local Python and FastAPI app with Supabase storage, WhatsApp or Telegram commands (tailor, skip, draft outreach), and scoring that learns from the listings I skip." },
-      { label: "Result", text: "A ranked daily brief with reviewed drafts ready to use. Private tool: no success rates or time savings are claimed." },
-    ],
+    headline: "Research and drafts, with approval before action.",
     tools: [
-      { label: "Models and APIs", items: ["OpenAI or Anthropic Claude (configurable)", "Apify", "WhatsApp / Telegram"] },
-      { label: "Built with", items: ["Python", "FastAPI", "Supabase"] },
+      { kind: "dev", name: "ChatGPT" },
+      { kind: "api", name: "OpenAI or Anthropic API (configurable)" },
+      { kind: "stack", name: "Python · FastAPI · Supabase" },
     ],
+    toolNote: "ChatGPT helped me build it. At runtime the app calls an LLM API; ChatGPT itself is not part of the running tool.",
+    workflow: [
+      { icon: "search", step: "Find", text: "Scan new listings" },
+      { icon: "gauge", step: "Assess", text: "Score fit 0–100 with a reason" },
+      { icon: "file", step: "Prepare", text: "Tailored résumé and outreach draft" },
+      { icon: "check", step: "Review", text: "I approve or skip", gate: true },
+    ],
+    bullets: [
+      "Built with ChatGPT as a development assistant; the running app calls an LLM API for scoring and drafting.",
+      "Automated listing research, fit scoring, and tailored résumé and outreach preparation.",
+      "Produced a ranked brief and reviewable drafts, with approval before external action.",
+    ],
+    result: "Ranked daily brief · reviewable drafts · nothing sent without my approval",
     details: [
-      "Prompts: the scoring prompt returns strict JSON and is told never to inflate scores; the tailoring prompt separates changes from gaps; outreach drafts end with what to personalize before sending.",
-      "A second, larger system I built with Claude: a job-search pipeline with Python discovery tools across multiple job sources (about 2,900 lines), a source-of-truth file for candidate facts, a deduplicating tracker and a written runbook. Its rules include no duplicate applications, no status without confirmation evidence, and never guessing legal or immigration answers, with unclear items escalated to me. It has 74 automated tests.",
-      "Scope: private, so there is no public source or demo.",
+      "Runtime integration: a wrapper supports OpenAI (gpt-4o-mini) or Anthropic (Claude Sonnet), selected by configuration. Scoring returns strict JSON with hard rules for seniority and visa fit; the tailoring prompt may reorder but never invent experience and lists gaps separately; outreach drafts end with what to personalize.",
+      "Workflow: Python and FastAPI app; a scheduled scan through an Apify scraper; Supabase storage; WhatsApp or Telegram commands (tailor, skip, draft outreach); scoring that learns from skipped listings.",
+      "A second, larger system I built with Claude: a job-search pipeline with Python discovery tools across multiple job sources (about 2,900 lines), a source-of-truth file for candidate facts, a deduplicating tracker and a written runbook. Its rules include no duplicate applications, no status without confirmation evidence, and never guessing legal or immigration answers. It has 74 automated tests.",
+      "Scope: private, so there is no public source or demo. No success rates or time savings are claimed.",
     ],
   },
   {
@@ -87,30 +95,31 @@ export const featured = [
     title: "TripPilot",
     headline: "Travel plans that handle preferences, changes, and approval.",
     scope: "Prototype · Mock data · Sandbox reservations",
+    tools: [
+      { kind: "api", name: "Optional OpenAI request extractor" },
+      { kind: "stack", name: "Next.js · FastAPI · PostgreSQL · Redis · Celery" },
+    ],
     image: {
       src: "/projects/trippilot-workspace.png",
       alt: "TripPilot trip workspace for a Boston to New York trip showing parsed constraints, planning progress, revisions, selected offers and a budget, using labeled demo data.",
       caption: "Trip workspace with labeled mock data.",
     },
-    points: [
-      { label: "AI used", text: "A request interpreter turns free text into structured constraints. A deterministic parser is the default and an optional LLM extractor sits behind the same interface. Budgets, timing and offer validity are checked in code, not by the model." },
-      { label: "What I built", text: "An editable itinerary workflow: edits re-run only the affected steps and keep a revision history, offers are re-checked, and sandbox reservations need explicit approval with duplicate-retry protection." },
-      { label: "Result", text: "A working prototype with a documented mock-data demo and visible planning progress. No savings or revenue have been measured." },
+    bullets: [
+      "Built an editable travel workflow with budget and timing checks.",
+      "Tracked revisions and rechecked selected offers before reservation approval.",
+      "Added approval gates and duplicate protection to sandbox reservations.",
     ],
-    tools: [
-      { label: "Models and APIs", items: ["Optional OpenAI request extractor", "Open-Meteo", "Optional search adapters (test only)"] },
-      { label: "Built with", items: ["Next.js", "FastAPI", "PostgreSQL + pgvector", "Redis", "Celery"] },
-    ],
+    result: "Working prototype · revision history · approval and duplicate protection",
     details: [
-      "Planning progress streams over server-sent events and is stored so a run can be replayed. Sandbox reservations use deterministic idempotency keys, so a retried approval does not create a duplicate.",
-      "Regression tests cover API, web unit and Playwright flows for planning, selective reuse, revisions, provider safety and approval boundaries.",
-      "Scope: mock data is the default; optional adapters support search and offer re-validation for testing only. No real payments, ticket issuance, refunds or cancellations. Provider secrets stay server-side and no card data is collected. No hosted demo (the repository documents a mock-mode walkthrough), no live customers.",
+      "Request interpretation: a deterministic parser is the default, with an optional LLM extractor behind the same interface. Budgets, timing, routes and offer validity are checked in code, not by the model.",
+      "Edits re-run only the affected planning steps and record a new revision. Planning progress streams over server-sent events and is stored so a run can be replayed. Sandbox reservations use deterministic idempotency keys, so a retried approval does not create a duplicate.",
+      "Stack: Next.js, FastAPI, PostgreSQL with pgvector, Redis, Celery. Regression tests cover API, web unit and Playwright flows.",
+      "Scope: mock data is the default; optional adapters support search and offer re-validation for testing only. No real payments, ticket issuance, refunds or cancellations. Provider secrets stay server-side and no card data is collected. No hosted demo (the repository documents a mock-mode walkthrough), no live customers, and no measured savings.",
     ],
     links: [{ label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/trippilot-ai", primary: true }],
   },
 ];
 
-// ---------- Professional experience ----------
 export const experience = {
   metroprint: {
     id: "metroprint",
@@ -119,22 +128,19 @@ export const experience = {
     role: "Contract Full-Stack Engineer",
     dates: "July 2026 – September 2026",
     place: "New York, NY",
-    headline: "An owner's requirements, turned into a production ordering platform.",
-    stats: [
-      { value: "~97", label: "configurable products supported" },
-      { value: "80 + 559", label: "products and pricing rows ingested" },
-    ],
-    points: [
-      { label: "AI used", text: "Built with Claude Code (AI-assisted development). The customer-facing product does not itself call an AI model." },
-      { label: "What I built", text: "Translated the owner's workflow into a Next.js and TypeScript platform on Supabase. Automated ingestion of 80 products and 559 pricing rows, reconciling records against source data." },
-      { label: "Result", text: "Added validation to block invalid configurations and prevent inconsistent checkout totals, so the owner manages every product and price in one place." },
-    ],
     tools: [
-      { label: "AI-assisted development", items: ["Claude Code"] },
-      { label: "Built with", items: ["Next.js", "TypeScript", "Supabase", "Stripe"] },
+      { kind: "dev", name: "Claude Code" },
+      { kind: "stack", name: "Next.js · TypeScript · Supabase · Stripe" },
     ],
+    toolNote: "AI-assisted development only: the customer-facing product does not call an AI model.",
+    bullets: [
+      "Used Claude Code to deliver a production platform from a business owner's requirements.",
+      "Automated ingestion of 80 products and 559 pricing rows.",
+      "Validated product combinations and checkout totals across about 97 configurable products.",
+    ],
+    result: "Production platform · ~97 configurable products · 80 products and 559 pricing rows ingested",
     details: [
-      "Pricing is built around 559 exact-combination rows. The server recalculates every checkout total from current database prices and discards browser-supplied amounts.",
+      "Pricing is built around 559 exact-combination rows, and ingestion counts were reconciled against the client's data. The server recalculates every checkout total from current database prices and discards browser-supplied amounts.",
       "Includes an admin area for prices and promotions, guest checkout with saved carts, and 26 automated test files covering pricing, discounts, tax and checkout.",
       "Client screenshots, code and further details are not published. The business's existing revenue is not attributed to this work.",
     ],
@@ -146,25 +152,17 @@ export const experience = {
     role: "Software Engineer Intern",
     dates: "June 2025 – August 2025",
     place: "San Francisco, CA",
-    headline: "Shared software and the apps built on it, for collaborative classrooms.",
-    stats: [
-      { value: "~500ms → <100ms", label: "update latency" },
-      { value: "10+", label: "apps integrated" },
-      { value: "30%", label: "less state drift" },
-      { value: "1,000", label: "lines of repeated code removed" },
+    tools: [{ kind: "stack", name: "TypeScript · React · Vite · RxJS · Yjs · GitHub Actions · Docker" }],
+    bullets: [
+      "Built shared synchronization used across 10+ applications.",
+      "Delivered client-side features and reduced repeated integration code.",
+      "Automated build, test, and publishing steps for dependable releases.",
     ],
-    statNote: "Figures are résumé-reported.",
-    apps: ["Word Mat / Blending Board", "Polls", "Timer", "Stopwatch", "Eraser", "Dice", "Box Breathing"],
-    points: [
-      { label: "Shared infrastructure", text: "Built Mario's shared synchronization infrastructure and integrated the SDK into 10+ apps, with more consistent updates and less repeated integration code." },
-      { label: "Client-side apps", text: "Worked on seven apps in the Mario monorepo: a configurable Word Mat on shared components, a Polls rewrite from Angular to React that preserved shared-state compatibility, and the Timer, Stopwatch, Eraser, Dice and a new Box Breathing app." },
-      { label: "Delivery", text: "Automated build, test and publishing steps, shortening the release cycle by 15%." },
-    ],
-    tools: [{ label: "Built with", items: ["TypeScript", "React", "Vite", "RxJS", "WebSockets", "Yjs", "GitHub Actions", "Docker"] }],
+    result: "10+ apps · update latency ~500ms → <100ms · 15% shorter releases (résumé-reported)",
     details: [
-      "Sync layer: incremental JSON Patch diffs, conflict-free merging with Yjs CRDTs, and an update to the shared SyncProvider (pull request 21). Apps were moved onto the shared UI library (pull request 12) and from webpack to Vite.",
-      "Word Mat: each mat is a configuration object passed to one shared component, so a new mat needs no change to shared board logic.",
-      "Merged pull requests in the company's private repository include 12, 14, 15, 19, 20, 21, 23 (Polls, merged 2025-08-04) and 24. The source is private, so no code or screenshots are shown.",
+      "Shared infrastructure: Mario's synchronization layer with incremental JSON Patch diffs and Yjs CRDT merging, integrated into 10+ embedded apps. Résumé-reported results: 30% less cross-client state drift, about 1,000 lines of repeated integration code removed, 15% shorter release cycle. I also updated the shared SyncProvider (pull request 21).",
+      "Client-side work, seven apps in the Mario monorepo: a configurable Word Mat (each mat is a configuration object on one shared component), a Polls rewrite from Angular to React that preserved shared-state compatibility (pull request 23, merged 2025-08-04), and the Timer, Stopwatch, Eraser, Dice and a new Box Breathing app.",
+      "Apps were moved onto the shared UI library (pull request 12) and from webpack to Vite. Merged pull requests also include 14, 15, 19, 20 and 24. The company's source is private, so no code or screenshots are shown.",
     ],
     link: { label: "@pncl/mario on npm", href: "https://www.npmjs.com/package/@pncl/mario" },
   },
@@ -197,52 +195,129 @@ export const compactExperience = [
   },
 ];
 
-// ---------- Capabilities (completed work) ----------
-export const capabilities = [
-  { title: "Build AI applications", text: "Shipped a live retrieval app whose answers trace to source passages.", evidence: [{ label: "AlphaBrief", href: "#alphabrief" }] },
-  { title: "Automate research and drafting", text: "Built tools that score, research and draft, with approval before anything goes out.", evidence: [{ label: "Job Scout", href: "#jobscout" }, { label: "Computer-use agent", href: "#more" }] },
-  { title: "Coordinate travel workflows", text: "Structured requests, checked constraints, tracked revisions and required approval, with secrets kept server-side and no card data collected.", evidence: [{ label: "TripPilot", href: "#trippilot" }] },
-  { title: "Integrate and ship with developers", text: "Delivered apps and shared sync code in a team monorepo through reviewed pull requests and automated releases.", evidence: [{ label: "Mario at Pencil", href: "#pencil" }] },
-  { title: "Translate business needs into software", text: "Turned an owner's workflow into a production platform with automated data ingestion and validated pricing.", evidence: [{ label: "MetroPrint", href: "#metroprint" }] },
-  { title: "Evaluate and explain tools", text: "Benchmarked retrieval on 125 questions, reported offline results as offline, and led recitations for 30+ students.", evidence: [{ label: "AlphaBrief", href: "#alphabrief" }, { label: "99 YARDS", href: "#experience-more" }, { label: "Teaching", href: "#more" }] },
+// ---------- Capability grid (directly below hero) ----------
+export const capabilityGrid = [
+  { n: 1, title: "AI applications", lines: [{ text: "AlphaBrief: model/API integration, retrieval, citations, and a usable interface.", href: "#alphabrief" }] },
+  { n: 2, title: "Research and drafting automation", lines: [{ text: "Job Scout: listing research, fit assessment, tailored materials, and approval before action.", href: "#jobscout" }] },
+  {
+    n: 3,
+    title: "Evaluation",
+    lines: [
+      { text: "AlphaBrief: retrieval benchmark and supported relevance judging.", href: "#alphabrief" },
+      { text: "99 YARDS: recommendation-model comparison against a baseline.", href: "#experience-more" },
+    ],
+  },
+  {
+    n: 4,
+    title: "Reliable systems",
+    inline: [
+      { text: "Source scoping", href: "#alphabrief" },
+      { text: "validation", href: "#metroprint" },
+      { text: "offer rechecks", href: "#trippilot" },
+      { text: "duplicate protection", href: "#trippilot" },
+      { text: "tests", href: "#alphabrief" },
+      { text: "controlled releases", href: "#pencil" },
+    ],
+  },
+  {
+    n: 5,
+    title: "Production delivery",
+    lines: [
+      { text: "MetroPrint's production platform.", href: "#metroprint" },
+      { text: "Mario's shared software and client apps.", href: "#pencil" },
+    ],
+  },
+  {
+    n: 6,
+    title: "Communication and adoption",
+    lines: [
+      { text: "Business-owner requirements (MetroPrint).", href: "#metroprint" },
+      { text: "Teaching 30+ students.", href: "#more" },
+    ],
+  },
 ];
 
-export const opportunities = {
-  title: "Aviation opportunities I would explore",
-  note: "Not built. I would start by learning how the team works today, and decisions stay with aviation professionals.",
-  items: [
-    "Inquiry-to-trip-brief drafts that list missing details",
-    "Operator quote extraction with cited comparisons",
-    "Assistance limited to approved policies and documents",
-    "Current trip summaries and advisor handoffs",
-  ],
-};
+export const toolLegend = [
+  { label: "Development assistance", items: "ChatGPT (Job Scout) · Claude Code (MetroPrint, AlphaBrief)" },
+  { label: "Runtime API integration", items: "OpenAI API (AlphaBrief; Job Scout, configurable) · Anthropic API (Job Scout, configurable) · Cohere, Pinecone (AlphaBrief)" },
+];
+
+// ---------- How this experience applies ----------
+export const coverage = [
+  {
+    area: "Sales",
+    done: { text: "Job Scout researches, prioritizes and drafts reviewed follow-ups; MetroPrint validated product and pricing records.", href: "#jobscout" },
+    proposed: "Lead-intake summaries and quote or follow-up drafts a salesperson reviews, with CRM record checks.",
+  },
+  {
+    area: "Operations",
+    done: { text: "TripPilot structures travel requests, tracks revisions and checks completeness.", href: "#trippilot" },
+    proposed: "Help advisors gather and compare operator quotes and prepare trip paperwork, with a person deciding.",
+  },
+  {
+    area: "Marketing",
+    done: { text: "Reviewed-draft workflow in Job Scout, where drafts are prepared for my review before use. No marketing campaigns completed.", href: "#jobscout" },
+    proposed: "A tone guide and prompt library so drafts match the approved voice, always with human review before publishing.",
+  },
+  {
+    area: "Client service",
+    done: { text: "AlphaBrief gives evidence-backed answers and declines when sources do not support one.", href: "#alphabrief" },
+    proposed: "Draft replies with sources, plus a handoff summary for the human advisor.",
+  },
+  {
+    area: "Developer partnership",
+    done: { text: "Mario: shared systems, compatible app changes, reviewed pull requests and automated releases.", href: "#pencil" },
+    proposed: "Follow the team's repository practices and code review to move prototypes into production.",
+  },
+  {
+    area: "Evaluation",
+    done: { text: "125-question retrieval benchmark with failure analysis; recommendation model compared against a baseline.", href: "#alphabrief" },
+    proposed: "A method to compare candidate tools on the same real tasks and report where each fails. I have not run a multi-model comparison.",
+  },
+  {
+    area: "Training",
+    done: { text: "Teaching assistant: weekly recitations for 30+ students and 200+ submissions reviewed.", href: "#more" },
+    proposed: "Short demos, a how-to guide and a prompt library. No corporate training delivered yet.",
+  },
+  {
+    area: "Staying current",
+    done: { text: "Independent builds: AlphaBrief, TripPilot, Job Scout and a computer-use agent.", href: "#work" },
+    proposed: "Share which new tools are worth adopting, and which are not, with evidence.",
+  },
+  {
+    area: "Measurement",
+    done: { text: "Projects report measured results such as latency, test coverage and retrieval scores. TripPilot and Job Scout have no measured savings.", href: "#experience" },
+    proposed: "Track time saved and correction rates per workflow, and iterate on feedback.",
+  },
+  {
+    area: "Data responsibility",
+    done: { text: "TripPilot keeps provider secrets server-side, collects no card data and gates actions on approval; AlphaBrief enforces source scope; Job Scout runs locally and privately.", href: "#trippilot" },
+    proposed: "Follow the company's privacy and security practices and keep client data out of unapproved tools.",
+  },
+];
 
 // ---------- More work ----------
 export const more = [
   {
     kind: "Independent Project · public source",
     title: "Computer-use automation system",
-    text: "An LLM agent learns how to complete a task in a legacy web UI with no API and saves it as a typed, reusable capability. A deterministic replay engine then runs it with no LLM, and stuck cases escalate to a human operator. The Anthropic API decider is implemented; the recorded runs were driven through a Claude Code session, as the README states.",
-    tools: "Python, Playwright, Anthropic API",
+    text: "An LLM agent learns a task in a legacy web UI, saves it as a typed capability, and a deterministic replay engine reruns it with no LLM, escalating to a human when stuck. The Anthropic API decider is implemented; recorded runs were driven through a Claude Code session, as the README states.",
     link: { label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/interface-ai-computer-use-assignment" },
   },
   {
     kind: "Independent Project · September 2025 – December 2025",
     title: "Distributed Systems Platform",
-    text: "Built a Go chat system across three application instances, supporting 100 connections per room, with Redis and Kafka coordinating updates and buffering traffic, deployed as a containerized stack to AWS with automated delivery.",
-    tools: "Go, Redis, Kafka, Docker, AWS, Terraform, GitHub Actions",
-    detail: "Résumé-reported, including Kafka buffering up to 10,000 messages per second. No repository or benchmark report found to link.",
+    text: "Built a Go chat system across three application instances, supporting 100 connections per room, with Redis and Kafka coordinating updates and buffering traffic, deployed to AWS with automated delivery. Résumé-reported; no repository or benchmark found to link.",
   },
   {
     kind: "Teaching · August 2024 – May 2025",
     title: "Teaching Assistant | Java and Data Structures",
-    text: "Stony Brook University. Led weekly recitations for 30+ students and reviewed 200+ submissions, coaching debugging and problem-solving, the same habit of explaining clearly I would bring to demos and teammate support.",
+    text: "Stony Brook University. Led weekly recitations for 30+ students and reviewed 200+ submissions, coaching debugging and problem-solving.",
   },
 ];
 
 export const highlights = [
-  { label: "AI-assisted development", value: "Claude Code" },
+  { label: "AI-assisted development", value: "ChatGPT, Claude Code" },
   { label: "AI applications", value: "RAG, prompt engineering, retrieval/extraction, evaluation" },
   { label: "Integration and delivery", value: "REST APIs, data pipelines, GitHub Actions, Docker" },
   { label: "Model and data services used", value: "OpenAI API, Anthropic API, Pinecone, Cohere, Apify" },

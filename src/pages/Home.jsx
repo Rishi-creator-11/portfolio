@@ -1,7 +1,8 @@
 import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { ExperienceSection } from "../components/ExperienceSection";
-import { CapabilitiesSection } from "../components/CapabilitiesSection";
+import { CapabilityGrid } from "../components/CapabilityGrid";
+import { CoverageSection } from "../components/CoverageSection";
 import { MoreWorkSection } from "../components/MoreWorkSection";
 import { SkillsEducationSection } from "../components/SkillsEducationSection";
 import { ProjectsSection } from "../components/ProjectsSection";
@@ -14,9 +15,10 @@ export const Home = () => (
     <Navbar />
     <main id="main">
       <HeroSection />
+      <CapabilityGrid />
       <ProjectsSection />
       <ExperienceSection />
-      <CapabilitiesSection />
+      <CoverageSection />
       <MoreWorkSection />
       <SkillsEducationSection />
       <ContactSection />

@@ -2,35 +2,33 @@ import { Github, Mail, MapPin, GraduationCap } from "lucide-react";
 import { links, identity } from "@/data/content";
 
 export const HeroSection = () => (
-  <section id="hero" className="bg-navy-900 text-white on-dark pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-    <div className="container grid items-center gap-10 lg:grid-cols-[1fr_1.15fr]">
+  <section id="hero" className="bg-navy-900 text-white on-dark pt-24 pb-10 md:pt-28 md:pb-12 overflow-hidden">
+    <div className="container grid items-center gap-8 lg:grid-cols-[1fr_1.1fr]">
       <div>
         <div className="flex items-center gap-3">
           <img
             src="/profile.png"
             alt="Portrait of Rishi Kumar in a dark suit"
-            width="56"
-            height="56"
-            className="size-14 rounded-full object-cover ring-2 ring-teal-glow/60"
+            width="48"
+            height="48"
+            className="size-12 rounded-full object-cover ring-2 ring-teal-glow/60"
           />
-          <div>
-            <p className="text-lg font-semibold">{identity.name}</p>
-            <p className="flex items-center gap-1.5 text-sm text-slate-300">
-              <MapPin size={14} aria-hidden="true" /> {identity.where}
+          <div className="text-sm text-slate-300">
+            <p className="text-base font-semibold text-white">{identity.name}</p>
+            <p className="flex items-center gap-1.5">
+              <MapPin size={13} aria-hidden="true" /> {identity.where}
             </p>
           </div>
         </div>
 
-        <h1 className="mt-7 text-4xl md:text-5xl xl:text-[52px] font-semibold tracking-tight leading-[1.08]">
-          I build AI tools that turn research and repetitive tasks into usable workflows.
+        <h1 className="mt-6 text-4xl md:text-5xl xl:text-[54px] font-semibold tracking-tight leading-[1.08]">
+          I build AI applications and reliable business workflows.
         </h1>
-        <p className="mt-5 max-w-xl text-lg text-slate-300 leading-relaxed">
-          From citation-backed research and reviewed outreach drafts to travel planning and
-          production business software. I combine hands-on AI development with the engineering
-          needed to make it useful.
+        <p className="mt-4 max-w-xl text-lg md:text-xl text-slate-300 leading-relaxed">
+          Hands-on experience with ChatGPT, OpenAI APIs, Claude Code, RAG, automation, and production software.
         </p>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           <a href="#work" className="btn btn-teal">Explore projects</a>
           <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light">
             <Github size={16} aria-hidden="true" /> GitHub
@@ -40,7 +38,7 @@ export const HeroSection = () => (
             <Mail size={16} aria-hidden="true" /> Contact
           </a>
         </div>
-        <p className="mt-6 flex items-start gap-2 text-sm text-slate-300">
+        <p className="mt-5 flex items-start gap-2 text-sm text-slate-300">
           <GraduationCap size={16} className="mt-0.5 shrink-0" aria-hidden="true" /> {identity.edu}
         </p>
       </div>
@@ -59,7 +57,7 @@ export const HeroSection = () => (
             className="w-full h-auto"
           />
         </div>
-        <figcaption className="mt-2 text-xs text-slate-400">AlphaBrief, a live app I built: scoped question, cited answer, source evidence.</figcaption>
+        <figcaption className="mt-2 text-sm text-slate-400">AlphaBrief, a live app I built.</figcaption>
       </figure>
     </div>
   </section>
