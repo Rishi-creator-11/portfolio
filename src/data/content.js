@@ -8,85 +8,37 @@ export const links = {
   phoneHref: "tel:+19144460465",
 };
 
-// Résumé order, titles and dates. `why` maps the work to what a team hiring an AI builder needs.
-export const experience = [
-  {
-    role: "Contract Full-Stack Engineer",
-    org: "Small-business ordering platform (client)",
-    place: "New York, NY",
-    dates: "July 2026 – September 2026",
-    bullets: [
-      "Used Claude Code and AI-assisted development to turn a business owner's workflows into a production Next.js/TypeScript platform supporting ~97 configurable products.",
-      "Automated ingestion of 80 products and 559 pricing rows into Supabase, reconciling counts against the client's data.",
-      "Rebuilt pricing around 559 exact-combination rows, blocking invalid configurations and client/server checkout-total drift.",
-    ],
-    why: "The owner now handles every product and price in one place, and a quote can't differ from the checkout total. Same pattern as lead intake, quoting and CRM upkeep: take a repetitive, error-prone workflow and make it one trusted system, built from a non-technical user's description. (Client name and screenshots are private; the business and its revenue pre-date my work.)",
-  },
-  {
-    role: "Software Engineer Intern",
-    org: "Pencil Learning Technologies",
-    place: "San Francisco, CA",
-    dates: "June 2025 – August 2025",
-    bullets: [
-      "Built core sync infrastructure for the Mario SDK (published as @pncl/mario), cutting state-update latency from ~500 ms to <100 ms with incremental JSON Patch diffs.",
-      "Designed conflict-free merge logic with Yjs CRDTs, preventing lost updates and keeping state consistent on reconnect.",
-      "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift 30% and removing 1K lines of per-app glue; built app features on it, including a configuration-driven Word Mat and the Polls rewrite from Angular to React/Vite.",
-      "Automated CI/CD with GitHub Actions and Docker (typed build, test, npm publish), trimming release cycle time 15%.",
-    ],
-    why: "Shipped inside a shared codebase other engineers depend on, with compatibility preserved and releases automated. That is how an AI prototype becomes a production feature alongside a dev team. Figures are from my résumé; the source is private (the npm package is public).",
-    link: { label: "@pncl/mario on npm", href: "https://www.npmjs.com/package/@pncl/mario" },
-  },
-  {
-    role: "Software Engineer Intern",
-    org: "Vertically Integrated Program, Stony Brook University",
-    place: "Stony Brook, NY",
-    dates: "August 2024 – December 2024",
-    bullets: [
-      "Shipped 15+ Node.js/Express REST endpoints on AWS (EC2, RDS), adding Redis caching and composite PostgreSQL indexes to cut p95 response time ~20%.",
-      "Added validation, pagination and query batching to list APIs, eliminating N+1 queries and unbounded-response timeouts.",
-      "Built Jest and Cypress suites into a GitHub Actions CI gate, raising backend coverage ~50% to ~90% and cutting manual QA ~30%.",
-    ],
-    why: "Every change had a before-and-after number. That is the habit behind tracking time saved and results.",
-  },
-  {
-    role: "Software Engineer Intern",
-    org: "99 YARDS",
-    place: "New York, NY",
-    dates: "June 2024 – August 2024",
-    bullets: [
-      "Built a TensorFlow two-tower recommender behind Node.js APIs, lifting offline hit-rate@10 ~25% over a popularity baseline.",
-      "Built PostgreSQL pipelines for training and online scoring, cutting feature-freshness lag from 1 h to 5 min.",
-    ],
-    why: "A model only helps once it sits behind an API and runs on fresh data. Offline gains, not live results.",
-  },
-  {
-    role: "Teaching Assistant, Java and Data Structures",
-    org: "Stony Brook University",
-    place: "Stony Brook, NY",
-    dates: "August 2024 – May 2025",
-    bullets: [
-      "Led weekly recitations for 30+ students and reviewed 200+ data-structures submissions, coaching debugging and Big-O trade-offs.",
-    ],
-    why: "Explaining technical ideas plainly to people new to them: the skill behind demos, guides and helping teammates get better with AI.",
-  },
+export const proof = [
+  { claim: "Build useful AI", evidence: "AlphaBrief: answers people can verify", href: "#alphabrief" },
+  { claim: "Deliver business workflows", evidence: "Ordering platform for ~97 products", href: "#ordering" },
+  { claim: "Collaborate with engineers", evidence: "Shared SDK used across 10+ apps", href: "#mario" },
+  { claim: "Help people use what I ship", evidence: "Led sessions for 30+ students", href: "#experience" },
 ];
 
 export const projects = [
   {
     id: "alphabrief",
     title: "AlphaBrief",
-    dates: "April 2026 – Present",
-    tagline: "Ask a question about SEC 10-K filings, get a cited answer you can check against the source.",
-    problem: "Filings are long and users need verifiable answers for the right company and year, not a confident summary.",
-    built:
-      "Full stack: a Next.js/TypeScript app (company and fiscal-year picker, numbered citations, evidence panel linking to the filing) over a Python/FastAPI retrieval pipeline (Pinecone, BM25, rank fusion, Cohere rerank) that filters by company and year before retrieval and declines when the filings don't support an answer.",
-    result:
-      "Live over 92 companies and 274 filings. Retrieval benchmark of 125 questions (8 companies, 2026-09-29): MRR 0.86, Recall@10 0.66, Precision@5 0.60. These are retrieval scores, not answer accuracy, and no user results are claimed.",
-    why: "Evidence-backed answers over documents a team trusts (quotes, policies), with honest evaluation and a clear 'not in the documents' response.",
+    subtitle: "AI answers with evidence",
+    status: "Live app · Full stack",
+    bullets: [
+      "Built a live research assistant covering 274 filings across 92 companies.",
+      "Made answers traceable with citations and an evidence panel that opens the source filing passage.",
+      "Benchmarked retrieval and cut median answer-generation time from 7.6s to 2.0s (earlier measured version).",
+    ],
+    relevance:
+      "I could help advisors get answers they can check against the source, and measure how good those answers are.",
     image: {
       src: "/projects/alphabrief-app.png",
-      alt: "AlphaBrief answering 'What were Apple's total net sales in fiscal 2025?' with a company and year picker, a cited answer, and the retrieved 10-K passage beside it.",
+      alt: "AlphaBrief answering a question about Apple's fiscal 2025 net sales, with a company and year picker, a cited answer, and the retrieved 10-K passage beside it.",
     },
+    details: [
+      "Stack: Next.js and TypeScript frontend on Vercel; Python and FastAPI backend; Pinecone dense search, BM25, rank fusion and Cohere reranking, with company and year filters applied before retrieval. The system declines when the filings do not support an answer.",
+      "Current benchmark (run 2026-09-29, 125 questions covering 8 of the 92 companies, current corpus): MRR 0.86, Recall@10 0.66, Precision@5 0.60. These are retrieval scores, not answer accuracy.",
+      "Earlier checkpoint (10-company corpus): MRR 0.88, Recall@10 0.70, Precision@5 0.62. The lower current scores follow a roughly 10x larger corpus.",
+      "Latency (résumé-reported, earlier version, not stored in the current repository): median generation 7.6s to 2.0s; end-to-end p95 19.5s to 5.4s.",
+      "Known limitation, documented in the backend README: same-year numeric precision for some filers. No user or ROI results are claimed.",
+    ],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app", primary: true },
       { label: "Backend source", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
@@ -97,25 +49,133 @@ export const projects = [
   {
     id: "trippilot",
     title: "TripPilot",
-    dates: "2026",
-    tagline: "An editable AI travel planner where a person approves before anything is reserved.",
-    problem: "A trip mixes preferences, flights, hotels, schedules, routes and budgets, and a plan that looks right can quietly break a constraint.",
-    built:
-      "Next.js/FastAPI workflow that checks budget and timing in code, re-runs only the steps an edit affects, keeps revision history, re-validates offers, and requires explicit approval before sandbox reservations, with duplicate-retry protection. The LLM is optional and only interprets the request.",
-    result:
-      "Working prototype with a documented mock-data demo. Mock data by default; no payments, ticket issuance, refunds or cancellations; no time savings or revenue measured. Provider keys stay server-side and no card data is collected.",
-    why: "Structure a request, compare options, track every change, check critical details, and keep a human decision-maker in control, with client data handled carefully.",
+    subtitle: "Travel planning with approval",
+    status: "Prototype · Mock-data demo · Sandbox reservations",
+    bullets: [
+      "Built an editable itinerary planner with budget and timing checks done in code.",
+      "Preserved revisions and re-ran only the affected planning steps when a request changed.",
+      "Re-checked offers and required approval before any sandbox reservation.",
+    ],
+    relevance:
+      "I could help organize travel requests, handle changes, and keep a person in control of consequential actions.",
     image: {
       src: "/projects/trippilot-workspace.png",
       alt: "TripPilot trip workspace for a Boston to New York trip showing constraints, planning progress, revisions, selected offers and a budget, using labeled demo data.",
     },
+    details: [
+      "Stack: Next.js, FastAPI, PostgreSQL with pgvector, Redis, Celery. Live progress over server-sent events.",
+      "Duplicate protection: sandbox reservations use deterministic idempotency keys, so a retried approval does not create a second booking.",
+      "Scope: mock data is the default; optional provider adapters support search and testing only. No payment processing, ticket issuance, refunds or cancellations. The LLM is optional and only interprets the request. Provider secrets stay server-side and no card data is collected.",
+      "No time savings or booking revenue have been measured. No hosted demo; the repository documents a mock-mode walkthrough.",
+    ],
     links: [{ label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/trippilot-ai", primary: true }],
-    note: "No hosted demo; the repository documents a mock-mode walkthrough.",
+  },
+  {
+    id: "mario",
+    title: "Mario SDK and collaborative apps",
+    subtitle: "Shared software at Pencil Spaces",
+    status: "Professional work · Source private",
+    bullets: [
+      "Helped cut state-update latency from about 500 ms to under 100 ms.",
+      "Integrated shared synchronization into 10+ apps, removing about 1K lines of repeated per-app code.",
+      "Built Word Mat and Polls features and automated build, test and publish releases.",
+    ],
+    relevance:
+      "I could work with a development team to fit AI tools into shared systems and keep them maintainable.",
+    details: [
+      "Résumé-reported results: 30% less cross-client state drift and a 15% shorter release cycle, alongside the figures above. The company's source is private, so there is no public repository or screenshots.",
+      "Stack: TypeScript, incremental JSON Patch diffs, Yjs CRDTs for conflict-free merging, GitHub Actions and Docker.",
+      "Word Mat (blending board): configuration-driven layouts on shared components, so new mats need no change to shared board logic. Polls: rewritten from Angular to React and Vite, keeping the existing shared poll state and extracting a voter utility.",
+    ],
+    links: [{ label: "@pncl/mario on npm", href: "https://www.npmjs.com/package/@pncl/mario", primary: true }],
+    note: "The npm package is public; its source repository is not.",
+  },
+  {
+    id: "ordering",
+    title: "Business ordering platform",
+    subtitle: "Workflow automation",
+    status: "Client work · Details private",
+    bullets: [
+      "Turned an owner's requirements into a production platform where they manage about 97 configurable products in one place.",
+      "Automated ingestion of 80 products and 559 pricing rows.",
+      "Added validation to prevent invalid configurations and inconsistent checkout totals.",
+    ],
+    relevance:
+      "I could help automate repetitive work and improve record quality by turning a nontechnical user's process into dependable software.",
+    details: [
+      "Stack: Next.js, TypeScript, Supabase. Built with Claude Code and AI-assisted development; the customer-facing product does not itself call an LLM.",
+      "Pricing is built around 559 exact-combination rows, and ingestion counts were reconciled against the client's data.",
+      "The client's name, links and screenshots are withheld. The business and its revenue pre-date my work, and I claim no revenue effect.",
+    ],
   },
 ];
 
-export const tinkering =
-  "Also tinkering: Job Scout, a private local Python/FastAPI tool that scans job listings, scores them against my résumé and drafts tailored résumés and outreach via chat commands. It never applies or messages anyone without my approval. No public code or demo.";
+export const jobScout = {
+  title: "Job Scout",
+  subtitle: "Research and drafting automation",
+  text: "Built a local tool that scans listings, scores fit against my résumé, and drafts tailored materials. Applications and messages stay behind my approval.",
+  relevance: "A research, prioritization and review workflow I could adapt to sales research and follow-up drafts.",
+  note: "Private local tool: Python and FastAPI. No public code or demo, and no results measured.",
+};
+
+export const fit = {
+  heading: "Why this fits the AI Specialist role at Flygreen",
+  intro: "What makes my experience relevant is that I've worked on several parts of this role.",
+  body: [
+    "AlphaBrief gave me experience building AI answers people can verify and measuring their quality. TripPilot gave me experience organizing travel requests, checking constraints, and handling changes with approval. My business-platform work involved understanding an owner's process and automating repetitive data work. At Pencil Spaces, I built shared software and app features alongside other developers.",
+    "At Flygreen, I could bring those skills together to help advisors prepare information, compare options, and draft responses more efficiently. I would first understand what your existing tools handle, then build and measure a focused improvement with the team.",
+  ],
+  whyYou: "I bring hands-on AI experience, production engineering, and experience working with nontechnical users. I can build the tool, collaborate with the developers, and explain it to the people using it. I'm especially interested in this role because I want that full ownership: understand the problem, ship something useful, and improve it based on real feedback.",
+  disclaimer: "I have no affiliation with, access to, or knowledge of Flygreen's internal systems; this describes what I could contribute.",
+};
+
+// Résumé order, titles and dates; two strongest results each.
+export const experience = [
+  {
+    role: "Contract Full-Stack Engineer",
+    org: "Small-business ordering platform (client)",
+    dates: "July 2026 – September 2026",
+    results: [
+      "Built a production Next.js/TypeScript platform supporting ~97 configurable products, using Claude Code and AI-assisted development.",
+      "Automated ingestion of 80 products and 559 pricing rows into Supabase and rebuilt pricing around 559 exact-combination rows.",
+    ],
+  },
+  {
+    role: "Software Engineer Intern",
+    org: "Pencil Learning Technologies",
+    dates: "June 2025 – August 2025",
+    results: [
+      "Cut state-update latency from ~500 ms to <100 ms in the Mario SDK (published TypeScript package) with incremental JSON Patch diffs.",
+      "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift 30% and removing 1K lines of per-app glue.",
+    ],
+  },
+  {
+    role: "Software Engineer Intern",
+    org: "Vertically Integrated Program, Stony Brook University",
+    dates: "August 2024 – December 2024",
+    results: [
+      "Cut p95 response time ~20% across 15+ Node.js/Express endpoints on AWS with Redis caching and composite PostgreSQL indexes.",
+      "Raised backend test coverage from ~50% to ~90% with Jest and Cypress in a CI gate, cutting manual QA ~30%.",
+    ],
+  },
+  {
+    role: "Software Engineer Intern",
+    org: "99 YARDS",
+    dates: "June 2024 – August 2024",
+    results: [
+      "Lifted offline hit-rate@10 ~25% over a popularity baseline with a TensorFlow two-tower recommender behind Node.js APIs.",
+      "Cut feature-freshness lag from 1 h to 5 min with incremental PostgreSQL pipelines.",
+    ],
+  },
+  {
+    role: "Teaching Assistant, Java and Data Structures",
+    org: "Stony Brook University",
+    dates: "August 2024 – May 2025",
+    results: [
+      "Led weekly recitations for 30+ students and reviewed 200+ submissions, the same habit of explaining clearly that I would bring to demos and supporting teammates.",
+    ],
+  },
+];
 
 export const education = {
   school: "Stony Brook University",

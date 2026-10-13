@@ -1,55 +1,72 @@
 import { ExternalLink } from "lucide-react";
 import { Section } from "./SectionHeading";
-import { projects, tinkering } from "@/data/content";
+import { projects, jobScout } from "@/data/content";
 
-const Row = ({ label, children }) => (
-  <div className="grid sm:grid-cols-[72px_1fr] gap-0.5 sm:gap-4">
-    <dt className="text-xs font-semibold uppercase tracking-wider text-primary pt-0.5">{label}</dt>
-    <dd className="text-[15px] leading-relaxed">{children}</dd>
-  </div>
+const Relevance = ({ children }) => (
+  <p className="mt-3 text-sm leading-relaxed">
+    <span className="font-semibold text-primary">Relevance: </span>
+    {children}
+  </p>
 );
 
 export const ProjectsSection = () => (
-  <Section id="projects" title="Projects" tone="alt">
-    <div className="space-y-6">
+  <Section id="projects" title="Featured projects" tone="alt">
+    <div className="space-y-5">
       {projects.map((p) => (
-        <article key={p.id} id={p.id} className="card">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1">
-            <h3 className="text-xl font-semibold tracking-tight">{p.title}</h3>
-            <p className="text-sm text-muted-foreground">{p.dates}</p>
-          </div>
-          <p className="mt-1 text-muted-foreground">{p.tagline}</p>
-
-          <div className="mt-4 grid gap-5 md:grid-cols-[1fr_300px] md:items-start">
-            <dl className="space-y-3">
-              <Row label="Problem">{p.problem}</Row>
-              <Row label="Built">{p.built}</Row>
-              <Row label="Result">{p.result}</Row>
-            </dl>
-            <figure>
-              <div className="max-h-56 overflow-hidden rounded-lg border border-border">
+        <article key={p.id} id={p.id} className="card scroll-mt-20">
+          <div className={p.image ? "grid gap-5 md:grid-cols-[1fr_280px] md:items-start" : ""}>
+            <div>
+              <h3 className="text-xl font-semibold tracking-tight">
+                {p.title} <span className="font-normal text-muted-foreground">— {p.subtitle}</span>
+              </h3>
+              <p className="mt-2 inline-block rounded-full border border-border bg-secondary px-3 py-0.5 text-xs font-semibold">
+                {p.status}
+              </p>
+              <ul className="mt-3 list-disc pl-5 space-y-1.5 text-[15px] leading-relaxed">
+                {p.bullets.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+              <Relevance>{p.relevance}</Relevance>
+            </div>
+            {p.image && (
+              <div className="max-h-52 overflow-hidden rounded-lg border border-border">
                 <img src={p.image.src} alt={p.image.alt} loading="lazy" className="w-full object-cover object-top" />
               </div>
-            </figure>
+            )}
           </div>
 
-          <p className="mt-4 rounded-lg bg-secondary px-3 py-2 text-sm leading-relaxed">
-            <span className="font-semibold">Why it matters: </span>
-            {p.why}
-          </p>
+          <details className="mt-4">
+            <summary className="cursor-pointer text-sm font-medium text-primary">Technical details and scope</summary>
+            <ul className="mt-3 list-disc pl-5 space-y-1.5 text-sm text-muted-foreground leading-relaxed">
+              {p.details.map((d) => (
+                <li key={d}>{d}</li>
+              ))}
+            </ul>
+          </details>
 
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            {p.links.map((l) => (
-              <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className={`btn ${l.primary ? "btn-primary" : "btn-outline"}`}>
-                {l.label} <ExternalLink size={14} aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            ))}
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">{p.note}</p>
+          {p.links && (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {p.links.map((l) => (
+                <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className={`btn ${l.primary ? "btn-primary" : "btn-outline"}`}>
+                  {l.label} <ExternalLink size={14} aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ))}
+            </div>
+          )}
+          {p.note && <p className="mt-2 text-xs text-muted-foreground">{p.note}</p>}
         </article>
       ))}
+
+      <article className="rounded-xl border border-dashed border-border p-5">
+        <h3 className="font-semibold">
+          {jobScout.title} <span className="font-normal text-muted-foreground">— {jobScout.subtitle}</span>
+        </h3>
+        <p className="mt-1 text-[15px] leading-relaxed">{jobScout.text}</p>
+        <Relevance>{jobScout.relevance}</Relevance>
+        <p className="mt-2 text-xs text-muted-foreground">{jobScout.note}</p>
+      </article>
     </div>
-    <p className="mt-5 text-sm text-muted-foreground leading-relaxed">{tinkering}</p>
   </Section>
 );
