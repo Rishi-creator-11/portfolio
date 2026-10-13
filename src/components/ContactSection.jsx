@@ -66,7 +66,7 @@ export const ContactSection = () => {
     { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/rishi1111", href: links.linkedin, external: true },
     { icon: Github, label: "GitHub", value: "github.com/Rishi-creator-11", href: links.github, external: true },
     { icon: Phone, label: "Phone", value: links.phone, href: links.phoneHref },
-    { icon: MapPin, label: "Location", value: "New York metropolitan area", href: null },
+    { icon: MapPin, label: "Location", value: "New York Metropolitan Area", href: null },
   ];
 
   return (

@@ -16,16 +16,16 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 222 28% 12%;
+    --background: 40 38% 96%;
+    --foreground: 220 50% 13%;
     --card: 0 0% 100%;
-    --primary: 215 70% 32%;
+    --primary: 174 66% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 14% 94%;
+    --secondary: 40 28% 91%;
     --secondary-foreground: 222 28% 12%;
-    --muted-foreground: 220 10% 36%;
-    --input: 220 14% 80%;
-    --border: 220 14% 87%;
+    --muted-foreground: 220 14% 32%;
+    --input: 38 14% 72%;
+    --border: 38 18% 82%;
   }
   * { @apply border-border; }
   html { @apply scroll-smooth; }
@@ -43,7 +43,7 @@
   padding-inline: 1rem;
   width: 100%;
   @media (width >= 640px) { padding-inline: 1.5rem; }
-  @media (width >= 1024px) { max-width: 960px; }
+  @media (width >= 1024px) { max-width: 1040px; }
 }
 
 @utility card {
