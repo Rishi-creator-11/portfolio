@@ -1,5 +1,6 @@
 import { Github, Mail } from "lucide-react";
 import { links } from "@/data/content";
+import { HeroVideo } from "./HeroVideo";
 
 export const HeroSection = () => (
   <section id="hero" className="bg-navy-900 text-white on-dark pt-24 pb-12 md:pt-28 md:pb-16 overflow-hidden">
@@ -38,19 +39,7 @@ export const HeroSection = () => (
         </div>
       </div>
 
-      <div className="shot-shadow overflow-hidden rounded-xl border border-white/15 bg-navy-950 lg:-mr-24">
-        <div className="flex items-center gap-1.5 border-b border-white/10 bg-navy-800 px-3 py-2" aria-hidden="true">
-          <span className="size-2.5 rounded-full bg-white/25" />
-          <span className="size-2.5 rounded-full bg-white/25" />
-          <span className="size-2.5 rounded-full bg-white/25" />
-          <span className="ml-3 text-xs text-slate-400">secfrontend.vercel.app</span>
-        </div>
-        <img
-          src="/projects/alphabrief-hero.png"
-          alt="AlphaBrief live app: a scoped question about Apple's fiscal 2025 net sales, a cited answer, and the retrieved filing passage in an evidence panel."
-          className="w-full h-auto"
-        />
-      </div>
+      <HeroVideo />
     </div>
   </section>
 );
