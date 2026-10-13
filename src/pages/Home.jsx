@@ -1,7 +1,6 @@
 import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { ExperienceSection } from "../components/ExperienceSection";
-import { FlygreenSection } from "../components/FlygreenSection";
 import { SkillsEducationSection } from "../components/SkillsEducationSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { ContactSection } from "../components/ContactSection";
@@ -15,7 +14,6 @@ export const Home = () => (
       <HeroSection />
       <ProjectsSection />
       <ExperienceSection />
-      <FlygreenSection />
       <SkillsEducationSection />
       <ContactSection />
     </main>

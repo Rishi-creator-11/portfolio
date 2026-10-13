@@ -12,11 +12,9 @@ const Case = ({ e }) => (
           <p className="mt-1 text-base text-slate-300">
             <span className="font-semibold text-white">{e.role}</span> · {e.dates} | {e.place}
           </p>
-          <p className="mt-3 text-xl font-medium">{e.sentence}</p>
         </header>
         <Bullets items={e.bullets} dark />
         <Outcome dark>{e.outcome}</Outcome>
-        {e.relevance && <p className="text-base text-slate-300">{e.relevance}</p>}
         <ToolRow tools={e.tools} dark />
         {e.links && <LinkButtons links={e.links} dark />}
         {e.link && (
@@ -47,7 +45,7 @@ const Case = ({ e }) => (
 );
 
 export const ExperienceSection = () => (
-  <Section id="experience" title="Professional experience" theme="dark">
+  <Section id="experience" title="Experience" theme="dark">
     <div className="space-y-6">
       {experience.map((e) => (
         <Case key={e.id} e={e} />
@@ -60,8 +58,11 @@ export const ExperienceSection = () => (
           <p className="text-base text-slate-300">
             <span className="font-semibold text-white">{e.role}</span> · {e.dates} | {e.place}
           </p>
-          <p className="mt-3 text-lg font-medium">{e.sentence}</p>
-          <p className="mt-1 text-base text-teal-glow">{e.result}</p>
+          <ul className="mt-3 list-disc pl-5 space-y-1.5 text-base leading-relaxed">
+            {e.bullets.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
         </article>
       ))}
     </div>

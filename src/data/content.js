@@ -145,7 +145,6 @@ export const experience = [
       "Built admin controls for the operational functions confirmed in the implementation.",
     ],
     outcome: "A deployed ordering platform with structured product data and validated pricing: about 97 configurable products, with 80 products and 559 pricing rows ingested.",
-    relevance: "Experience building the internal interfaces and accurate records that sales and operations teams rely on.",
     tools: ["Claude Code", "Next.js", "TypeScript", "Supabase"],
     image: {
       src: "/projects/metroprint-storefront.png",
@@ -192,16 +191,20 @@ export const otherExperience = [
     role: "Software Engineer Intern",
     dates: "August 2024 – December 2024",
     place: "Stony Brook, NY",
-    sentence: "Backend validation and API reliability.",
-    result: "Test coverage approximately 50% to 90%, with approximately 30% less manual QA.",
+    bullets: [
+      "Shipped 15+ backend endpoints and reduced p95 response time by approximately 20%.",
+      "Increased backend test coverage from approximately 50% to 90% and reduced manual QA by approximately 30%.",
+    ],
   },
   {
     org: "99 YARDS",
     role: "Software Engineer Intern",
     dates: "June 2024 – August 2024",
     place: "New York, NY",
-    sentence: "Recommendation-model evaluation against a popularity baseline.",
-    result: "Approximately 25% improvement in offline hit-rate@10; feature freshness improved from one hour to five minutes.",
+    bullets: [
+      "Built a recommendation model that improved offline hit-rate@10 by approximately 25% over a popularity baseline.",
+      "Reduced feature-data freshness lag from one hour to five minutes through incremental updates.",
+    ],
   },
 ];
 

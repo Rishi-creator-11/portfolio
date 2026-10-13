@@ -1,4 +1,4 @@
-import { Github, Mail } from "lucide-react";
+import { Github, Mail, ExternalLink } from "lucide-react";
 import { links } from "@/data/content";
 import { HeroVideo } from "./HeroVideo";
 
@@ -24,16 +24,20 @@ export const HeroSection = () => (
           automation. My professional experience includes delivering a business platform and
           building collaborative applications used across 10+ apps.
         </p>
-        <p className="mt-3 max-w-xl text-base text-slate-400 leading-relaxed">
-          Interested in bringing practical AI and reliable engineering to aviation and luxury hospitality.
-        </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href="#work" className="btn btn-teal">View live products</a>
-          <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light">
+          <a href="https://secfrontend.vercel.app/" target="_blank" rel="noopener noreferrer" className="btn btn-teal !px-4">
+            AlphaBrief live <ExternalLink size={14} aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a href="https://www.metroprintmkt.com/" target="_blank" rel="noopener noreferrer" className="btn btn-teal !px-4">
+            MetroPrint live <ExternalLink size={14} aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-light !px-4">
             <Github size={16} aria-hidden="true" /> GitHub
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
-          <a href="#contact" className="btn btn-ghost-light">
+          <a href="#contact" className="btn btn-ghost-light !px-4">
             <Mail size={16} aria-hidden="true" /> Contact
           </a>
         </div>
