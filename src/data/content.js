@@ -1,4 +1,5 @@
-// Single source of truth. Claims trace to the résumé, public repos, or the owner's own account.
+// Single source of truth. Every claim traces to the résumé, a public repo, the project's own
+// source/git history, or the owner's account. Résumé-reported figures are labeled as such.
 
 export const links = {
   github: "https://github.com/Rishi-creator-11",
@@ -8,33 +9,43 @@ export const links = {
   phoneHref: "tel:+19144460465",
 };
 
-export const projects = [
+export const identity = {
+  name: "Hrishit (Rishi) Kumar",
+  where: "New York Metropolitan Area",
+  edu: "B.S. Computer Science (AI & Data Science), Stony Brook University, May 2026",
+};
+
+// ---------- Featured independent work ----------
+export const featured = [
   {
     id: "alphabrief",
-    title: "AlphaBrief",
-    label: "Independent Project",
+    kind: "Independent Project",
     dates: "April 2026 – Present",
-    summary: "Citation-backed research across company filings.",
-    bullets: [
-      "Built an application that answers filing questions with citations and a supporting evidence panel.",
-      "Added company and year controls to keep retrieved information relevant to the request.",
-      "Evaluated retrieval on a 125-question benchmark to identify strengths and failure cases.",
-    ],
-    relevance:
-      "Experience building verifiable AI assistance and evaluating its outputs—the foundation for working with approved quotes, policies, and operational documents.",
+    title: "AlphaBrief",
+    headline: "Answers backed by retrievable evidence.",
     image: {
-      src: "/projects/alphabrief-app.png",
-      alt: "AlphaBrief answering a question about Apple's fiscal 2025 net sales, with a company and year picker, a cited answer, and the retrieved 10-K passage beside it.",
-      caption: "Live app: scoped question, cited answer.",
+      src: "/projects/alphabrief-evidence.png",
+      alt: "AlphaBrief showing an answer with a citation marker beside an evidence panel that quotes the retrieved 10-K passage and links to the SEC filing.",
+      caption: "Live app: every answer is paired with the filing passage behind it.",
     },
+    points: [
+      { label: "AI used", text: "Retrieval-augmented generation over SEC 10-K filings: OpenAI embeddings and Pinecone, BM25 keyword search, rank fusion and Cohere reranking. The answer model sees only retrieved text and declines when the filings don't support an answer." },
+      { label: "What I built", text: "The full app: company and fiscal-year scope controls, numbered citations, an evidence panel that links to the SEC filing, and an evaluation set with LLM-assisted relevance judging." },
+      { label: "Result", text: "Users can inspect the source passages behind an answer. Live over 92 companies and 274 filings; retrieval benchmarked on 125 questions." },
+    ],
+    tools: [
+      { label: "Models and APIs", items: ["OpenAI (embeddings, answers, relevance judging)", "Cohere Rerank", "Pinecone"] },
+      { label: "Built with", items: ["Python", "FastAPI", "Next.js", "TypeScript", "BM25"] },
+      { label: "AI-assisted development", items: ["Claude Code"] },
+    ],
     details: [
-      "Pipeline: Next.js/TypeScript frontend (Vercel) over a Python/FastAPI backend. Retrieval combines Pinecone dense search (OpenAI embeddings), BM25 keyword search, Reciprocal Rank Fusion and Cohere reranking. Answers are generated only from retrieved filing text, and the system declines when the filings do not support an answer.",
-      "Scope filtering: company and fiscal-year filters are applied before retrieval, not after. An unsupported year returns a clear error instead of silently widening scope. Comparison questions retrieve each scope separately before one shared rerank.",
-      "Ingestion and tests: a resumable SEC EDGAR ingestion pipeline with index-parity checks; 362 backend tests, including structural tests for cross-year and cross-company isolation.",
-      "Current benchmark (benchmark_v3_repool, run 2026-09-29): 125 questions covering 8 of the 92 companies, scored against the current corpus of 92 companies, 274 filings and 45,252 chunks. MRR 0.86, Recall@10 0.66, Precision@5 0.60. Relevance judgments are model-assisted, and these are retrieval scores, not answer accuracy.",
-      "Earlier version (separate measurement, 10 companies, 31 filings, 4,262 chunks, 320 tests): MRR 0.88, Recall@10 0.70, Precision@5 0.62. The lower current scores follow a roughly 10x larger corpus.",
+      "Scope filtering: company and fiscal-year filters are applied before retrieval, not after. An unsupported year returns a clear error instead of silently widening scope. Comparison questions retrieve each scope separately, then share one rerank.",
+      "Ingestion and tests: resumable SEC EDGAR ingestion with index-parity checks; 362 backend tests, including structural tests for cross-year and cross-company isolation.",
+      "Evaluation: relevance judgments are produced by an LLM that sees each question and its pooled candidates without retriever names, ranks or scores; they are model-assisted, not human-labeled.",
+      "Current benchmark (benchmark_v3_repool, run 2026-09-29): 125 questions covering 8 of the 92 companies, scored on the current corpus (92 companies, 274 filings, 45,252 chunks). MRR 0.86, Recall@10 0.66, Precision@5 0.60. These are retrieval scores, not answer accuracy.",
+      "Earlier version (separate measurement: 10 companies, 31 filings, 4,262 chunks, 320 tests): MRR 0.88, Recall@10 0.70, Precision@5 0.62. The current scores are lower on a roughly 10x larger corpus.",
       "Latency (résumé-reported for the earlier version; no matching report found in the repository): median generation 7.6s to 2.0s, end-to-end p95 19.5s to 5.4s.",
-      "Known limitation: same-year numeric precision for filers that restate a metric in several tables. No user or time-savings results are claimed.",
+      "Also produced a launch film and logo mark for the product. Known limitation: same-year numeric precision for filers that restate a metric in several tables. No user or time-savings results are claimed.",
     ],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app/", primary: true },
@@ -44,109 +55,122 @@ export const projects = [
     note: "Frontend source is private.",
   },
   {
-    id: "trippilot",
-    title: "TripPilot",
-    label: "Independent Project",
-    dates: "2026",
-    summary: "Travel planning with checked constraints and human approval.",
-    scope: "Prototype · Mock-data demo · Sandbox reservations",
-    bullets: [
-      "Built an editable itinerary workflow that checks budgets and timing.",
-      "Preserved revision history and updated affected planning steps when requests changed.",
-      "Rechecked offers and required approval before sandbox reservations, with duplicate-retry protection.",
+    id: "jobscout",
+    kind: "Personal Automation",
+    title: "Job Scout",
+    headline: "Research and personalized drafts, with approval before action.",
+    workflow: [
+      { icon: "search", step: "Find", text: "A scheduled scan collects new listings through an Apify scraper." },
+      { icon: "gauge", step: "Assess", text: "An LLM scores each listing 0–100 against my résumé and preferences, with a one-line reason." },
+      { icon: "file", step: "Prepare", text: "It drafts a tailored résumé and outreach message. Rules forbid inventing experience, and gaps are listed." },
+      { icon: "check", step: "Review", text: "I approve or skip from chat. Nothing is submitted or sent automatically.", gate: true },
     ],
-    relevance: "Experience organizing travel requests, handling changes, and controlling actions that require review.",
+    points: [
+      { label: "AI used", text: "LLM scoring with hard rules (seniority, visa fit), résumé tailoring that may reorder but never invent, and outreach drafting. The wrapper supports OpenAI (gpt-4o-mini) or Anthropic (Claude Sonnet)." },
+      { label: "What I built", text: "A local Python and FastAPI app with Supabase storage, WhatsApp or Telegram commands (tailor, skip, draft outreach), and scoring that learns from the listings I skip." },
+      { label: "Result", text: "A ranked daily brief with reviewed drafts ready to use. Private tool: no success rates or time savings are claimed." },
+    ],
+    tools: [
+      { label: "Models and APIs", items: ["OpenAI or Anthropic Claude (configurable)", "Apify", "WhatsApp / Telegram"] },
+      { label: "Built with", items: ["Python", "FastAPI", "Supabase"] },
+    ],
+    details: [
+      "Prompts: the scoring prompt returns strict JSON and is told never to inflate scores; the tailoring prompt separates changes from gaps; outreach drafts end with what to personalize before sending.",
+      "A second, larger system I built with Claude: a job-search pipeline with Python discovery tools across multiple job sources (about 2,900 lines), a source-of-truth file for candidate facts, a deduplicating tracker and a written runbook. Its rules include no duplicate applications, no status without confirmation evidence, and never guessing legal or immigration answers, with unclear items escalated to me. It has 74 automated tests.",
+      "Scope: private, so there is no public source or demo.",
+    ],
+  },
+  {
+    id: "trippilot",
+    kind: "Independent Project",
+    dates: "2026",
+    title: "TripPilot",
+    headline: "Travel plans that handle preferences, changes, and approval.",
+    scope: "Prototype · Mock data · Sandbox reservations",
     image: {
       src: "/projects/trippilot-workspace.png",
-      alt: "TripPilot trip workspace for a Boston to New York trip showing constraints, planning progress, revisions, selected offers and a budget, using labeled demo data.",
+      alt: "TripPilot trip workspace for a Boston to New York trip showing parsed constraints, planning progress, revisions, selected offers and a budget, using labeled demo data.",
       caption: "Trip workspace with labeled mock data.",
     },
+    points: [
+      { label: "AI used", text: "A request interpreter turns free text into structured constraints. A deterministic parser is the default and an optional LLM extractor sits behind the same interface. Budgets, timing and offer validity are checked in code, not by the model." },
+      { label: "What I built", text: "An editable itinerary workflow: edits re-run only the affected steps and keep a revision history, offers are re-checked, and sandbox reservations need explicit approval with duplicate-retry protection." },
+      { label: "Result", text: "A working prototype with a documented mock-data demo and visible planning progress. No savings or revenue have been measured." },
+    ],
+    tools: [
+      { label: "Models and APIs", items: ["Optional OpenAI request extractor", "Open-Meteo", "Optional search adapters (test only)"] },
+      { label: "Built with", items: ["Next.js", "FastAPI", "PostgreSQL + pgvector", "Redis", "Celery"] },
+    ],
     details: [
-      "Stack: Next.js and TypeScript web app; FastAPI backend; PostgreSQL with pgvector for persistence; Redis; Celery workers. Planning progress streams over server-sent events and is stored so a run can be replayed.",
-      "Selective edits: a change re-runs only the planning steps it affects and records a new revision.",
-      "Validation and approval: budget, timing and offer validity are checked in code. The LLM is optional and only interprets the request. Sandbox reservations require explicit approval and use deterministic idempotency keys so a retry does not create a duplicate.",
-      "Provider adapters: mock data is the default. Optional adapters support search and offer re-validation for testing only; provider secrets stay server-side.",
-      "Scope: no real payments, production ticket issuance, refunds or cancellations. No hosted demo (the repository documents a mock-mode walkthrough), no live customers, and no measured savings or revenue.",
+      "Planning progress streams over server-sent events and is stored so a run can be replayed. Sandbox reservations use deterministic idempotency keys, so a retried approval does not create a duplicate.",
+      "Regression tests cover API, web unit and Playwright flows for planning, selective reuse, revisions, provider safety and approval boundaries.",
+      "Scope: mock data is the default; optional adapters support search and offer re-validation for testing only. No real payments, ticket issuance, refunds or cancellations. Provider secrets stay server-side and no card data is collected. No hosted demo (the repository documents a mock-mode walkthrough), no live customers.",
     ],
     links: [{ label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/trippilot-ai", primary: true }],
   },
-  {
-    id: "distributed",
-    title: "Distributed Systems Platform",
-    label: "Independent Project",
-    dates: "September 2025 – December 2025",
-    summary: "Real-time communication across multiple application instances.",
-    bullets: [
-      "Built a Go chat system across three application instances, supporting 100 connections per room.",
-      "Used Redis and Kafka to coordinate updates and buffer message traffic.",
-      "Deployed the containerized stack to AWS with automated delivery.",
-    ],
-    relevance: "Experience integrating services and maintaining reliable information flow across connected applications.",
-    details: [
-      "Résumé-reported architecture: Go (Fiber) chat servers on three instances using WebSockets, with Redis pub/sub to fan messages out between instances and Kafka buffering up to 10,000 messages per second.",
-      "Infrastructure: Docker, deployed on AWS (EC2, S3) with Terraform and GitHub Actions CI/CD, behind a TLS-terminated Nginx proxy.",
-      "Measurement scope: the 100 connections per room and 10,000 messages per second figures come from my résumé; I have not located a repository or benchmark report to link, so no source link is provided.",
-    ],
-  },
-  {
-    id: "jobscout",
-    title: "Job Scout",
-    label: "Personal Automation",
-    summary: "Research and drafting with approval before action.",
-    bullets: [
-      "Built a local tool that scans job listings and scores them against my resume.",
-      "Generates tailored resume and outreach drafts through chat commands.",
-      "Requires my approval before submitting applications or sending messages.",
-    ],
-    relevance: "A transferable workflow for research, prioritization, and reviewed follow-up drafting.",
-    details: [
-      "Implementation: local Python and FastAPI app; job listings come from an Apify scraper, scoring and drafting use an LLM API, results are stored in Supabase, and commands arrive over WhatsApp or Telegram (for example 'tailor 1', 'skip 2', 'draft outreach 1').",
-      "Scope: a private tool, so there is no public source or demo. No success rates or time savings are claimed.",
-    ],
-  },
 ];
 
-export const experience = [
-  {
+// ---------- Professional experience ----------
+export const experience = {
+  metroprint: {
+    id: "metroprint",
+    kind: "Contract employment",
     org: "MetroPrint USA",
     role: "Contract Full-Stack Engineer",
     dates: "July 2026 – September 2026",
     place: "New York, NY",
-    bullets: [
-      "Translated an owner's workflow into a production platform supporting approximately 97 configurable products.",
-      "Automated ingestion of 80 products and 559 pricing rows, reconciling records against source data.",
-      "Added validation to block invalid configurations and prevent inconsistent checkout totals.",
+    headline: "An owner's requirements, turned into a production ordering platform.",
+    stats: [
+      { value: "~97", label: "configurable products supported" },
+      { value: "80 + 559", label: "products and pricing rows ingested" },
     ],
-    connection: "Business discovery, repetitive-work automation, and accurate records.",
-    tools: "Claude Code, Next.js, TypeScript, Supabase.",
+    points: [
+      { label: "AI used", text: "Built with Claude Code (AI-assisted development). The customer-facing product does not itself call an AI model." },
+      { label: "What I built", text: "Translated the owner's workflow into a Next.js and TypeScript platform on Supabase. Automated ingestion of 80 products and 559 pricing rows, reconciling records against source data." },
+      { label: "Result", text: "Added validation to block invalid configurations and prevent inconsistent checkout totals, so the owner manages every product and price in one place." },
+    ],
+    tools: [
+      { label: "AI-assisted development", items: ["Claude Code"] },
+      { label: "Built with", items: ["Next.js", "TypeScript", "Supabase", "Stripe"] },
+    ],
     details: [
-      "Pricing is built around 559 exact-combination rows, and ingestion counts were reconciled against the client's data.",
-      "Built with Claude Code and AI-assisted development. The customer-facing product does not itself call an LLM.",
+      "Pricing is built around 559 exact-combination rows. The server recalculates every checkout total from current database prices and discards browser-supplied amounts.",
+      "Includes an admin area for prices and promotions, guest checkout with saved carts, and 26 automated test files covering pricing, discounts, tax and checkout.",
       "Client screenshots, code and further details are not published. The business's existing revenue is not attributed to this work.",
     ],
   },
-  {
+  pencil: {
+    id: "pencil",
+    kind: "Internship",
     org: "Pencil Learning Technologies",
     role: "Software Engineer Intern",
     dates: "June 2025 – August 2025",
     place: "San Francisco, CA",
-    bullets: [
-      "Built Mario's shared synchronization infrastructure, reducing update latency from approximately 500ms to under 100ms.",
-      "Integrated the SDK into 10+ apps, reducing state drift by 30% and removing 1,000 lines of repeated integration code.",
-      "Built client-side features, including a configurable Word Mat and a Polls rewrite that preserved shared-state compatibility.",
-      "Automated build, test, and publishing steps, shortening the release cycle by 15%.",
+    headline: "Shared software and the apps built on it, for collaborative classrooms.",
+    stats: [
+      { value: "~500ms → <100ms", label: "update latency" },
+      { value: "10+", label: "apps integrated" },
+      { value: "30%", label: "less state drift" },
+      { value: "1,000", label: "lines of repeated code removed" },
     ],
-    connection: "Developer collaboration, usable application features, and dependable production integration.",
-    tools: "TypeScript, RxJS, WebSockets, Yjs, GitHub Actions, Docker.",
+    statNote: "Figures are résumé-reported.",
+    apps: ["Word Mat / Blending Board", "Polls", "Timer", "Stopwatch", "Eraser", "Dice", "Box Breathing"],
+    points: [
+      { label: "Shared infrastructure", text: "Built Mario's shared synchronization infrastructure and integrated the SDK into 10+ apps, with more consistent updates and less repeated integration code." },
+      { label: "Client-side apps", text: "Worked on seven apps in the Mario monorepo: a configurable Word Mat on shared components, a Polls rewrite from Angular to React that preserved shared-state compatibility, and the Timer, Stopwatch, Eraser, Dice and a new Box Breathing app." },
+      { label: "Delivery", text: "Automated build, test and publishing steps, shortening the release cycle by 15%." },
+    ],
+    tools: [{ label: "Built with", items: ["TypeScript", "React", "Vite", "RxJS", "WebSockets", "Yjs", "GitHub Actions", "Docker"] }],
     details: [
-      "Sync infrastructure: incremental JSON Patch diffs, and conflict-free merge logic using Yjs CRDTs so concurrent updates are not lost and state stays consistent after a reconnect.",
-      "Word Mat (blending board): configuration-driven layouts on shared components, so new mats need no change to shared board logic.",
-      "Polls: rewritten from Angular to React and Vite, keeping the existing shared poll state and extracting a voter utility.",
-      "Release pipeline: typed build, test and npm publish through GitHub Actions and Docker.",
-      "Company source is private, so no code or screenshots are shown. Figures are from my résumé.",
+      "Sync layer: incremental JSON Patch diffs, conflict-free merging with Yjs CRDTs, and an update to the shared SyncProvider (pull request 21). Apps were moved onto the shared UI library (pull request 12) and from webpack to Vite.",
+      "Word Mat: each mat is a configuration object passed to one shared component, so a new mat needs no change to shared board logic.",
+      "Merged pull requests in the company's private repository include 12, 14, 15, 19, 20, 21, 23 (Polls, merged 2025-08-04) and 24. The source is private, so no code or screenshots are shown.",
     ],
     link: { label: "@pncl/mario on npm", href: "https://www.npmjs.com/package/@pncl/mario" },
   },
+};
+
+export const compactExperience = [
   {
     org: "Vertically Integrated Program, Stony Brook University",
     role: "Software Engineer Intern",
@@ -157,8 +181,7 @@ export const experience = [
       "Added validation, pagination, and query batching to prevent unbounded responses and repeated queries.",
       "Increased backend test coverage from approximately 50% to 90% and reduced manual QA by approximately 30%.",
     ],
-    connection: "Reliable integrations, validation, and measured improvement.",
-    tools: "Node.js, Express, AWS (EC2, RDS), Redis, PostgreSQL, Jest, Cypress, GitHub Actions.",
+    tools: "Node.js, Express, AWS (EC2, RDS), Redis, PostgreSQL, Jest, Cypress, GitHub Actions",
   },
   {
     org: "99 YARDS",
@@ -169,25 +192,60 @@ export const experience = [
       "Built a recommendation model that improved offline hit-rate@10 by approximately 25% over a popularity baseline.",
       "Reduced feature-data freshness lag from one hour to five minutes through incremental updates.",
     ],
-    connection: "Model evaluation and data pipelines that keep applications supplied with current information.",
-    tools: "TensorFlow, Node.js, PostgreSQL.",
+    tools: "TensorFlow, Node.js, PostgreSQL",
     note: "The hit-rate gain is an offline evaluation result, not a measured live or revenue improvement.",
   },
 ];
 
-export const teaching = {
-  title: "Teaching Assistant | Java and Data Structures",
-  org: "Stony Brook University",
-  dates: "August 2024 – May 2025",
-  text: "Led weekly recitations for 30+ students and reviewed 200+ submissions, coaching debugging and problem-solving.",
-  connection: "Explaining technical ideas clearly and helping people learn new tools.",
+// ---------- Capabilities (completed work) ----------
+export const capabilities = [
+  { title: "Build AI applications", text: "Shipped a live retrieval app whose answers trace to source passages.", evidence: [{ label: "AlphaBrief", href: "#alphabrief" }] },
+  { title: "Automate research and drafting", text: "Built tools that score, research and draft, with approval before anything goes out.", evidence: [{ label: "Job Scout", href: "#jobscout" }, { label: "Computer-use agent", href: "#more" }] },
+  { title: "Coordinate travel workflows", text: "Structured requests, checked constraints, tracked revisions and required approval, with secrets kept server-side and no card data collected.", evidence: [{ label: "TripPilot", href: "#trippilot" }] },
+  { title: "Integrate and ship with developers", text: "Delivered apps and shared sync code in a team monorepo through reviewed pull requests and automated releases.", evidence: [{ label: "Mario at Pencil", href: "#pencil" }] },
+  { title: "Translate business needs into software", text: "Turned an owner's workflow into a production platform with automated data ingestion and validated pricing.", evidence: [{ label: "MetroPrint", href: "#metroprint" }] },
+  { title: "Evaluate and explain tools", text: "Benchmarked retrieval on 125 questions, reported offline results as offline, and led recitations for 30+ students.", evidence: [{ label: "AlphaBrief", href: "#alphabrief" }, { label: "99 YARDS", href: "#experience-more" }, { label: "Teaching", href: "#more" }] },
+];
+
+export const opportunities = {
+  title: "Aviation opportunities I would explore",
+  note: "Not built. I would start by learning how the team works today, and decisions stay with aviation professionals.",
+  items: [
+    "Inquiry-to-trip-brief drafts that list missing details",
+    "Operator quote extraction with cited comparisons",
+    "Assistance limited to approved policies and documents",
+    "Current trip summaries and advisor handoffs",
+  ],
 };
+
+// ---------- More work ----------
+export const more = [
+  {
+    kind: "Independent Project · public source",
+    title: "Computer-use automation system",
+    text: "An LLM agent learns how to complete a task in a legacy web UI with no API and saves it as a typed, reusable capability. A deterministic replay engine then runs it with no LLM, and stuck cases escalate to a human operator. The Anthropic API decider is implemented; the recorded runs were driven through a Claude Code session, as the README states.",
+    tools: "Python, Playwright, Anthropic API",
+    link: { label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/interface-ai-computer-use-assignment" },
+  },
+  {
+    kind: "Independent Project · September 2025 – December 2025",
+    title: "Distributed Systems Platform",
+    text: "Built a Go chat system across three application instances, supporting 100 connections per room, with Redis and Kafka coordinating updates and buffering traffic, deployed as a containerized stack to AWS with automated delivery.",
+    tools: "Go, Redis, Kafka, Docker, AWS, Terraform, GitHub Actions",
+    detail: "Résumé-reported, including Kafka buffering up to 10,000 messages per second. No repository or benchmark report found to link.",
+  },
+  {
+    kind: "Teaching · August 2024 – May 2025",
+    title: "Teaching Assistant | Java and Data Structures",
+    text: "Stony Brook University. Led weekly recitations for 30+ students and reviewed 200+ submissions, coaching debugging and problem-solving, the same habit of explaining clearly I would bring to demos and teammate support.",
+  },
+];
 
 export const highlights = [
   { label: "AI-assisted development", value: "Claude Code" },
   { label: "AI applications", value: "RAG, prompt engineering, retrieval/extraction, evaluation" },
   { label: "Integration and delivery", value: "REST APIs, data pipelines, GitHub Actions, Docker" },
-  { label: "Relevant services", value: "Pinecone, Cohere, OpenAI API (embeddings and generation in AlphaBrief)" },
+  { label: "Model and data services used", value: "OpenAI API, Anthropic API, Pinecone, Cohere, Apify" },
 ];
 
 export const skills = [

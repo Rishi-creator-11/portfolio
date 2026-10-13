@@ -2,7 +2,7 @@ import { Section } from "./SectionHeading";
 import { highlights, skills, education as ed } from "@/data/content";
 
 export const SkillsEducationSection = () => (
-  <Section id="skills" title="Education and skills" tone="alt">
+  <Section id="skills" title="Education and skills">
     <div className="grid gap-5 md:grid-cols-2">
       <div className="card">
         <h3 className="font-semibold">Tools used in projects</h3>
