@@ -43,28 +43,32 @@ export const featured = [
   {
     id: "alphabrief",
     title: "AlphaBrief",
-    kicker: "Evidence and evaluation",
-    summary: "A citation-backed research assistant for SEC 10-K filings.",
+    kicker: "Evidence and evaluation · full-stack app",
+    summary: "A deployed research app where you ask a plain-English question about SEC 10-K filings and get an answer you can check against the source.",
     problem:
-      "Annual filings are long, and users need answers they can check against the source rather than a confident summary.",
+      "Annual filings are long, and users need answers they can verify rather than a confident summary, with the right company and year every time.",
     action:
-      "Built a Python and FastAPI retrieval-augmented pipeline: Pinecone dense search, BM25 keyword search, rank fusion and Cohere reranking. Company and fiscal-year filters are applied before retrieval, every answer cites its filing passage, and the system declines when the filings do not support an answer. Evaluated retrieval against a fixed question set.",
+      "Built both halves. The interface is a Next.js and TypeScript app: a question box with a company and fiscal-year picker (years are validated against the chosen companies), example questions, an answer with numbered citations, and an evidence panel showing the retrieved filing text with a link to the filing on SEC.gov, plus Pipeline and Metrics tabs and plain-language messages for refusals and errors. The backend is a Python and FastAPI retrieval pipeline: Pinecone dense search, BM25 keyword search, rank fusion and Cohere reranking, with company and year filters applied before retrieval. It declines to answer when the filings do not support one. I evaluated retrieval against a fixed question set.",
     result:
-      "A live research app over 92 companies and 274 10-K filings. On a 125-question retrieval benchmark (8 companies, run 2026-09-29 on the current corpus) hybrid retrieval scored MRR 0.86, Recall@10 0.66 and Precision@5 0.60.",
+      "A live app over 92 companies and 274 10-K filings. On a 125-question retrieval benchmark (8 companies, run 2026-09-29 on the current corpus) hybrid retrieval scored MRR 0.86, Recall@10 0.66 and Precision@5 0.60.",
     scope:
-      "These are retrieval scores, not answer accuracy. The question set covers 8 of the 92 companies. The README documents a known same-year numeric-precision limitation for some filers.",
+      "These are retrieval scores, not answer accuracy. The question set covers 8 of the 92 companies. The backend README documents a known same-year numeric-precision limitation for some filers. No user or ROI results are claimed.",
+    image: {
+      src: "/projects/alphabrief-app.png",
+      alt: "AlphaBrief web app answering 'What were Apple's total net sales in fiscal 2025?' with a scoped company and fiscal-year picker, a one-line cited answer, and an evidence panel showing the retrieved 10-K passage.",
+      caption: "The live app answering a scoped question, with the cited filing passage beside the answer.",
+    },
     details: [
-      "Stack: Python, FastAPI, Pinecone, bm25s, Reciprocal Rank Fusion, Cohere rerank, Next.js frontend on Vercel.",
-      "Structural tests check cross-year and cross-company isolation, and the backend suite (362 tests per the README) runs in CI.",
-      "An earlier 10-company checkpoint scored 0.88 / 0.70 / 0.62; the lower current numbers reflect a roughly 10x larger corpus, as the README explains.",
-      "No user or ROI results are claimed.",
+      "Frontend: Next.js, TypeScript, Tailwind, deployed on Vercel. It retries a transient request failure once and maps backend error codes to specific messages.",
+      "Backend: Python, FastAPI, Pinecone, bm25s, Reciprocal Rank Fusion, Cohere rerank. Structural tests check cross-year and cross-company isolation, and the backend suite (362 tests per its README) runs in CI.",
+      "An earlier 10-company checkpoint scored 0.88 / 0.70 / 0.62; the lower current numbers reflect a roughly 10x larger corpus, as the backend README explains.",
     ],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app", primary: true },
+      { label: "Backend source", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
       { label: "API docs", href: "https://sec-rag-engine.vercel.app/docs" },
-      { label: "Source on GitHub", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
     ],
-    note: "The live demo is the user interface. The API docs page is the backend's Swagger documentation.",
+    note: "The live demo is the full app. The frontend source is in a private repository; the backend source and API docs are public.",
   },
   {
     id: "mario",

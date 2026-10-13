@@ -24,7 +24,7 @@ export const ProjectCard = ({ project: p }) => (
 
     {p.image && (
       <figure className="mt-5">
-        <div className="max-h-72 overflow-hidden rounded-lg border border-border">
+        <div className="max-h-80 overflow-hidden rounded-lg border border-border">
           <img src={p.image.src} alt={p.image.alt} loading="lazy" className="w-full object-cover object-top" />
         </div>
         <figcaption className="mt-1.5 text-xs text-muted-foreground">{p.image.caption}</figcaption>
