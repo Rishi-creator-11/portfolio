@@ -29,7 +29,7 @@ export const HeroSection = () => (
       </p>
 
       <div className="mt-7 flex flex-wrap gap-3">
-        <a href="#work" className="btn btn-primary">
+        <a href="#projects" className="btn btn-primary">
           Featured projects <ArrowRight size={16} aria-hidden="true" />
         </a>
         <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline">

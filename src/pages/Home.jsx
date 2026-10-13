@@ -1,10 +1,8 @@
 import { Navbar } from "../components/Navbar";
 import { HeroSection } from "../components/HeroSection";
-import { FeaturedWork } from "../components/FeaturedWork";
-import { CaseStudy } from "../components/CaseStudy";
-import { HowIWork } from "../components/HowIWork";
 import { ExperienceSection } from "../components/ExperienceSection";
-import { AviationSection } from "../components/AviationSection";
+import { ProjectsSection } from "../components/ProjectsSection";
+import { EducationSection } from "../components/EducationSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 
@@ -14,11 +12,9 @@ export const Home = () => (
     <Navbar />
     <main id="main">
       <HeroSection />
-      <FeaturedWork />
-      <CaseStudy />
-      <HowIWork />
       <ExperienceSection />
-      <AviationSection />
+      <ProjectsSection />
+      <EducationSection />
       <ContactSection />
     </main>
     <Footer />
