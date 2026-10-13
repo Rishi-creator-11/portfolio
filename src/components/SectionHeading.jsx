@@ -1,12 +1,9 @@
-export const SectionHeading = ({ title, highlight, subtitle }) => (
-  <div className="mb-12 text-center">
-    <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-      {title} <span className="text-primary">{highlight}</span>
-    </h2>
-    {subtitle && (
-      <p className="mt-3 text-muted-foreground max-w-2xl mx-auto text-base">
-        {subtitle}
-      </p>
-    )}
-  </div>
+export const Section = ({ id, title, intro, children, tone }) => (
+  <section id={id} className={`scroll-mt-16 py-14 md:py-16 ${tone === "alt" ? "bg-secondary/60" : ""}`}>
+    <div className="container">
+      <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{title}</h2>
+      {intro && <p className="mt-2 max-w-2xl text-muted-foreground">{intro}</p>}
+      <div className="mt-8">{children}</div>
+    </div>
+  </section>
 );

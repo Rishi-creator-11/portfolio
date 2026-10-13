@@ -1,8 +1,9 @@
-import { Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { SectionHeading } from "./SectionHeading";
+import { Section } from "./SectionHeading";
+import { links } from "@/data/content";
 
 export const ContactSection = () => {
   const { toast } = useToast();
@@ -59,66 +60,61 @@ export const ContactSection = () => {
     }
   };
 
+  const field = "w-full px-3 py-2 rounded-lg border border-input bg-card text-sm";
+  const items = [
+    { icon: Mail, label: "Email", value: links.email, href: `mailto:${links.email}` },
+    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/rishi1111", href: links.linkedin, external: true },
+    { icon: Github, label: "GitHub", value: "github.com/Rishi-creator-11", href: links.github, external: true },
+    { icon: Phone, label: "Phone", value: links.phone, href: links.phoneHref },
+    { icon: MapPin, label: "Location", value: "New York metropolitan area", href: null },
+  ];
+
   return (
-    <section id="contact" className="py-20 px-4">
-      <div className="container mx-auto max-w-5xl">
-        <SectionHeading
-          title="Get In"
-          highlight="Touch"
-          subtitle="Open to full-time opportunities and collaborations."
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-6 text-left">
-            {[
-              { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/rishi1111", href: "https://www.linkedin.com/in/rishi1111", external: true },
-              { icon: Mail, label: "Email", value: "hrishitkumar.cs@gmail.com", href: "mailto:hrishitkumar.cs@gmail.com" },
-              { icon: Phone, label: "Phone", value: "(914) 446-0465", href: "tel:+19144460465" },
-              { icon: MapPin, label: "Location", value: "Stony Brook, NY", href: null },
-            ].map(({ icon: Icon, label, value, href, external }) => (
-              <div key={label} className="flex items-start gap-4">
-                <div className="p-2.5 rounded-lg bg-primary/10">
-                  <Icon className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">{label}</p>
-                  {href ? (
-                    <a
-                      href={href}
-                      target={external ? "_blank" : undefined}
-                      rel={external ? "noopener noreferrer" : undefined}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      {value}
-                    </a>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">{value}</p>
-                  )}
-                </div>
+    <Section id="contact" title="Contact" intro="Email is the fastest way to reach me. The form below sends to the same inbox.">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ul className="space-y-4">
+          {items.map(({ icon: Icon, label, value, href, external }) => (
+            <li key={label} className="flex items-start gap-3">
+              <Icon className="h-5 w-5 mt-0.5 text-primary" aria-hidden="true" />
+              <div>
+                <p className="text-sm font-medium">{label}</p>
+                {href ? (
+                  <a
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="text-sm text-muted-foreground underline underline-offset-2 hover:text-primary"
+                  >
+                    {value}
+                    {external && <span className="sr-only"> (opens in a new tab)</span>}
+                  </a>
+                ) : (
+                  <p className="text-sm text-muted-foreground">{value}</p>
+                )}
               </div>
-            ))}
-          </div>
+            </li>
+          ))}
+        </ul>
 
-          <form className="surface-card p-6 space-y-4 text-left" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1.5">Name</label>
-              <input id="name" name="name" required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Your name" />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1.5">Email</label>
-              <input id="email" name="email" type="email" required className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="you@email.com" />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-1.5">Message</label>
-              <textarea id="message" name="message" required rows={4} className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Hi Rishi..." />
-            </div>
-            <button type="submit" disabled={isSubmitting} className={cn("cosmic-button w-full")}>
-              {isSubmitting ? "Sending..." : "Send Message"}
-              {!isSubmitting && <Send size={15} />}
-            </button>
-          </form>
-        </div>
+        <form className="card space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium mb-1.5">Name</label>
+            <input id="name" name="name" autoComplete="name" required className={field} />
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1.5">Email</label>
+            <input id="email" name="email" type="email" autoComplete="email" required className={field} />
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-1.5">Message</label>
+            <textarea id="message" name="message" required rows={4} className={`${field} resize-none`} />
+          </div>
+          <button type="submit" disabled={isSubmitting} className={cn("btn btn-primary w-full")}>
+            {isSubmitting ? "Sending..." : "Send message"}
+            {!isSubmitting && <Send size={15} aria-hidden="true" />}
+          </button>
+        </form>
       </div>
-    </section>
+    </Section>
   );
 };

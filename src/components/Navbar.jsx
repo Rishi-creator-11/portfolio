@@ -1,77 +1,47 @@
-import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const navItems = [
-  { name: "About", href: "#about" },
+  { name: "Work", href: "#work" },
+  { name: "Case study", href: "#case-study" },
+  { name: "How I work", href: "#how-i-work" },
   { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
+  { name: "Aviation", href: "#aviation" },
 ];
 
 export const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  const [open, setOpen] = useState(false);
   return (
-    <nav
-      className={cn(
-        "fixed w-full z-40 transition-all duration-300 border-b border-transparent",
-        isScrolled && "bg-background/90 backdrop-blur-md border-border shadow-sm py-3",
-        !isScrolled && "py-5"
-      )}
-    >
-      <div className="container flex items-center justify-between">
-        <a href="#hero" className="text-lg font-semibold text-foreground hover:text-primary transition-colors">
-          Rishi Kumar
-        </a>
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <nav aria-label="Primary" className="container flex h-14 items-center justify-between">
+        <a href="#hero" className="font-semibold hover:text-primary">Rishi Kumar</a>
 
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {item.name}
-            </a>
+        <div className="hidden md:flex items-center gap-6">
+          {navItems.map((i) => (
+            <a key={i.name} href={i.href} className="text-sm text-muted-foreground hover:text-foreground">{i.name}</a>
           ))}
-          <a href="#contact" className="cosmic-button py-2 px-5">
-            Contact
-          </a>
+          <a href="#contact" className="btn btn-primary !py-1.5">Contact</a>
         </div>
 
         <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((o) => !o)}
+          className="md:hidden p-2"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
-          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
-
-        {isMenuOpen && (
-          <div className="fixed inset-0 top-[60px] bg-background/98 backdrop-blur-md z-30 md:hidden flex flex-col items-center gap-6 pt-10">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-base text-muted-foreground hover:text-foreground"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </a>
+      </nav>
+      {open && (
+        <div id="mobile-menu" className="md:hidden border-t border-border bg-background">
+          <div className="container flex flex-col py-2">
+            {[...navItems, { name: "Contact", href: "#contact" }].map((i) => (
+              <a key={i.name} href={i.href} onClick={() => setOpen(false)} className="py-3 text-base">{i.name}</a>
             ))}
-            <a href="#contact" className="cosmic-button" onClick={() => setIsMenuOpen(false)}>
-              Contact
-            </a>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      )}
+    </header>
   );
 };

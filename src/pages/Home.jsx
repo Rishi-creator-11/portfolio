@@ -1,25 +1,26 @@
 import { Navbar } from "../components/Navbar";
-import { StarBackground } from "@/components/StarBackground";
 import { HeroSection } from "../components/HeroSection";
-import { AboutSection } from "../components/AboutSection";
+import { FeaturedWork } from "../components/FeaturedWork";
+import { CaseStudy } from "../components/CaseStudy";
+import { HowIWork } from "../components/HowIWork";
 import { ExperienceSection } from "../components/ExperienceSection";
-import { ProjectsSection } from "../components/ProjectsSection";
+import { AviationSection } from "../components/AviationSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 
-export const Home = () => {
-  return (
-    <div className="relative min-h-screen bg-transparent text-foreground">
-      <StarBackground />
-      <Navbar />
-      <main className="relative z-10">
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
-  );
-};
+export const Home = () => (
+  <div className="min-h-screen">
+    <a href="#main" className="skip-link">Skip to content</a>
+    <Navbar />
+    <main id="main">
+      <HeroSection />
+      <FeaturedWork />
+      <CaseStudy />
+      <HowIWork />
+      <ExperienceSection />
+      <AviationSection />
+      <ContactSection />
+    </main>
+    <Footer />
+  </div>
+);
