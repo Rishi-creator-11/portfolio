@@ -6,6 +6,8 @@ export const evidenceProjects = [
   { id: "computer-use", label: "Computer-use agent" },
   { id: "metroprint", label: "MetroPrint" },
   { id: "pencil", label: "Pencil / Mario" },
+  { id: "tripilot-ai", label: "TriPilot AI" },
+  { id: "alumi", label: "Alumi" },
 ];
 
 export const evidenceRows = [
@@ -38,6 +40,8 @@ export const evidenceRows = [
       trippilot: "Next.js App Router workspace with live progress",
       metroprint: "Next.js storefront and admin workspace",
       pencil: "React apps on a shared UI library (Word Mat, Polls, Timer and more)",
+      "tripilot-ai": "Next.js live product site and app",
+      alumi: "React, TypeScript and Vite storefront with a photo customizer",
     },
   },
   {
@@ -47,6 +51,7 @@ export const evidenceRows = [
       trippilot: "PostgreSQL with pgvector, Redis, Celery",
       jobscout: "Supabase",
       metroprint: "Supabase (Postgres, Auth, Storage)",
+      alumi: "Supabase tables for orders, order items and bulk inquiries",
     },
   },
   {

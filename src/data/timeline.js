@@ -43,6 +43,11 @@ export const timeline = [
     points: ["An editable travel-planning workflow with budget and timing checks, revision history, and approval-gated sandbox reservations."],
   },
   {
+    id: "alumi", lane: "projects", short: "Alumi", title: "Alumi", role: "Independent project",
+    dates: "August 2026 (repository commits: August 9 to 21)", start: [2026, 8], end: [2026, 9], link: "alumi",
+    points: ["A live photo-print storefront with an upload customizer, cart, checkout and Supabase-backed orders; built with Bolt; payments in test mode."],
+  },
+  {
     id: "metroprint", lane: "professional", short: "MetroPrint", title: "MetroPrint USA", role: "Contract Full-Stack Engineer",
     dates: "July 2026 – September 2026", start: [2026, 7], end: [2026, 10], link: "metroprint",
     points: ["Built a production ordering platform and admin workspace with about 97 configurable products.", "Automated ingestion of 80 products and 559 pricing rows; validated combinations and checkout totals."],

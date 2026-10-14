@@ -64,9 +64,9 @@ const Project = ({ p, index }) => {
         </div>
       ),
     },
-    { id: "decisions", label: "Decisions", content: <Cards items={p.decisions} /> },
-    { id: "limits", label: "Challenges", content: <Cards items={p.challenges} /> },
-    {
+    p.decisions.length > 0 && { id: "decisions", label: "Decisions", content: <Cards items={p.decisions} /> },
+    p.challenges.length > 0 && { id: "limits", label: "Challenges", content: <Cards items={p.challenges} /> },
+    (p.results.stats.length > 0 || p.results.note) && {
       id: "results",
       label: "Results",
       content: (
@@ -77,7 +77,7 @@ const Project = ({ p, index }) => {
         </div>
       ),
     },
-  ];
+  ].filter(Boolean);
 
   return (
     <article id={p.id} aria-labelledby={`${p.id}-h`} className={`py-16 md:py-24 ${index % 2 ? "bg-secondary" : "bg-background"}`}>
@@ -109,7 +109,7 @@ const Project = ({ p, index }) => {
 export default function Projects() {
   usePageMeta(
     "Projects — Rishi Kumar",
-    "Architecture, decisions and results for AlphaBrief, TripPilot, a computer-use automation system, Job Scout, MetroPrint and Pencil's Mario sync layer."
+    "Architecture, decisions and results for AlphaBrief, MetroPrint, TriPilot AI, Alumi, TripPilot, a computer-use automation system, Job Scout and Pencil's Mario sync layer."
   );
   return (
     <>

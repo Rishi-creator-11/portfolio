@@ -2,7 +2,7 @@
 // (see `sources`) or from the single-source-of-truth summary in content.js. `role` states plainly what
 // was personal work versus team context. Résumé-reported figures are labeled as such.
 
-export const projects = [
+const allProjects = [
   {
     id: "alphabrief",
     title: "AlphaBrief",
@@ -41,6 +41,53 @@ export const projects = [
     },
     chart: "alphabriefBenchmark",
     sources: "sec-rag-engine README, INGESTION.md, FAILURES.md",
+  },
+  {
+    id: "tripilot-ai",
+    title: "TriPilot AI",
+    kind: "Independent project · live product",
+    role: "Independent project, live at tripilot-ai.vercel.app.",
+    problem:
+      "A trip ends up spread across PDFs, maps, emails, notes and group chats, and AI suggestions often ignore tickets already bought. TriPilot AI is a travel product built around that problem.",
+    links: [{ label: "Live app", href: "https://tripilot-ai.vercel.app/", primary: true }],
+    stack: ["Next.js"],
+    diagrams: [],
+    image: { src: "/projects/tripilot.webp", alt: "The TriPilot AI home page: 'Plan smarter. Travel easier.' beside a sample London day itinerary with a locked ticketed reservation." },
+    overview: [
+      "A live product site and app for planning trips, with account sign-up, a dashboard and a pricing page (Free, Pro and a one-off Trip Pass).",
+      "The product is positioned around itineraries that respect what is already booked: paid reservations are shown as locked.",
+      "Features presented on the live site: map-first planning, group voting, budget tracking, a live guide and an offline trip pack.",
+      "Described from the live site. The implementation is not documented on this page.",
+    ],
+    decisions: [],
+    challenges: [],
+    results: { stats: [], note: "" },
+    sources: "Live site tripilot-ai.vercel.app (public pages)",
+  },
+  {
+    id: "alumi",
+    title: "Alumi",
+    kind: "Independent project · live storefront · August 2026",
+    role: "Independent project: a photo-print storefront, built with Bolt and deployed on Vercel.",
+    problem:
+      "A custom product has to be configured before it can be bought. Alumi lets a customer turn a photo into an aluminum print order without talking to anyone.",
+    links: [{ label: "Live site", href: "https://alumi2.vercel.app/", primary: true }],
+    stack: ["React", "TypeScript", "Vite", "Tailwind", "Supabase", "Bolt (development)"],
+    diagrams: [],
+    image: { src: "/projects/alumi.webp", alt: "The Alumi storefront hero: 'Your camera roll deserves better' beside a collage of printed aluminum photos and a photo upload box." },
+    overview: [
+      "A storefront for photo prints on aluminum: upload a photo, then choose size, crop, finish and quantity in a customizer.",
+      "Cart, checkout and order confirmation, with orders and line items stored in Supabase, plus a separate bulk-order inquiry form.",
+      "Payments run in test mode, so no real charges are made.",
+      "Built with Bolt (AI-assisted development) as a React, TypeScript and Vite app, and deployed on Vercel.",
+    ],
+    decisions: [],
+    challenges: [],
+    results: {
+      stats: [{ value: "3", label: "Supabase tables: orders, order items, bulk inquiries" }],
+      note: "Test-payment mode: orders are recorded but not charged.",
+    },
+    sources: "Alumi repository (private) and the live site",
   },
   {
     id: "trippilot",
@@ -203,6 +250,9 @@ export const projects = [
     sources: "Résumé and content.js",
   },
 ];
+
+const ORDER = ["alphabrief", "metroprint", "tripilot-ai", "alumi", "trippilot", "computer-use", "jobscout", "pencil"];
+export const projects = ORDER.map((id) => allProjects.find((p) => p.id === id));
 
 // Small data sets for the technical visualizations (BarCompare).
 export const charts = {
