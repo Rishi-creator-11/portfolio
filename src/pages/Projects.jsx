@@ -100,7 +100,7 @@ const Project = ({ p, index }) => (
         <Diagram k={p.overview} />
       </section>
 
-      <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-12">
+      <div className={`grid gap-8 ${p.metrics.length ? "lg:grid-cols-[1.5fr_1fr] lg:gap-12" : ""}`}>
         <section aria-label="What I built">
           <Heading>What I built</Heading>
           <ul className="mt-3 space-y-3 text-[16px] leading-relaxed">
@@ -109,6 +109,7 @@ const Project = ({ p, index }) => (
             ))}
           </ul>
         </section>
+        {p.metrics.length > 0 && (
         <section aria-label="Results">
           <Heading>Results</Heading>
           <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-5">
@@ -120,6 +121,7 @@ const Project = ({ p, index }) => (
             ))}
           </dl>
         </section>
+        )}
       </div>
 
       <Details p={p} />

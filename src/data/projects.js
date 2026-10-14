@@ -67,12 +67,7 @@ export const projects = [
     ],
     role: "Sole engineer: workflows, API, data model, provider adapters, web client, tests and documentation. Prototype with mock data and sandbox reservations.",
     tech: ["Next.js (App Router)", "TypeScript", "FastAPI", "Pydantic", "SQLAlchemy async", "PostgreSQL + pgvector", "Redis", "Celery", "Playwright", "Docker"],
-    metrics: [
-      { value: "3", label: "typed workflows: plan, edit, book" },
-      { value: "2", label: "max repair attempts per plan" },
-      { value: "5", label: "optional provider adapters" },
-      { value: "0", label: "real payments processed" },
-    ],
+    metrics: [],
     built: [
       "Built three typed workflows (planning, incremental edit, booking) instead of free-form agent chat, so control flow is inspectable and testable.",
       "Kept consequential logic deterministic: money in integer minor units, dates and schedule feasibility, route fit, offer validity, repair caps and the approval gate. The model is optional and only extracts intent and drafts explanations.",
