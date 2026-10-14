@@ -1,75 +1,69 @@
-import { ExternalLink } from "lucide-react";
 import { Section } from "./SectionHeading";
-import { Shot, Bullets, Outcome, Details, LinkButtons, ToolRow } from "./Parts";
+import { Shot, Bullets, Outcome, Details, LinkButtons, ToolLine, ExternalButton } from "./Parts";
 import { experience, otherExperience, supporting } from "@/data/content";
 
-const Case = ({ e }) => (
-  <article id={e.id} className="scroll-mt-20 rounded-3xl border border-white/10 bg-navy-800 p-6 md:p-9">
-    <div className={`grid gap-8 ${e.image ? "lg:grid-cols-2 lg:items-start" : ""}`}>
-      <div className="space-y-4">
-        <header>
-          <h3 className="text-3xl font-semibold tracking-tight">{e.org}</h3>
-          <p className="mt-1 text-base text-slate-300">
-            <span className="font-semibold text-white">{e.role}</span> · {e.dates} | {e.place}
-          </p>
-        </header>
-        <Bullets items={e.bullets} dark />
-        <Outcome dark>{e.outcome}</Outcome>
-        <ToolRow tools={e.tools} dark />
-        {e.links && <LinkButtons links={e.links} dark />}
-        {e.link && (
-          <a href={e.link.href} target="_blank" rel="noopener noreferrer" className="btn btn-teal !py-2">
-            {e.link.label} <ExternalLink size={14} aria-hidden="true" />
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-        )}
-        <Details items={e.details} dark title="Implementation details" />
-      </div>
-      {e.image && (
-        <div className="space-y-4">
-          <Shot {...e.image} />
-          {e.admin && (
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="text-sm font-bold uppercase tracking-wider text-teal-glow">Admin workspace I built</p>
-              <ul className="mt-2 list-disc pl-5 space-y-1.5 text-base leading-snug">
-                {e.admin.map((a) => (
-                  <li key={a}>{a}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+const Row = ({ id, rail, children }) => (
+  <article id={id} className="grid scroll-mt-24 gap-5 border-t border-white/20 pt-10 lg:grid-cols-[14rem_1fr] lg:gap-16">
+    <div className="text-[15px] leading-snug text-slate-300 lg:sticky lg:top-24 lg:self-start">{rail}</div>
+    <div className="min-w-0 space-y-6">{children}</div>
   </article>
+);
+
+const Rail = ({ dates, place }) => (
+  <>
+    <p className="font-semibold text-white">{dates}</p>
+    <p>{place}</p>
+  </>
+);
+
+const Heading = ({ title, subtitle, big }) => (
+  <header>
+    <h3 className={`font-semibold leading-tight ${big ? "text-3xl md:text-4xl" : "text-2xl"}`}>{title}</h3>
+    <p className="mt-1 text-lg text-slate-300">{subtitle}</p>
+  </header>
+);
+
+const Case = ({ e }) => (
+  <Row id={e.id} rail={<Rail dates={e.dates} place={e.place} />}>
+    <Heading title={e.org} subtitle={e.role} big />
+    {e.image && <Shot {...e.image} />}
+    {e.admin && (
+      <div className="border-l-2 border-teal-glow pl-5">
+        <p className="font-display text-lg font-semibold">Admin workspace I built</p>
+        <ul className="mt-2 list-disc space-y-1.5 pl-5 text-base leading-snug text-slate-200">
+          {e.admin.map((a) => (
+            <li key={a}>{a}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+    <Bullets items={e.bullets} dark />
+    <Outcome>{e.outcome}</Outcome>
+    <ToolLine tools={e.tools} dark />
+    <div className="flex flex-wrap items-center gap-3">
+      {e.links && <LinkButtons links={e.links} dark />}
+      {e.link && <ExternalButton href={e.link.href} label={e.link.label} className="btn btn-teal" />}
+    </div>
+    <Details items={e.details} dark title="Implementation details" />
+  </Row>
 );
 
 export const ExperienceSection = () => (
   <Section id="experience" title="Experience" theme="dark">
-    <div className="space-y-6">
+    <div className="space-y-16">
       {experience.map((e) => (
         <Case key={e.id} e={e} />
       ))}
-    </div>
-    <div className="mt-6 grid gap-6 md:grid-cols-2">
       {otherExperience.map((e) => (
-        <article key={e.org} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h3 className="text-xl font-semibold">{e.org}</h3>
-          <p className="text-base text-slate-300">
-            <span className="font-semibold text-white">{e.role}</span> · {e.dates} | {e.place}
-          </p>
-          <ul className="mt-3 list-disc pl-5 space-y-1.5 text-base leading-relaxed">
-            {e.bullets.map((b) => (
-              <li key={b}>{b}</li>
-            ))}
-          </ul>
-        </article>
+        <Row key={e.org} rail={<Rail dates={e.dates} place={e.place} />}>
+          <Heading title={e.org} subtitle={e.role} />
+          <Bullets items={e.bullets} dark />
+        </Row>
       ))}
+      <Row rail={<p className="font-semibold text-white">September 2025 – December 2025</p>}>
+        <Heading title={supporting.title} subtitle="Supporting Independent Project" />
+        <p className="text-[17px] leading-relaxed text-slate-200">{supporting.text}</p>
+      </Row>
     </div>
-    <article className="mt-6 rounded-2xl border border-white/10 p-5">
-      <p className="text-sm font-bold uppercase tracking-wider text-slate-300">{supporting.kind}</p>
-      <h3 className="mt-1 text-xl font-semibold">{supporting.title}</h3>
-      <p className="mt-1 text-base text-slate-300">{supporting.text}</p>
-    </article>
   </Section>
 );

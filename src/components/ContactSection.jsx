@@ -60,7 +60,7 @@ export const ContactSection = () => {
     }
   };
 
-  const field = "w-full px-3 py-2 rounded-lg border border-input bg-card text-sm";
+  const field = "w-full min-h-11 rounded-lg border border-input bg-card px-3.5 py-2.5 text-base";
   const items = [
     { icon: Mail, label: "Email", value: links.email, href: `mailto:${links.email}` },
     { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/rishi1111", href: links.linkedin, external: true },
@@ -77,36 +77,36 @@ export const ContactSection = () => {
             <li key={label} className="flex items-start gap-3">
               <Icon className="h-5 w-5 mt-0.5 text-primary" aria-hidden="true" />
               <div>
-                <p className="text-sm font-medium">{label}</p>
+                <p className="text-base font-medium">{label}</p>
                 {href ? (
                   <a
                     href={href}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-muted-foreground underline underline-offset-2 hover:text-primary"
+                    className="inline-block py-1.5 text-base text-muted-foreground underline underline-offset-2 hover:text-primary"
                   >
                     {value}
                     {external && <span className="sr-only"> (opens in a new tab)</span>}
                   </a>
                 ) : (
-                  <p className="text-sm text-muted-foreground">{value}</p>
+                  <p className="text-base text-muted-foreground">{value}</p>
                 )}
               </div>
             </li>
           ))}
         </ul>
 
-        <form className="card space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-5 rounded-lg border border-border bg-card p-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-1.5">Name</label>
+            <label htmlFor="name" className="block text-base font-medium mb-1.5">Name</label>
             <input id="name" name="name" autoComplete="name" required className={field} />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1.5">Email</label>
+            <label htmlFor="email" className="block text-base font-medium mb-1.5">Email</label>
             <input id="email" name="email" type="email" autoComplete="email" required className={field} />
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-1.5">Message</label>
+            <label htmlFor="message" className="block text-base font-medium mb-1.5">Message</label>
             <textarea id="message" name="message" required rows={4} className={`${field} resize-none`} />
           </div>
           <button type="submit" disabled={isSubmitting} className={cn("btn btn-primary w-full")}>

@@ -1,35 +1,34 @@
 import { Section } from "./SectionHeading";
-import { Shot, Bullets, Outcome, Details, LinkButtons, Workflow, ToolRow } from "./Parts";
+import { Shot, Bullets, Outcome, Details, LinkButtons, Workflow, ToolLine } from "./Parts";
 import { featured } from "@/data/content";
 
-export const CaseCard = ({ c, flip }) => (
-  <article id={c.id} className="scroll-mt-20 grid gap-8 lg:grid-cols-2 lg:items-center">
-    <div className={`space-y-4 ${flip ? "lg:order-2" : ""}`}>
-      <header>
-        <p className="text-sm font-bold uppercase tracking-wider text-primary">
-          {c.kind}
-          {c.dates && <span className="font-medium normal-case tracking-normal text-muted-foreground"> | {c.dates}</span>}
-        </p>
-        <h3 className="mt-1 text-3xl font-semibold tracking-tight">{c.title}</h3>
-        {c.label && <p className="mt-2 inline-block rounded-full border border-primary/40 bg-primary/5 px-3 py-0.5 text-sm font-semibold text-primary">{c.label}</p>}
-      </header>
+const CaseCard = ({ c }) => (
+  <article id={c.id} className="grid scroll-mt-24 gap-8 border-t border-foreground/20 pt-10 lg:grid-cols-[17rem_1fr] lg:gap-16">
+    <header className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+      <p className="text-[15px] text-muted-foreground">
+        {c.kind}
+        {c.dates && <> | {c.dates}</>}
+      </p>
+      <h3 className="text-4xl font-semibold leading-none md:text-5xl">{c.title}</h3>
+      {c.label && <p className="inline-block border-l-2 border-primary pl-2.5 text-[15px] font-semibold">{c.label}</p>}
+      <ToolLine tools={c.tools} />
+      {c.links && <LinkButtons links={c.links} />}
+    </header>
+
+    <div className="min-w-0 space-y-8">
+      {c.image ? <Shot {...c.image} /> : <Workflow steps={c.workflow} />}
       <Bullets items={c.bullets} />
       <Outcome>{c.outcome}</Outcome>
-      <ToolRow tools={c.tools} />
-      {c.links && <LinkButtons links={c.links} />}
       <Details items={c.details} />
-    </div>
-    <div className={flip ? "lg:order-1" : ""}>
-      {c.image ? <Shot {...c.image} /> : <Workflow steps={c.workflow} />}
     </div>
   </article>
 );
 
 export const ProjectsSection = () => (
   <Section id="work" title="Work">
-    <div className="space-y-16">
-      {featured.map((c, i) => (
-        <CaseCard key={c.id} c={c} flip={i % 2 === 1} />
+    <div className="space-y-24">
+      {featured.map((c) => (
+        <CaseCard key={c.id} c={c} />
       ))}
     </div>
   </Section>

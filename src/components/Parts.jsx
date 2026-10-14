@@ -1,45 +1,42 @@
-import { ExternalLink, Search, Gauge, FileText, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ExternalLink, ChevronRight, Search, Gauge, FileText, ShieldCheck } from "lucide-react";
+import { useInView } from "@/hooks/use-in-view";
 
-export const ToolRow = ({ tools, dark }) => (
-  <p className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm">
-    <span className={`font-semibold ${dark ? "text-slate-300" : "text-muted-foreground"}`}>Tools</span>
-    {tools.map((t) => (
-      <span key={t} className={`rounded-md px-2 py-0.5 font-medium ${dark ? "bg-white/10" : "bg-secondary"}`}>
-        {t}
-      </span>
-    ))}
+export const ToolLine = ({ tools, dark }) => (
+  <p className={`text-[15px] leading-snug ${dark ? "text-slate-300" : "text-muted-foreground"}`}>
+    <span className={`font-semibold ${dark ? "text-white" : "text-foreground"}`}>Tools </span>
+    {tools.join(", ")}
   </p>
 );
 
 export const Bullets = ({ items, dark }) => (
-  <ul className="space-y-2.5 text-[17px] leading-relaxed">
+  <ul className="space-y-3 text-[17px] leading-relaxed">
     {items.map((b) => (
-      <li key={b} className="flex gap-3">
-        <span className={`mt-2.5 size-1.5 shrink-0 rounded-full ${dark ? "bg-teal-glow" : "bg-primary"}`} aria-hidden="true" />
+      <li key={b} className="flex gap-3.5">
+        <span className={`mt-[0.8em] h-px w-4 shrink-0 ${dark ? "bg-teal-glow" : "bg-primary"}`} aria-hidden="true" />
         <span>{b}</span>
       </li>
     ))}
   </ul>
 );
 
-export const Outcome = ({ children, dark }) => (
-  <p
-    className={`flex items-start gap-2.5 rounded-xl px-4 py-3 text-base font-semibold leading-snug ${
-      dark ? "bg-teal-glow/15 text-teal-glow" : "bg-primary/10 text-primary"
-    }`}
-  >
-    <CheckCircle2 size={20} className="mt-0.5 shrink-0" aria-hidden="true" />
-    <span>
-      <span className="font-bold">Outcome: </span>
-      {children}
-    </span>
-  </p>
-);
+export const Outcome = ({ children }) => {
+  const [ref, inView] = useInView();
+  return (
+    <p className="text-lg font-medium leading-[1.7]">
+      <span className="font-semibold">Outcome </span>
+      <span ref={ref} className={`marker ${inView ? "is-in" : ""}`}>
+        {children}
+      </span>
+    </p>
+  );
+};
 
 export const Details = ({ items, dark, title = "Technical details" }) => (
-  <details>
-    <summary className={`cursor-pointer text-base font-semibold ${dark ? "text-teal-glow" : "text-primary"}`}>{title}</summary>
-    <ul className={`mt-3 list-disc pl-5 space-y-2 text-base leading-relaxed ${dark ? "text-slate-300" : "text-muted-foreground"}`}>
+  <details className="group">
+    <summary className={`inline-flex min-h-11 items-center gap-1.5 text-[15px] font-semibold ${dark ? "text-teal-glow" : "text-primary"}`}>
+      <ChevronRight size={16} className="chev" aria-hidden="true" /> {title}
+    </summary>
+    <ul className={`mt-2 list-disc space-y-2 pl-6 text-base leading-relaxed ${dark ? "text-slate-300" : "text-muted-foreground"}`}>
       {items.map((d) => (
         <li key={d}>{d}</li>
       ))}
@@ -47,49 +44,56 @@ export const Details = ({ items, dark, title = "Technical details" }) => (
   </details>
 );
 
+// Anchor that opens in a new tab and announces that to screen readers.
+export const NewTabLink = ({ href, className, children }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+    {children}
+    <span className="sr-only"> (opens in a new tab)</span>
+  </a>
+);
+
+export const ExternalButton = ({ href, label, className }) => (
+  <NewTabLink href={href} className={className}>
+    {label} <ExternalLink size={14} aria-hidden="true" />
+  </NewTabLink>
+);
+
+const buttonVariant = (primary, dark) => {
+  if (primary) return dark ? "btn-teal" : "btn-primary";
+  return dark ? "btn-ghost-light" : "btn-outline";
+};
+
 export const LinkButtons = ({ links, dark }) => (
   <div className="flex flex-wrap items-center gap-2.5">
     {links.map((l) => (
-      <a
-        key={l.href}
-        href={l.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`btn !py-2 ${l.primary ? (dark ? "btn-teal" : "btn-primary") : dark ? "btn-ghost-light" : "btn-outline"}`}
-      >
-        {l.label} <ExternalLink size={14} aria-hidden="true" />
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
+      <ExternalButton key={l.href} href={l.href} label={l.label} className={`btn ${buttonVariant(l.primary, dark)}`} />
     ))}
   </div>
 );
 
 export const Shot = ({ src, alt, className = "" }) => (
-  <div className={`shot-shadow overflow-hidden rounded-xl border border-navy-700/40 bg-navy-950 ${className}`}>
-    <div className="flex items-center gap-1.5 border-b border-white/10 bg-navy-800 px-3 py-2" aria-hidden="true">
-      <span className="size-2.5 rounded-full bg-white/25" />
-      <span className="size-2.5 rounded-full bg-white/25" />
-      <span className="size-2.5 rounded-full bg-white/25" />
-    </div>
-    <img src={src} alt={alt} loading="lazy" className="w-full h-auto max-h-[480px] object-cover object-top" />
+  <div className={`frame lift overflow-hidden rounded-lg border border-foreground/15 bg-navy-950 ${className}`}>
+    <img src={src} alt={alt} loading="lazy" className="block w-full h-auto max-h-[520px] object-cover object-top" />
   </div>
 );
 
 const icons = { search: Search, gauge: Gauge, file: FileText, check: ShieldCheck };
 
 export const Workflow = ({ steps }) => (
-  <ol className="grid grid-cols-2 gap-3">
+  <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
     {steps.map((s, i) => {
       const Icon = icons[s.icon];
       return (
-        <li key={s.step} className={`rounded-xl border p-4 ${s.gate ? "border-primary bg-primary/10" : "border-border bg-card"}`}>
-          <span className={`grid size-9 place-items-center rounded-lg ${s.gate ? "bg-primary text-white" : "bg-navy-900 text-teal-glow"}`}>
+        <li key={s.step} className={`flex gap-4 p-5 ${s.gate ? "bg-primary/10" : "bg-card"}`}>
+          <span className={`grid size-10 shrink-0 place-items-center rounded-full ${s.gate ? "bg-primary text-white" : "bg-navy-900 text-teal-glow"}`}>
             <Icon size={18} aria-hidden="true" />
           </span>
-          <p className="mt-2 text-lg font-semibold">
-            {i + 1}. {s.step}
-          </p>
-          <p className="text-[15px] leading-snug text-muted-foreground">{s.text}</p>
+          <div>
+            <p className="font-display text-lg font-semibold leading-tight">
+              {i + 1}. {s.step}
+            </p>
+            <p className="mt-0.5 text-[15px] leading-snug text-muted-foreground">{s.text}</p>
+          </div>
         </li>
       );
     })}

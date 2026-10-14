@@ -1,12 +1,14 @@
-export const Section = ({ id, title, intro, children, theme = "light" }) => {
-  const dark = theme === "dark";
-  const bg = { light: "bg-background", alt: "bg-secondary", dark: "bg-navy-900 text-white on-dark" }[theme];
+const themeClasses = { light: "bg-background", alt: "bg-secondary", dark: "bg-navy-950 text-white on-dark" };
+
+export const Section = ({ id, title, children, theme = "light" }) => {
+  const headingId = `${id}-h`;
   return (
-    <section id={id} className={`scroll-mt-14 py-16 md:py-20 ${bg}`}>
+    <section id={id} aria-labelledby={headingId} className={`py-20 md:py-28 ${themeClasses[theme]}`}>
       <div className="container">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h2>
-        {intro && <p className={`mt-3 max-w-2xl text-lg ${dark ? "text-slate-300" : "text-muted-foreground"}`}>{intro}</p>}
-        <div className="mt-10">{children}</div>
+        <h2 id={headingId} className="mb-12 font-display text-4xl font-semibold tracking-tight md:mb-16 md:text-6xl">
+          {title}
+        </h2>
+        {children}
       </div>
     </section>
   );
