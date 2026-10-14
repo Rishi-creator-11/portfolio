@@ -13,7 +13,6 @@
   --color-navy-950: #08121f;
   --color-navy-900: #0d1b2e;
   --color-teal-glow: #5eead4;
-  --color-marker: #ffe066;
   --font-display: "Bricolage Grotesque", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -57,31 +56,32 @@
 @utility btn-ghost-light { @apply border border-white/35 text-white hover:bg-white hover:text-navy-950; }
 @utility skip-link { @apply absolute left-2 -top-20 z-50 rounded bg-primary px-3 py-2 text-sm text-primary-foreground focus:top-2; }
 
-/* Signature: the evidence highlight (echoes AlphaBrief's highlighted source terms). */
-.marker {
-  color: #0d1b2e;
-  background-image: linear-gradient(transparent 12%, var(--color-marker) 12%, var(--color-marker) 92%, transparent 92%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  padding: 0.05em 0.3em;
-  border-radius: 2px;
-}
 @media (prefers-reduced-motion: no-preference) {
-  .js .marker { background-size: 0% 100%; transition: background-size 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
-  .js .marker.is-in { background-size: 100% 100%; }
-
   /* One orchestrated moment: the hero sequence on page load. */
   .rise { opacity: 0; transform: translateY(14px); animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; animation-delay: calc(var(--i, 0) * 110ms + 80ms); }
   @keyframes rise { to { opacity: 1; transform: none; } }
-
-  details > summary .chev { transition: transform 0.2s ease; }
-  details[open] > summary .chev { transform: rotate(90deg); }
-  .lift { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease; }
-  .lift:hover { transform: translateY(-4px); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
 .frame { box-shadow: 0 1px 0 rgba(13, 27, 46, 0.04), 0 22px 50px -26px rgba(13, 27, 46, 0.5); }
+
+/* Route transition: a quiet fade when moving between the three pages. */
+@media (prefers-reduced-motion: no-preference) {
+  .page-in { animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}
+
+/* Diagram edges: a moving dash on emphasised edges only; static under reduced motion. */
+.fd-node:focus-visible { outline: none; }
+.fd-node:focus-visible .fd-box { stroke: #0b7a6f; stroke-width: 3; }
+.fd-node:hover .fd-box { stroke: #0b7a6f; }
+@media (prefers-reduced-motion: no-preference) {
+  .fd-flow { stroke-dasharray: 7 6; animation: fd-dash 1s linear infinite; }
+  @keyframes fd-dash { to { stroke-dashoffset: -13; } }
+}
+
+/* Technical visualizations: bars grow in once; static under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .bar-fill { transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+}

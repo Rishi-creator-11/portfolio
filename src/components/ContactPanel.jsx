@@ -2,10 +2,9 @@ import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { Section } from "./SectionHeading";
 import { links } from "@/data/content";
 
-export const ContactSection = () => {
+export const ContactPanel = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,7 +69,7 @@ export const ContactSection = () => {
   ];
 
   return (
-    <Section id="contact" title="Contact">
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <ul className="space-y-4">
           {items.map(({ icon: Icon, label, value, href, external }) => (
@@ -115,6 +114,6 @@ export const ContactSection = () => {
           </button>
         </form>
       </div>
-    </Section>
+    </>
   );
 };

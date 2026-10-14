@@ -1,4 +1,5 @@
 import { Github, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import { links } from "@/data/content";
 import { HeroVideo } from "./HeroVideo";
 import { ExternalButton, NewTabLink } from "./Parts";
@@ -32,9 +33,9 @@ export const HeroSection = () => (
           <NewTabLink href={links.github} className="btn btn-ghost-light !px-4">
             <Github size={16} aria-hidden="true" /> GitHub
           </NewTabLink>
-          <a href="#contact" className="btn btn-ghost-light !px-4">
+          <Link to="/contact" className="btn btn-ghost-light !px-4">
             <Mail size={16} aria-hidden="true" /> Contact
-          </a>
+          </Link>
         </div>
       </div>
 

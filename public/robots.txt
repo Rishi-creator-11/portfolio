@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://portfolio-mu-gold-94.vercel.app/sitemap.xml

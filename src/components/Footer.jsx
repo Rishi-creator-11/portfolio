@@ -1,12 +1,17 @@
-import { ArrowUp } from "lucide-react";
+import { Link } from "react-router-dom";
+import { links } from "@/data/content";
 
 export const Footer = () => (
-  <footer className="border-t border-border py-6">
-    <div className="container flex items-center justify-between">
-      <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Rishi Kumar</p>
-      <a href="#hero" className="grid size-11 place-items-center rounded-full border border-border text-muted-foreground hover:text-primary" aria-label="Back to top">
-        <ArrowUp size={18} aria-hidden="true" />
-      </a>
+  <footer className="on-dark bg-navy-950 py-10 text-slate-300">
+    <div className="container flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-[15px]">&copy; {new Date().getFullYear()} Hrishit (Rishi) Kumar</p>
+      <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-1 text-[15px]">
+        <Link to="/" className="py-2 hover:text-white">Home</Link>
+        <Link to="/projects" className="py-2 hover:text-white">Projects</Link>
+        <Link to="/contact" className="py-2 hover:text-white">Contact</Link>
+        <a href={links.github} target="_blank" rel="noopener noreferrer" className="py-2 hover:text-white">GitHub<span className="sr-only"> (opens in a new tab)</span></a>
+        <a href={links.linkedin} target="_blank" rel="noopener noreferrer" className="py-2 hover:text-white">LinkedIn<span className="sr-only"> (opens in a new tab)</span></a>
+      </nav>
     </div>
   </footer>
 );
