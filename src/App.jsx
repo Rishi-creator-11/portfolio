@@ -6,7 +6,6 @@ import { Home } from "@/pages/Home";
 
 // The Projects page carries the diagram engine; load it only when visited.
 const Projects = lazy(() => import("@/pages/Projects"));
-const Contact = lazy(() => import("@/pages/Contact"));
 
 const Loading = () => <div className="min-h-[60vh]" role="status" aria-label="Loading page" />;
 
@@ -20,7 +19,7 @@ function App() {
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="projects" element={<Projects />} />
-              <Route path="contact" element={<Contact />} />
+              <Route path="contact" element={<Navigate to="/#contact" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>

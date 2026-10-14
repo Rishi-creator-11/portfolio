@@ -139,32 +139,3 @@ export const StatRow = ({ stats }) =>
       ))}
     </dl>
   ) : null;
-
-/**
- * Before/after bars. Each row has its own unit, so bars show the change relative to the "before" value.
- * @param {{ items: { label: string, unit: string, before: number, after: number, upperBound?: boolean, source: string }[] }} props
- */
-export const ImprovementBars = ({ items }) => (
-  <ul className="grid gap-4 md:grid-cols-3">
-    {items.map((m) => {
-      const hi = Math.max(m.before, m.after);
-      return (
-        <li key={m.label} className="rounded-xl border border-border bg-card p-5">
-          <p className="font-display text-lg font-semibold leading-snug">{m.label}</p>
-          {[["Before", m.before, "bg-border"], ["After", m.after, "bg-primary"]].map(([name, v, color]) => (
-            <div key={name} className="mt-3">
-              <div className="flex items-baseline justify-between text-[15px]">
-                <span className="text-muted-foreground">{name}</span>
-                <span className="font-semibold tabular-nums">{name === "After" && m.upperBound ? "under " : ""}{v} {m.unit}</span>
-              </div>
-              <div className="mt-1 h-3 rounded-full bg-secondary" role="img" aria-label={`${name}: ${v} ${m.unit}`}>
-                <div className={`h-3 rounded-full ${color}`} style={{ width: `${(v / hi) * 100}%` }} />
-              </div>
-            </div>
-          ))}
-          <p className="mt-3 text-[14px] leading-snug text-muted-foreground">{m.source}</p>
-        </li>
-      );
-    })}
-  </ul>
-);

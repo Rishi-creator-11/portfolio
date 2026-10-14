@@ -204,5 +204,88 @@ export const diagrams = {
       { nodes: ["push", "ci", "tests"], caption: "Every push and pull request installs dependencies and runs the full suite." },
       { nodes: ["stubs", "tests"], caption: "External services are patched out, so tests are fast, free and deterministic." },
     ],
-  }
+  },
+
+  tripOverview: {
+    title: "TripPilot: from request to approved reservation",
+    description: "A free-text trip request is searched, verified in code, saved as a revision, and only reserved after the traveler approves.",
+    source: "trippilot-ai docs/ARCHITECTURE.md (planning, edit and booking graphs, simplified)",
+    nodes: [
+      { id: "ask", col: 0, row: 1, label: "Trip request", sub: "free text", tone: "user", detail: "A free-text request is parsed into a typed intent. An optional LLM helps with parsing; without a key a conservative parser is used, and both must validate as a source-aware intent." },
+      { id: "search", col: 1, row: 1, label: "Parallel search", sub: "flights, hotels, places, weather", tone: "external", detail: "Only the searches the intent needs are run, in parallel, through capability-declared provider adapters. Mock data is the default." },
+      { id: "verify", col: 2, row: 1, label: "Verify in code", sub: "budget, dates, offers", tone: "service", detail: "Budgets, timing, route fit and offer validity are checked deterministically, not by the model. Repairable plans get at most two repair attempts." },
+      { id: "rev", col: 2, row: 2, label: "Revisions", sub: "diff per edit", tone: "data", detail: "Every plan and edit is saved as a revision with an item-level diff. Edits re-search only the domains they affect." },
+      { id: "gate", col: 3, row: 1, label: "Traveler approves", sub: "explicit confirmation", tone: "human", detail: "Offers are revalidated and previewed, then the workflow pauses until the traveler confirms." },
+      { id: "res", col: 4, row: 1, label: "Sandbox reservation", sub: "idempotent, no payments", tone: "external", detail: "Reservations are sandbox only, with deterministic idempotency keys so a retry cannot create a second one. No real payments, ticketing, refunds or cancellations." },
+    ],
+    edges: [
+      { from: "ask", to: "search" },
+      { from: "search", to: "verify" },
+      { from: "verify", to: "rev" },
+      { from: "verify", to: "gate" },
+      { from: "gate", to: "res" },
+    ],
+  },
+
+  metroprintFlow: {
+    kind: "workflow",
+    title: "MetroPrint: from the owner's catalogue to a validated order",
+    description: "Product and pricing data is ingested, stored once, priced by exact option combination and checked on client and server at checkout.",
+    source: "my résumé (MetroPrint USA, contract engineer). Client internals are not published.",
+    nodes: [
+      { id: "owner", col: 0, row: 1, label: "Owner's workflows", sub: "products and price rules", tone: "user", detail: "The starting point: how the business actually configures and prices its products." },
+      { id: "ingest", col: 1, row: 1, label: "Scripted ingestion", sub: "80 products, 559 price rows", tone: "service", detail: "Client data was translated and loaded by script, with counts reconciled against the source." },
+      { id: "db", col: 2, row: 1, label: "One product store", sub: "Supabase", tone: "data", detail: "All products and pricing rows live in one place instead of in separate files." },
+      { id: "price", col: 3, row: 1, label: "Exact-combination pricing", sub: "invalid configs blocked", tone: "service", detail: "Every valid combination of options is its own pricing row. Invalid combinations cannot be ordered." },
+      { id: "checkout", col: 4, row: 1, label: "Validated checkout", sub: "client = server total", tone: "service", detail: "Pricing is validated on the client and the server so the total shown is the total charged." },
+    ],
+    edges: [
+      { from: "owner", to: "ingest" },
+      { from: "ingest", to: "db" },
+      { from: "db", to: "price" },
+      { from: "price", to: "checkout" },
+    ],
+  },
+
+  pencilFlow: {
+    title: "Mario SDK: shared state across embedded apps",
+    description: "Apps share one SDK; changes travel as small JSON Patch diffs and are merged with CRDTs, and releases are automated.",
+    source: "my résumé (Pencil Learning Technologies, intern). The company's source is private; this is a simplified view.",
+    nodes: [
+      { id: "apps", col: 0, row: 1, label: "10+ embedded apps", sub: "one integration each", tone: "user", detail: "Each app integrates the same SDK instead of carrying its own glue code; about 1,000 lines of per-app code were removed." },
+      { id: "sdk", col: 1, row: 1, label: "Mario SDK", sub: "published TypeScript package", tone: "service", detail: "Core sync infrastructure for collaborative state, published as a TypeScript package." },
+      { id: "patch", col: 2, row: 1, label: "JSON Patch diffs", sub: "~500ms to under 100ms", tone: "service", detail: "Incremental diffs replace whole-state updates, cutting update latency from about 500ms to under 100ms." },
+      { id: "crdt", col: 3, row: 1, label: "Yjs CRDT merge", sub: "no lost updates", tone: "service", detail: "Conflict-free merging keeps concurrent edits and keeps state consistent on reconnect. Cross-client drift fell about 30%." },
+      { id: "state", col: 4, row: 1, label: "Shared state", sub: "consistent on every client", tone: "data", detail: "Every participant converges on the same state." },
+      { id: "ci", col: 1, row: 2, label: "CI/CD", sub: "GitHub Actions, Docker", tone: "external", detail: "Typed build, test and npm publish are automated, trimming release cycle time by about 15%." },
+    ],
+    edges: [
+      { from: "apps", to: "sdk" },
+      { from: "sdk", to: "patch" },
+      { from: "patch", to: "crdt" },
+      { from: "crdt", to: "state" },
+      { from: "ci", to: "sdk", dashed: true, label: "publishes" },
+    ],
+  },
+
+  distributedFlow: {
+    title: "Distributed chat: instances, pub/sub and a message buffer",
+    description: "As described on my résumé: three Go instances behind a TLS proxy, with Redis pub/sub and Kafka buffering, deployed to AWS.",
+    source: "my résumé (Distributed Systems Platform). Simplified; no repository located to verify the topology.",
+    nodes: [
+      { id: "clients", col: 0, row: 1, label: "WebSocket clients", sub: "100 per room", tone: "user", detail: "Each room supports 100 WebSocket connections." },
+      { id: "nginx", col: 1, row: 1, label: "Nginx", sub: "TLS termination", tone: "service", detail: "TLS-terminated proxy in front of the application instances." },
+      { id: "fiber", col: 2, row: 1, label: "3 Go (Fiber) instances", sub: "Dockerized", tone: "service", detail: "The chat service runs as three instances of a Go Fiber application." },
+      { id: "redis", col: 3, row: 0, label: "Redis pub/sub", sub: "across instances", tone: "data", detail: "Messages are shared between instances through Redis pub/sub." },
+      { id: "kafka", col: 3, row: 2, label: "Kafka buffer", sub: "up to 10,000 msg/s", tone: "data", detail: "Kafka buffers up to 10,000 messages per second." },
+      { id: "aws", col: 1, row: 2, label: "AWS", sub: "EC2, S3, Terraform, Actions", tone: "external", detail: "Deployed to AWS (EC2, S3) with Terraform and GitHub Actions CI/CD." },
+    ],
+    edges: [
+      { from: "clients", to: "nginx" },
+      { from: "nginx", to: "fiber" },
+      { from: "fiber", to: "redis" },
+      { from: "fiber", to: "kafka" },
+      { from: "aws", to: "fiber", dashed: true, label: "deploys" },
+    ],
+  },
 };

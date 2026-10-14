@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 
 const NAV = [
-  { name: "Home", to: "/" },
-  { name: "Projects", to: "/projects" },
-  { name: "Contact", to: "/contact" },
+  { name: "Why me", to: "/" },
+  { name: "Engineering proof", to: "/projects" },
 ];
 
 const linkClass = ({ isActive }) =>
@@ -33,6 +32,7 @@ export const Navbar = () => {
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} end className={linkClass}>{n.name}</NavLink>
           ))}
+          <Link to="/#contact" className="btn btn-teal !min-h-10 !px-4 !py-1.5">Contact</Link>
         </div>
 
         <button
@@ -53,6 +53,7 @@ export const Navbar = () => {
                 {n.name}
               </NavLink>
             ))}
+            <Link to="/#contact" className="flex min-h-12 items-center text-lg font-medium text-teal-glow">Contact</Link>
           </div>
         </div>
       )}

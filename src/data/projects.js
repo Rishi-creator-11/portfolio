@@ -11,6 +11,13 @@ export const projects = [
     title: "AlphaBrief",
     kind: "Independent project · April 2026 – present",
     sentence: "A RAG research assistant that answers questions about SEC 10-K filings and shows the passage behind every answer.",
+    problem: "Analysts need answers from SEC filings that they can check, not plausible summaries.",
+    bullets: [
+      "Hybrid retriever: Pinecone dense search and BM25 keyword search merged with rank fusion, then reranked by Cohere, with a fallback if reranking fails.",
+      "Company and fiscal-year scope is applied before retrieval, so one company's text cannot leak into another's answer. Tests assert zero leakage.",
+      "Answers are generated only from retrieved text, with citations that open the filing passage, and the system declines when evidence is thin.",
+      "Resumable ingestion of 10-K filings with index-parity checks, evaluated on a 125-question benchmark with CI on every push."
+    ],
     role: "Sole engineer: ingestion, retrieval and generation API, Next.js interface, evaluation, tests and deployment.",
     tech: ["Python", "FastAPI", "OpenAI API (embeddings, gpt-5-nano, relevance judging)", "Pinecone", "bm25s", "Cohere Rerank", "Next.js", "TypeScript", "GitHub Actions", "Vercel"],
     metrics: [
@@ -39,7 +46,8 @@ export const projects = [
       { title: "Availability over peak precision on the failure path", text: "If rerank fails or is rate-limited, the scope-filtered hybrid top 5 is served rather than an error." },
       { title: "Decline instead of guess", text: "Some answerable questions get a refusal; that is preferred to an unsupported answer." },
     ],
-    diagrams: ["alphabriefQuery", "alphabriefIngest", "alphabriefCi"],
+    diagrams: ["alphabriefIngest", "alphabriefCi"],
+    overview: "alphabriefQuery",
     evidence: "alphabriefBenchmark",
     notes: ["Current figures (MRR 0.86, Recall@10 0.66, Precision@5 0.60) come from the repository's 2026-09-29 run on 8 of the 92 companies with LLM-assisted judgments. They are retrieval scores, not answer accuracy."],
     links: [{ label: "Live demo", href: "https://secfrontend.vercel.app/", primary: true }, github("sec-rag-engine")],
@@ -50,6 +58,13 @@ export const projects = [
     title: "TripPilot",
     kind: "Independent project · 2026",
     sentence: "A travel planner where budgets, schedules and routes are computed in code, edits are incremental, and nothing is reserved without approval.",
+    problem: "Travel plans mix budgets, schedules and routes; a model should not decide those, and nothing should be reserved without approval.",
+    bullets: [
+      "Three typed workflows (plan, edit, book) instead of free-form agent chat, so control flow can be inspected and tested.",
+      "Budgets, dates, route fit and offer validity are computed in code; the model only parses requests and drafts text.",
+      "Edits re-search only the affected domains and save a new revision with an item-level diff.",
+      "Booking pauses for explicit approval and uses idempotency keys, so a retry cannot create a second reservation."
+    ],
     role: "Sole engineer: workflows, API, data model, provider adapters, web client, tests and documentation. Prototype with mock data and sandbox reservations.",
     tech: ["Next.js (App Router)", "TypeScript", "FastAPI", "Pydantic", "SQLAlchemy async", "PostgreSQL + pgvector", "Redis", "Celery", "Playwright", "Docker"],
     metrics: [
@@ -78,6 +93,7 @@ export const projects = [
       { title: "Capability-declared adapters", text: "Production booking paths are disabled and test/live spillover is blocked at the factory; real providers are search and test only." },
     ],
     diagrams: ["tripSystem", "tripPlanning", "tripEdit", "tripBooking"],
+    overview: "tripOverview",
     evidence: "tripSplit",
     notes: ["Prototype with mock data and sandbox reservations: no real payments, ticket issuance, refunds or cancellations; provider secrets stay server-side and no card data is collected. No measured savings or live customers. Not on my résumé."],
     links: [github("trippilot-ai")],
@@ -88,6 +104,7 @@ export const projects = [
     title: "MetroPrint USA",
     kind: "Contract employment · July – September 2026",
     sentence: "A production Next.js and TypeScript ordering platform built from a business owner's workflows.",
+    problem: "A print business needed every product, option and price in one place that customers can order from.",
     role: "Contract full-stack engineer. Used Claude Code and AI-assisted development to implement the platform.",
     tech: ["Next.js", "TypeScript", "Supabase", "Claude Code (AI-assisted development)"],
     metrics: [
@@ -109,6 +126,7 @@ export const projects = [
       { title: "Exact-combination pricing", text: "A price is a lookup, not a formula that can drift. Trade-off: a large table to maintain." },
     ],
     diagrams: [],
+    overview: "metroprintFlow",
     notes: ["Client work: source and internal architecture are not published, so there is no diagram. The business and its existing revenue are the client's; no revenue effect is claimed."],
     links: [{ label: "Live site", href: "https://www.metroprintmkt.com/", primary: true }],
   },
@@ -118,6 +136,7 @@ export const projects = [
     title: "Mario SDK at Pencil Learning Technologies",
     kind: "Internship · June – August 2025",
     sentence: "Shared real-time state infrastructure for embedded collaborative apps, published as a TypeScript package.",
+    problem: "Embedded collaborative apps each carried their own sync code, and shared state was slow and drifted between clients.",
     role: "Software Engineer Intern: built core sync infrastructure and integrated it into 10+ embedded apps.",
     tech: ["TypeScript", "JSON Patch", "Yjs (CRDTs)", "GitHub Actions", "Docker", "npm"],
     metrics: [
@@ -139,6 +158,7 @@ export const projects = [
     ],
     decisions: [],
     diagrams: [],
+    overview: "pencilFlow",
     evidence: "pencilLatency",
     notes: ["Figures are from my résumé. The company's source is private, so no code or internal architecture is published and there is no diagram."],
     links: [],
@@ -149,6 +169,7 @@ export const projects = [
     title: "Distributed Systems Platform",
     kind: "Independent project · September – December 2025",
     sentence: "A distributed Go chat system across three application instances, with Redis and Kafka, deployed to AWS.",
+    problem: "Chat has to stay consistent across several server instances while buffering heavy message bursts.",
     role: "Sole engineer (résumé-reported).",
     tech: ["Go (Fiber)", "WebSockets", "Redis", "Kafka", "Docker", "AWS (EC2, S3)", "Terraform", "GitHub Actions", "Nginx (TLS)"],
     metrics: [
@@ -163,6 +184,7 @@ export const projects = [
     problems: [],
     decisions: [],
     diagrams: [],
+    overview: "distributedFlow",
     notes: ["Résumé-reported. I have not located a repository for this project, so there is no diagram or link and the figures are not independently verified."],
     links: [],
   },

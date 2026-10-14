@@ -4,6 +4,7 @@
 export const roles = [
   {
     id: "metroprint",
+    headline: "Turned a print business's workflows into a production ordering platform for about 97 products.",
     org: "MetroPrint USA",
     role: "Contract Full-Stack Engineer",
     kind: "Contract employment",
@@ -28,6 +29,7 @@ export const roles = [
   },
   {
     id: "pencil",
+    headline: "Built shared real-time sync for 10+ embedded apps: updates from ~500ms to under 100ms, 30% less drift.",
     org: "Pencil Learning Technologies",
     role: "Software Engineer Intern",
     kind: "Internship",
@@ -55,6 +57,7 @@ export const roles = [
   },
   {
     id: "vip",
+    headline: "Backend APIs on AWS: p95 response time down 20%, test coverage from 50% to 90%.",
     org: "Vertically Integrated Program, Stony Brook University",
     role: "Software Engineer Intern",
     kind: "Internship",
@@ -81,6 +84,7 @@ export const roles = [
   },
   {
     id: "yards",
+    headline: "Recommendation model with 25% higher offline hit-rate@10; data freshness lag cut from 1 hour to 5 minutes.",
     org: "99 YARDS",
     role: "Software Engineer Intern",
     kind: "Internship",
@@ -103,6 +107,7 @@ export const roles = [
   },
   {
     id: "ta",
+    headline: "Taught weekly recitations for 30+ students and reviewed 200+ submissions.",
     org: "Stony Brook University",
     role: "Teaching Assistant | Java and Data Structures",
     kind: "Teaching",
@@ -117,11 +122,4 @@ export const roles = [
     impact: ["The same habit of explaining clearly that I bring to demos, handoffs and supporting teammates."],
     tools: ["Java", "Data structures"],
   },
-];
-
-export const approach = [
-  { title: "Make the checkable part code", text: "TripPilot's budgets, dates and offer validity are deterministic; the model only helps with language.", id: "trippilot" },
-  { title: "Scope before you search", text: "AlphaBrief filters by company and year before retrieval, then tests that nothing leaks across scopes.", id: "alphabrief" },
-  { title: "Gate the irreversible", text: "TripPilot pauses for explicit approval before any reservation, and idempotency keys mean a retry cannot create a second one.", id: "trippilot" },
-  { title: "Say what the number means", text: "Benchmarks are labeled with their coverage and judging method, and résumé-reported figures are marked as such.", id: "alphabrief" },
 ];
