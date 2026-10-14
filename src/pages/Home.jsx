@@ -8,6 +8,7 @@ import { Section } from "@/components/SectionHeading";
 import { StatRow, ImprovementBars } from "@/components/Visuals";
 import { EvidenceMap } from "@/components/EvidenceMap";
 import { WorkCards } from "@/components/WorkCards";
+import { approach as principles } from "@/data/experience";
 
 // The three things a reader should take away in under a minute, each with a link to proof.
 const claims = [
@@ -18,7 +19,7 @@ const claims = [
   },
   {
     claim: "I solve business problems practically.",
-    proof: "An owner's requirements became a live ordering platform with about 97 configurable products and an admin workspace.",
+    proof: "An owner's workflows became a production ordering platform with about 97 configurable products and validated pricing.",
     to: { href: "https://www.metroprintmkt.com/", label: "Open the site", external: true },
   },
   {
@@ -28,17 +29,10 @@ const claims = [
   },
 ];
 
-const principles = [
-  { title: "Make the checkable part code", text: "TripPilot's budgets, dates and offer validity are deterministic; the model only helps with language.", id: "trippilot" },
-  { title: "Scope before you search", text: "AlphaBrief filters by company and year before retrieval, then tests that nothing leaks across scopes.", id: "alphabrief" },
-  { title: "Gate the irreversible", text: "Booking waits for explicit approval, replay escalates to a person, and Job Scout never sends on its own.", id: "computer-use" },
-  { title: "Say what the number means", text: "Benchmarks are labeled with their coverage and judging method, and résumé-reported figures are marked as such.", id: "alphabrief" },
-];
-
 const numbers = [
   { value: "92 / 274", label: "companies and filings searchable in AlphaBrief" },
   { value: "≈97", label: "configurable products on a live storefront" },
-  { value: "10+", label: "collaborative apps on one shared sync layer" },
+  { value: "10+", label: "embedded apps on one shared sync SDK" },
   { value: "125", label: "question benchmark behind AlphaBrief's retrieval" },
 ];
 

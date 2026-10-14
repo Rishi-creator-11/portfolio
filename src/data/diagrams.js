@@ -185,68 +185,6 @@ export const diagrams = {
     ],
   },
 
-  computerUse: {
-    title: "Computer-use automation: learn once, replay deterministically",
-    description: "A discovery agent drives a web UI one decision at a time and saves a typed capability; a separate replay engine runs it with no model call; a stuck run escalates to a person.",
-    source: "interface-ai-assignment REPORT.md sections 1, 2, 3, 5 and 6",
-    nodes: [
-      { id: "ui", col: 0, row: 1, label: "Web UI", sub: "legacy-style demo app", tone: "external", detail: "A local Flask app that stands in for a legacy back-office console: server-rendered tables, no test IDs, no JSON API." },
-      { id: "perceive", col: 1, row: 0, label: "Perception", sub: "accessibility tree", tone: "service", detail: "Turns the live page into an observation for the model. Discovery and replay resolve locators from the same accessibility tree, so there is no second execution path to drift." },
-      { id: "decide", col: 2, row: 0, label: "LLM decider", sub: "one decision per step", tone: "ai", detail: "The single interface between the loop and any decision source. The Anthropic API decider is implemented; the recorded runs used a file-relay decider driven through Claude Code." },
-      { id: "guard", col: 3, row: 0, label: "Guardrails", sub: "allowlist before acting", tone: "service", detail: "Allowed hosts and action types are checked before navigation and before every action, in discovery and in replay. A violation aborts the run." },
-      { id: "cap", col: 3, row: 1, label: "Capability", sub: "typed, parameterized", tone: "data", detail: "Typed steps with role-and-name locators, templated inputs (for example a member ID), a checkpoint assertion and known business outcomes." },
-      { id: "replay", col: 2, row: 1, label: "Replay engine", sub: "no model call", tone: "service", detail: "Re-runs a capability from input parameters. Reports SUCCESS, BUSINESS_OUTCOME or FAILURE, and checks business outcomes before the next step, not only after." },
-      { id: "human", col: 1, row: 2, label: "Human operator", sub: "takes over when stuck", tone: "human", detail: "The decider can return stuck instead of guessing. That writes an intervention request with the goal, step, reason, URL and a screenshot, and the operator's resume is recorded." },
-    ],
-    edges: [
-      { from: "ui", to: "perceive" },
-      { from: "perceive", to: "decide" },
-      { from: "decide", to: "guard" },
-      { from: "guard", to: "cap" },
-      { from: "cap", to: "replay" },
-      { from: "replay", to: "ui", dashed: true },
-      { from: "decide", to: "human", dashed: true },
-    ],
-    steps: [
-      { path: ["ui", "perceive", "decide"], caption: "Discovery observes the page through the accessibility tree and asks the decider for one next action." },
-      { path: ["decide", "guard"], caption: "Each action passes the allowlist guardrail before it runs." },
-      { path: ["guard", "cap"], caption: "A successful run is saved as a capability, with literal values rewritten into parameters such as {{ member_id }}." },
-      { path: ["cap", "replay", "ui"], caption: "Replay re-runs the capability against the UI with new parameters and no model. Business outcomes like 'no such member' are reported as such, not as failures." },
-      { path: ["decide", "human"], caption: "If the decider cannot proceed it returns stuck. The run is routed to a person with full context." },
-    ],
-  },
-
-  jobScout: {
-    title: "Job Scout: from listings to approved drafts",
-    description: "A scheduled pipeline scrapes, deduplicates, filters and scores listings, sends a brief over chat, and prepares drafts only when the user asks.",
-    source: "Job Scout source: app/services/scout.py, scoring.py, bot/commands.py, scheduler.py",
-    nodes: [
-      { id: "sched", col: 0, row: 1, label: "Daily schedule", sub: "APScheduler cron", tone: "service", detail: "Runs the scout once a day at a configured hour (README: 7am)." },
-      { id: "scrape", col: 1, row: 1, label: "Scrape", sub: "Apify LinkedIn Jobs", tone: "external", detail: "Fetches listings using the saved search preferences." },
-      { id: "dedupe", col: 2, row: 0, label: "Dedupe + filter", sub: "URL check, prefilter", tone: "service", detail: "Drops URLs already stored and filters obvious mismatches before spending model calls. A cap limits how many jobs are scored per run." },
-      { id: "score", col: 3, row: 0, label: "Score 0 to 100", sub: "LLM, strict JSON", tone: "ai", detail: "Scores against the master resume and preferences. Hard rules score zero for excluded roles, senior roles, 4+ years required, or visa-incompatible postings. Recent skip and tailor decisions feed back in." },
-      { id: "store", col: 3, row: 1, label: "Supabase", sub: "jobs, decisions", tone: "data", detail: "Stores scored jobs, user decisions and resume-version metadata." },
-      { id: "brief", col: 4, row: 1, label: "Morning brief", sub: "WhatsApp or Telegram", tone: "user", detail: "The top-ranked jobs above a minimum score, with the available commands." },
-      { id: "you", col: 4, row: 2, label: "Your decision", sub: "tailor, skip, outreach", tone: "human", detail: "Commands: tailor N, skip N, not a fit N, draft outreach N. Nothing is applied for or sent without approval." },
-    ],
-    edges: [
-      { from: "sched", to: "scrape" },
-      { from: "scrape", to: "dedupe" },
-      { from: "dedupe", to: "score" },
-      { from: "score", to: "store" },
-      { from: "store", to: "brief" },
-      { from: "brief", to: "you" },
-      { from: "you", to: "store", dashed: true },
-    ],
-    steps: [
-      { path: ["sched", "scrape", "dedupe"], caption: "Each day the scout scrapes listings and removes ones it has already seen." },
-      { path: ["dedupe", "score"], caption: "Remaining listings are scored by a model that must return strict JSON, under hard rules for seniority and visa fit." },
-      { path: ["score", "store", "brief"], caption: "Scored jobs are stored and the best are sent as a brief." },
-      { path: ["brief", "you"], caption: "The user chooses what happens next. Tailored resumes may reorder but not invent experience, and gaps are listed separately." },
-      { path: ["you", "store"], caption: "Skip and tailor decisions are stored and used as learned rules in later scoring." },
-    ],
-  },
-
   alphabriefCi: {
     title: "AlphaBrief: test pipeline",
     description: "Pushes and pull requests run pytest on GitHub Actions with external services replaced by stubs.",
@@ -266,33 +204,5 @@ export const diagrams = {
       { nodes: ["push", "ci", "tests"], caption: "Every push and pull request installs dependencies and runs the full suite." },
       { nodes: ["stubs", "tests"], caption: "External services are patched out, so tests are fast, free and deterministic." },
     ],
-  },
-
-  agentReplay: {
-    title: "Computer-use automation: replay outcomes",
-    description: "A saved capability is replayed with no model; the run ends as a success, a business outcome or a failure.",
-    source: "interface-ai-assignment REPORT.md section 3",
-    nodes: [
-      { id: "params", col: 0, row: 1, label: "Parameters", sub: "from a production agent", tone: "user", detail: "A production AI agent calls the capability with inputs such as a member ID and sub-account type." },
-      { id: "engine", col: 1, row: 1, label: "Replay engine", sub: "no LLM", tone: "service", detail: "Re-runs the saved steps. No model decision is made at any step." },
-      { id: "resolve", col: 2, row: 1, label: "Resolve locators", sub: "live accessibility tree", tone: "service", detail: "Each locator is resolved against the page as it is now, so it survives layout changes that break coordinates or CSS paths." },
-      { id: "check", col: 3, row: 1, label: "Checkpoint", sub: "outcome check first", tone: "service", detail: "Known business outcomes are checked before attempting the next step, so a missing member surfaces as the real answer at the step where it is knowable." },
-      { id: "ok", col: 4, row: 0, label: "SUCCESS", sub: "checkpoint met", tone: "user", detail: "The final checkpoint assertion passed." },
-      { id: "biz", col: 4, row: 1, label: "BUSINESS_OUTCOME", sub: "app said no", tone: "data", detail: "A legitimate non-success the caller must distinguish, such as 'no such member' or a validation message." },
-      { id: "fail", col: 4, row: 2, label: "FAILURE", sub: "step + expected/observed", tone: "human", detail: "A locator did not resolve or a checkpoint was not met. Reported with the step index and expected versus observed state." },
-    ],
-    edges: [
-      { from: "params", to: "engine" },
-      { from: "engine", to: "resolve" },
-      { from: "resolve", to: "check" },
-      { from: "check", to: "ok" },
-      { from: "check", to: "biz" },
-      { from: "check", to: "fail" },
-    ],
-    steps: [
-      { nodes: ["params", "engine", "resolve"], caption: "Parameters go to a replay engine that makes no model calls and resolves each locator on the live page." },
-      { nodes: ["resolve", "check"], caption: "Before the next step it checks for known business outcomes. My first version only checked after a step, which reported a missing member as an unrelated locator failure one step later." },
-      { nodes: ["check", "ok", "biz", "fail"], edges: ["check>ok", "check>biz", "check>fail"], caption: "Three outcomes stay distinct. A fourth, RECOVERED, is reserved in the schema for inline retries." },
-    ],
-  },
+  }
 };

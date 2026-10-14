@@ -23,9 +23,7 @@ export const HeroSection = () => (
           I build AI products and automate business workflows.
         </h1>
         <p className="rise mt-6 max-w-[34rem] text-lg leading-relaxed text-slate-300" style={{ "--i": 2 }}>
-          I've built document research tools, travel-planning software, and research-and-drafting
-          automation. My professional experience includes delivering a business platform and
-          building collaborative applications used across 10+ apps.
+          I've built a RAG research tool with verifiable answers and a travel-planning workflow with human approval. My professional experience includes delivering a production ordering platform and building shared sync infrastructure used across 10+ embedded apps.
         </p>
         <div className="rise mt-8 flex flex-wrap gap-3" style={{ "--i": 3 }}>
           <ExternalButton href="https://secfrontend.vercel.app/" label="AlphaBrief live" className="btn btn-teal !px-4" />

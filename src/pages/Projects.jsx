@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { projects, charts } from "@/data/projects";
 import { diagrams } from "@/data/diagrams";
@@ -6,9 +7,8 @@ import { FlowDiagram } from "@/components/FlowDiagram";
 import { Tabs } from "@/components/Tabs";
 import { BarCompare, IsolationChecks, ResponsibilitySplit, StatRow } from "@/components/Visuals";
 import { LinkButtons, ToolLine } from "@/components/Parts";
-import { supporting } from "@/data/content";
 
-const Visuals = ({ chart }) => {
+const Evidence = ({ chart }) => {
   if (chart === "alphabriefBenchmark") {
     return (
       <div className="grid gap-5 lg:grid-cols-[3fr_2fr]">
@@ -22,110 +22,130 @@ const Visuals = ({ chart }) => {
   return null;
 };
 
-const Cards = ({ items }) => (
-  <ul className="grid gap-4 md:grid-cols-2">
-    {items.map((d) => (
-      <li key={d.title} className="rounded-lg border border-border bg-card p-5">
-        <h4 className="font-display text-lg font-semibold leading-snug">{d.title}</h4>
-        <p className="mt-1.5 text-[16px] leading-relaxed text-muted-foreground">{d.text}</p>
-      </li>
-    ))}
-  </ul>
-);
+const Dash = () => <span className="mt-[0.8em] h-px w-4 shrink-0 bg-primary" aria-hidden="true" />;
 
-const Project = ({ p, index }) => {
-  const tabs = [
-    {
-      id: "architecture",
-      label: p.diagrams.length ? "Architecture" : "Overview",
-      content: (
+const Heading = ({ children }) => <h3 className="font-display text-xl font-semibold tracking-tight">{children}</h3>;
+
+const Diagrams = ({ p }) => {
+  const specs = p.diagrams.map((k) => ({ key: k, spec: diagrams[k] }));
+  const isWorkflow = specs.every((d) => d.spec.kind === "workflow");
+  const one = (d) => (
+    <div key={d.key}>
+      <FlowDiagram spec={d.spec} />
+      <p className="mt-2 text-[13px] text-muted-foreground">Source: {d.spec.source}.</p>
+    </div>
+  );
+  return (
+    <section aria-label={isWorkflow ? "Product workflow" : "Architecture"} className="space-y-3">
+      <Heading>{isWorkflow ? "Product workflow" : "Architecture"}</Heading>
+      {specs.length === 1 ? (
+        one(specs[0])
+      ) : (
+        <Tabs
+          label={`${p.title} diagrams`}
+          items={specs.map((d) => ({ id: d.key, label: d.spec.title.split(":")[1]?.trim() ?? d.spec.title, content: one(d) }))}
+        />
+      )}
+    </section>
+  );
+};
+
+const Project = ({ p, index }) => (
+  <article id={p.id} aria-labelledby={`${p.id}-h`} className={`py-14 md:py-20 ${index % 2 ? "bg-secondary" : "bg-background"}`}>
+    <div className="container space-y-8">
+      <header className="grid gap-6 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
+        <div>
+          <p className="text-[15px] font-semibold text-primary">{p.kind}</p>
+          <h2 id={`${p.id}-h`} className="mt-1 font-display text-4xl font-semibold tracking-tight md:text-5xl">{p.title}</h2>
+          <p className="mt-3 max-w-2xl text-xl leading-snug">{p.sentence}</p>
+        </div>
+        <div className="space-y-3 lg:pt-8">
+          <p className="border-l-2 border-primary pl-4 text-[15px] leading-snug"><span className="font-semibold">My role. </span>{p.role}</p>
+          <ToolLine tools={p.tech} />
+          {p.links.length > 0 && <LinkButtons links={p.links} />}
+        </div>
+      </header>
+
+      {p.metrics.length > 0 && <StatRow stats={p.metrics} />}
+
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
+        <section aria-label="What I built">
+          <Heading>What I built, and how</Heading>
+          <ul className="mt-3 space-y-3 text-[16px] leading-relaxed">
+            {p.built.map((b) => (
+              <li key={b} className="flex gap-3.5"><Dash /><span>{b}</span></li>
+            ))}
+          </ul>
+        </section>
         <div className="space-y-6">
-          {p.diagrams.map((k) => (
-            <div key={k}>
-              <FlowDiagram spec={diagrams[k]} />
-              <p className="mt-2 text-[13px] text-muted-foreground">Source: {diagrams[k].source}.</p>
-            </div>
-          ))}
-          {p.diagrams.length === 0 && (
-            <div className={`grid gap-6 ${p.image ? "lg:grid-cols-[1.1fr_1fr] lg:items-start" : ""}`}>
-              {p.image && (
-                <img src={p.image.src} alt={p.image.alt} width="1600" height="1000" loading="lazy" decoding="async" className="frame w-full rounded-lg border border-border object-cover object-top" />
-              )}
-              <ul className="space-y-3 text-[17px] leading-relaxed">
-                {p.overview.map((o) => (
-                  <li key={o} className="flex gap-3.5">
-                    <span className="mt-[0.8em] h-px w-4 shrink-0 bg-primary" aria-hidden="true" />
-                    <span>{o}</span>
+          {p.problems.length > 0 && (
+            <section aria-label="Problems solved">
+              <Heading>Problems solved</Heading>
+              <ul className="mt-3 space-y-3.5 text-[16px] leading-snug">
+                {p.problems.map((x) => (
+                  <li key={x.problem}>
+                    <p className="font-semibold">{x.problem}</p>
+                    <p className="mt-0.5 text-muted-foreground">{x.solution}</p>
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
+          )}
+          {p.observed && (
+            <section aria-label="Observed in the public deployment">
+              <Heading>Observed in the public deployment</Heading>
+              <ul className="mt-3 space-y-2.5 text-[16px] leading-snug">
+                {p.observed.map((o) => (
+                  <li key={o} className="flex gap-3.5"><Dash /><span>{o}</span></li>
+                ))}
+              </ul>
+              <p className="mt-4 rounded-lg border border-dashed border-primary/50 bg-primary/5 px-4 py-3 text-[15px] leading-snug"><span className="font-semibold">Missing evidence. </span>{p.missing}</p>
+            </section>
           )}
         </div>
-      ),
-    },
-    p.decisions.length > 0 && { id: "decisions", label: "Decisions", content: <Cards items={p.decisions} /> },
-    p.challenges.length > 0 && { id: "limits", label: "Challenges", content: <Cards items={p.challenges} /> },
-    (p.results.stats.length > 0 || p.results.note) && {
-      id: "results",
-      label: "Results",
-      content: (
-        <div className="space-y-5">
-          <StatRow stats={p.results.stats} />
-          <p className="max-w-3xl text-[16px] leading-relaxed text-muted-foreground">{p.results.note}</p>
-          <Visuals chart={p.chart} />
-        </div>
-      ),
-    },
-  ].filter(Boolean);
-
-  return (
-    <article id={p.id} aria-labelledby={`${p.id}-h`} className={`py-16 md:py-24 ${index % 2 ? "bg-secondary" : "bg-background"}`}>
-      <div className="container">
-        <header className="grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
-          <div>
-            <p className="text-[15px] font-semibold text-primary">{p.kind}</p>
-            <h2 id={`${p.id}-h`} className="mt-1 font-display text-4xl font-semibold tracking-tight md:text-5xl">{p.title}</h2>
-            {p.label && <p className="mt-2 inline-block rounded-full border border-border bg-card px-3 py-0.5 text-[13px] font-medium">{p.label}</p>}
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed">{p.problem}</p>
-          </div>
-          <div className="space-y-4 lg:pt-6">
-            <p className="border-l-2 border-primary pl-4 text-[15px] leading-snug">
-              <span className="font-semibold">My role. </span>
-              {p.role}
-            </p>
-            <ToolLine tools={p.stack} />
-            {p.links.length > 0 && <LinkButtons links={p.links} />}
-          </div>
-        </header>
-        <div className="mt-10">
-          <Tabs items={tabs} label={`${p.title} details`} />
-        </div>
       </div>
-    </article>
-  );
-};
+
+      {p.diagrams.length > 0 && <Diagrams p={p} />}
+
+      {p.decisions.length > 0 && (
+        <section aria-label="Engineering decisions and trade-offs" className="space-y-3">
+          <Heading>Engineering decisions and trade-offs</Heading>
+          <ul className="grid gap-4 md:grid-cols-2">
+            {p.decisions.map((d) => (
+              <li key={d.title} className="rounded-lg border border-border bg-card p-4">
+                <p className="font-display text-lg font-semibold leading-snug">{d.title}</p>
+                <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground">{d.text}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {p.evidence && <Evidence chart={p.evidence} />}
+
+      {p.notes?.map((n) => (
+        <p key={n} className="max-w-4xl text-[14px] leading-snug text-muted-foreground">{n}</p>
+      ))}
+    </div>
+  </article>
+);
 
 export default function Projects() {
   usePageMeta(
     "Projects — Rishi Kumar",
-    "Architecture, decisions and results for AlphaBrief, MetroPrint, TriPilot AI, Alumi, TripPilot, a computer-use automation system, Job Scout and Pencil's Mario sync layer."
+    "Engineering deep dives with architecture diagrams: AlphaBrief (RAG), TripPilot, the MetroPrint ordering platform, Pencil's Mario SDK and a distributed Go chat system."
   );
   return (
     <>
-      <section className="on-dark bg-navy-900 pb-14 pt-28 text-white md:pb-20 md:pt-36">
+      <section className="on-dark bg-navy-900 pb-12 pt-28 text-white md:pb-16 md:pt-36">
         <div className="container">
-          <h1 className="max-w-3xl text-[clamp(2.25rem,4.3vw,3.6rem)] font-semibold leading-[1.04]">
-            Projects, with the engineering behind them.
-          </h1>
+          <h1 className="max-w-3xl text-[clamp(2.25rem,4.3vw,3.6rem)] font-semibold leading-[1.04]">Projects, with the engineering behind them.</h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-300">
-            Each project has a diagram you can step through, the decisions behind it, what it still gets wrong, and results with their caveats. Diagrams come from each project's own documentation or source.
+            What I built, the problems it raised, the decisions behind it and the results, with diagrams drawn from each project's own source or documentation.
           </p>
           <nav aria-label="Projects on this page" className="mt-8 flex flex-wrap gap-2">
             {projects.map((p) => (
-              <Link key={p.id} to={`/projects#${p.id}`} className="btn btn-ghost-light !min-h-10 !px-4 !py-1.5">
-                {p.title}
-              </Link>
+              <Link key={p.id} to={`/projects#${p.id}`} className="btn btn-ghost-light !min-h-10 !px-4 !py-1.5">{p.title}</Link>
             ))}
           </nav>
         </div>
@@ -133,19 +153,10 @@ export default function Projects() {
       {projects.map((p, i) => (
         <Project key={p.id} p={p} index={i} />
       ))}
-      <section aria-labelledby="also-h" className="bg-secondary py-14">
-        <div className="container max-w-4xl">
-          <h2 id="also-h" className="font-display text-3xl font-semibold">Also built</h2>
-          <h3 className="mt-5 font-display text-xl font-semibold">{supporting.title}</h3>
-          <p className="text-[15px] text-muted-foreground">Supporting independent project · September 2025 – December 2025</p>
-          <p className="mt-2 text-[17px] leading-relaxed">{supporting.text}</p>
-          <p className="mt-2 text-[14px] text-muted-foreground">Résumé-reported. I have not located a repository for this project, so there is no diagram or link.</p>
-        </div>
-      </section>
-      <section className="on-dark bg-navy-950 py-16 text-white">
+      <section className="on-dark bg-navy-950 py-14 text-white">
         <div className="container flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xl font-display text-2xl font-semibold leading-snug">Want to talk through any of this?</p>
-          <Link to="/contact" className="btn btn-teal">Get in touch</Link>
+          <Link to="/contact" className="btn btn-teal">Get in touch <ArrowRight size={16} aria-hidden="true" /></Link>
         </div>
       </section>
     </>

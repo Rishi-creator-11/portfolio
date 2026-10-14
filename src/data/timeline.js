@@ -25,7 +25,11 @@ export const timeline = [
   {
     id: "pencil", lane: "professional", short: "Pencil", title: "Pencil Learning Technologies", role: "Software Engineer Intern",
     dates: "June 2025 – August 2025", start: [2025, 6], end: [2025, 9], link: "pencil",
-    points: ["Built Mario synchronization infrastructure and integrated it into 10+ collaborative apps.", "Delivered client-side work including configurable Word Mat layouts and the Angular-to-React Polls rewrite.", "Automated builds, tests, and publishing, shortening the release cycle by 15% (résumé-reported)."],
+    points: [
+      "Built core sync infrastructure for the Mario SDK: state-update latency from about 500ms to under 100ms with incremental JSON Patch diffs.",
+      "Designed conflict-free merging with Yjs CRDTs; integrated the SDK into 10+ embedded apps, cutting state drift by 30%.",
+      "Automated CI/CD with GitHub Actions and Docker, trimming release cycle time by 15% (résumé-reported).",
+    ],
   },
   {
     id: "dsp", lane: "projects", short: "Dist. Systems", title: "Distributed Systems Platform", role: "Supporting independent project",
@@ -43,14 +47,12 @@ export const timeline = [
     points: ["An editable travel-planning workflow with budget and timing checks, revision history, and approval-gated sandbox reservations."],
   },
   {
-    id: "alumi", lane: "projects", short: "Alumi", title: "Alumi", role: "Independent project",
-    dates: "August 2026 (repository commits: August 9 to 21)", start: [2026, 8], end: [2026, 9], link: "alumi",
-    points: ["A live photo-print storefront with an upload customizer, cart, checkout and Supabase-backed orders; built with Bolt; payments in test mode."],
-  },
-  {
     id: "metroprint", lane: "professional", short: "MetroPrint", title: "MetroPrint USA", role: "Contract Full-Stack Engineer",
     dates: "July 2026 – September 2026", start: [2026, 7], end: [2026, 10], link: "metroprint",
-    points: ["Built a production ordering platform and admin workspace with about 97 configurable products.", "Automated ingestion of 80 products and 559 pricing rows; validated combinations and checkout totals."],
+    points: [
+      "Used Claude Code to build a production ordering platform supporting about 97 configurable products.",
+      "Automated ingestion of 80 products and 559 pricing rows; rebuilt pricing around exact combinations to block invalid configurations and checkout-total drift.",
+    ],
   },
 ];
 

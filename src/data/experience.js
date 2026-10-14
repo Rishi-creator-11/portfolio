@@ -1,0 +1,127 @@
+// Professional experience for the Home page. Each entry separates what I engineered, the problems
+// solved and the measured impact. Figures are from my résumé and are approximate where stated.
+// Private employer and client source is not published, so descriptions stay at the level of the résumé.
+export const roles = [
+  {
+    id: "metroprint",
+    org: "MetroPrint USA",
+    role: "Contract Full-Stack Engineer",
+    kind: "Contract employment",
+    dates: "July 2026 – September 2026",
+    place: "New York, NY",
+    metrics: [
+      { value: "≈97", label: "configurable products supported" },
+      { value: "80 + 559", label: "products and pricing rows ingested" },
+    ],
+    engineered: [
+      "Used Claude Code and AI-assisted development to translate a print-shop owner's workflows into a production Next.js and TypeScript platform supporting about 97 configurable products.",
+      "Automated ingestion of 80 products and 559 pricing rows into Supabase, translating client data and reconciling counts.",
+      "Rebuilt pricing around 559 exact-combination rows, blocking invalid configurations and client/server checkout-total drift.",
+    ],
+    problems: [
+      { problem: "Prices depend on the exact combination of options", solution: "Priced every valid combination as its own row and blocked invalid configurations." },
+      { problem: "Totals shown and totals charged could disagree", solution: "Validated pricing across the client and the server so checkout totals stay consistent." },
+      { problem: "Importing the owner's data accurately", solution: "Scripted ingestion with counts reconciled against the client data instead of manual entry." },
+    ],
+    impact: ["A production ordering platform with structured product data and validated pricing, built from the owner's own workflows."],
+    tools: ["Claude Code", "Next.js", "TypeScript", "Supabase"],
+  },
+  {
+    id: "pencil",
+    org: "Pencil Learning Technologies",
+    role: "Software Engineer Intern",
+    kind: "Internship",
+    dates: "June 2025 – August 2025",
+    place: "San Francisco, CA",
+    metrics: [
+      { value: "~500ms → <100ms", label: "state-update latency" },
+      { value: "10+", label: "embedded apps integrated" },
+      { value: "-30%", label: "cross-client state drift" },
+      { value: "-15%", label: "release cycle time" },
+    ],
+    engineered: [
+      "Built core sync infrastructure for the Mario SDK (a published TypeScript package), cutting state-update latency from about 500ms to under 100ms with incremental JSON Patch diffs.",
+      "Designed conflict-free merge logic with Yjs CRDTs, preventing lost updates and maintaining consistent state on reconnect.",
+      "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift by 30% and removing 1K lines of per-app glue.",
+      "Automated CI/CD with GitHub Actions and Docker (typed build, test, npm publish), trimming release cycle time by 15%.",
+    ],
+    problems: [
+      { problem: "Slow, drifting shared state across participants", solution: "Incremental diffs instead of whole state, merged with CRDTs so concurrent edits are not lost." },
+      { problem: "Every app carried its own integration glue", solution: "One shared SDK integration, removing about 1,000 lines of per-app code." },
+      { problem: "Manual release steps", solution: "Automated typed build, test and npm publish." },
+    ],
+    impact: ["Faster, more consistent shared updates, less repeated integration code and a 15% shorter release cycle. Figures are from my résumé; the company's source is private."],
+    tools: ["TypeScript", "JSON Patch", "Yjs", "GitHub Actions", "Docker", "npm"],
+  },
+  {
+    id: "vip",
+    org: "Vertically Integrated Program, Stony Brook University",
+    role: "Software Engineer Intern",
+    kind: "Internship",
+    dates: "August 2024 – December 2024",
+    place: "Stony Brook, NY",
+    metrics: [
+      { value: "-20%", label: "p95 response time" },
+      { value: "50% → 90%", label: "backend test coverage" },
+      { value: "-30%", label: "manual QA" },
+    ],
+    engineered: [
+      "Shipped 15+ Node.js and Express REST endpoints on AWS (EC2, RDS).",
+      "Added Redis caching and composite PostgreSQL indexes to the hot paths.",
+      "Added validation, pagination and query batching to list APIs.",
+      "Built Jest and Cypress suites into a GitHub Actions CI gate.",
+    ],
+    problems: [
+      { problem: "Slow responses under load", solution: "Added Redis caching and composite PostgreSQL indexes, cutting p95 response time by about 20%." },
+      { problem: "N+1 queries and unbounded responses causing timeouts", solution: "Batched queries and paginated list endpoints." },
+      { problem: "Regressions caught by hand", solution: "A CI gate raised coverage from about 50% to 90% and cut manual QA by about 30%." },
+    ],
+    impact: ["Faster, safer APIs with automated regression protection."],
+    tools: ["Node.js", "Express", "AWS (EC2, RDS)", "Redis", "PostgreSQL", "Jest", "Cypress", "GitHub Actions"],
+  },
+  {
+    id: "yards",
+    org: "99 YARDS",
+    role: "Software Engineer Intern",
+    kind: "Internship",
+    dates: "June 2024 – August 2024",
+    place: "New York, NY",
+    metrics: [
+      { value: "+25%", label: "offline hit-rate@10 vs. baseline" },
+      { value: "1 h → 5 min", label: "feature-data freshness lag" },
+    ],
+    engineered: [
+      "Built a TensorFlow two-tower recommendation model behind Node.js APIs.",
+      "Built PostgreSQL pipelines for training and online scoring with incremental updates.",
+    ],
+    problems: [
+      { problem: "Showing whether a model is actually better than a simple one", solution: "Evaluated it offline against a popularity baseline: about 25% higher hit-rate@10." },
+      { problem: "Stale features feeding the model", solution: "Built PostgreSQL pipelines for training and online scoring with incremental updates, cutting lag from one hour to five minutes." },
+    ],
+    impact: ["The 25% is an offline evaluation result, not a measured live or revenue improvement."],
+    tools: ["TensorFlow", "Node.js", "PostgreSQL"],
+  },
+  {
+    id: "ta",
+    org: "Stony Brook University",
+    role: "Teaching Assistant | Java and Data Structures",
+    kind: "Teaching",
+    dates: "August 2024 – May 2025",
+    place: "Stony Brook, NY",
+    metrics: [
+      { value: "30+", label: "students in weekly recitations" },
+      { value: "200+", label: "submissions reviewed" },
+    ],
+    engineered: ["Led weekly recitations and reviewed data-structures submissions, coaching debugging and Big-O trade-offs."],
+    problems: [{ problem: "Making debugging and complexity trade-offs concrete", solution: "Weekly recitations and submission reviews coaching debugging and Big-O trade-offs." }],
+    impact: ["The same habit of explaining clearly that I bring to demos, handoffs and supporting teammates."],
+    tools: ["Java", "Data structures"],
+  },
+];
+
+export const approach = [
+  { title: "Make the checkable part code", text: "TripPilot's budgets, dates and offer validity are deterministic; the model only helps with language.", id: "trippilot" },
+  { title: "Scope before you search", text: "AlphaBrief filters by company and year before retrieval, then tests that nothing leaks across scopes.", id: "alphabrief" },
+  { title: "Gate the irreversible", text: "TripPilot pauses for explicit approval before any reservation, and idempotency keys mean a retry cannot create a second one.", id: "trippilot" },
+  { title: "Say what the number means", text: "Benchmarks are labeled with their coverage and judging method, and résumé-reported figures are marked as such.", id: "alphabrief" },
+];

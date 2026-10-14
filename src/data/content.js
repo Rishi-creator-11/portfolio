@@ -9,12 +9,6 @@ export const links = {
   phoneHref: "tel:+19144460465",
 };
 
-export const supporting = {
-  kind: "Supporting Independent Project · September 2025 – December 2025",
-  title: "Distributed Systems Platform",
-  text: "Built a Go chat system across three application instances, supporting 100 connections per room, with Redis and Kafka coordinating updates and buffering message traffic, deployed to AWS with automated delivery.",
-};
-
 export const teaching = {
   title: "Teaching Assistant | Java and Data Structures",
   org: "Stony Brook University",

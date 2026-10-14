@@ -163,6 +163,11 @@ export const FlowDiagram = ({ spec }) => {
           ))}
         </ul>
       </figcaption>
+      {spec.kind === "workflow" && (
+        <p className="mb-3 inline-block rounded-full border border-primary/40 bg-primary/5 px-3 py-0.5 text-[13px] font-semibold text-primary">
+          Product workflow, not implementation architecture
+        </p>
+      )}
 
       {phone && !showDiagram && steps.length > 0 ? (
         <div>
