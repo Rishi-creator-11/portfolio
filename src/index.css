@@ -1354,3 +1354,5 @@ html, body { overflow-x: clip; }
 .pcard-wide .pcard-sum { max-width: 75ch; }
 .pcard-wide .pcard-points { max-width: 80ch; }
 @media (max-width: 640px) { .pcard-wide { padding: 20px 18px; } }
+.about-hero-tabs { padding-top: 8px; }
+.about-hero-tabs .about-jump { margin: 0; }

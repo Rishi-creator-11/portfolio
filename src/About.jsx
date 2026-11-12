@@ -5,21 +5,13 @@ import Stack from "./Stack.jsx";
 const sections = [
   ["Experience", "experience"],
   ["Skills", "skills"],
-  ["Education", "education"],
+  ["Education and awards", "education"],
 ];
 
 export default function About() {
   return (
     <div className="about">
-      <header className="about-hero">
-        <p className="status">
-          <span className="pulse" aria-hidden="true" />
-          Open to new roles, collabs and anything AI
-        </p>
-        <h1>About me</h1>
-        <p className="hero-sub">
-          I'm {person.name}. 22, Stony Brook Computer Science grad (specialized in AI and Data Science, 2022 – 2026), and I spend most of my days building with AI in New York.
-        </p>
+      <header className="about-hero about-hero-tabs">
         <nav className="about-jump" aria-label="On this page">
           {sections.map(([l, id]) => (
             <a key={id} href={`#${id}`}>
