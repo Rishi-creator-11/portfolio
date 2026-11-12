@@ -420,6 +420,6 @@ export const education = {
   awards: [
     { name: "Dean's List, 6 semesters", why: "Recognized for top academic standing across six semesters." },
     { name: "Far Beyond Scholarship", why: "Awarded for strong academic performance at Stony Brook, and for maintaining it." },
-    { name: "Grumman Engineering Scholarship", why: "Awarded for strong academic performance in the College of Engineering and Applied Sciences." },
+    { name: "Grumman Engineering Scholarship", why: "Recognized for internships, projects I built, and involvement in the department, including the Computing Society." },
   ],
 };
