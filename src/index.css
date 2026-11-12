@@ -1274,3 +1274,9 @@ html, body { overflow-x: clip; }
 .xp-home-role { color: var(--muted); font-size: 0.88rem; margin: 4px 0 0; }
 .xp-home-line { margin: 0; max-width: 62ch; }
 @media (max-width: 700px) { .xp-home li { grid-template-columns: 1fr; } }
+
+/* ---------- minimal presentation ---------- */
+.pcard-cat { margin: 0; font: 500 0.78rem var(--mono); color: var(--muted); }
+.pcard-points { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 4px; padding-left: 18px; list-style: disc; color: var(--text); font-size: 0.93rem; line-height: 1.5; }
+.pcard-points li::marker { color: var(--cyan); }
+.post-diagram { margin: 18px 0; }

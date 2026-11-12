@@ -255,3 +255,122 @@ export const workContent = {
     ],
   },
 };
+
+
+/* ---- Minimal presentation layer: website = highlights, blog = story, GitHub = depth ---- */
+export const minimal = {
+  callpilot: {
+    category: "Applied AI · Backend engineering",
+    oneLine: "A multi-tenant AI phone assistant that handles customer inquiries, schedules appointments, and connects to business workflows.",
+    engineered: [
+      "Built isolated business workspaces with FastAPI, PostgreSQL and Supabase row-level security to securely manage knowledge and call data.",
+      "Implemented pgvector semantic retrieval with confidence thresholds and refusal safeguards to ground answers in owner-approved information.",
+      "Integrated Vapi, Google Calendar and Stripe for voice workflows, scheduling, subscriptions and usage controls.",
+    ],
+    chips: ["Python", "FastAPI", "PostgreSQL", "pgvector", "Vapi", "Stripe"],
+    article: "how-callpilot-works",
+  },
+  alphabrief: {
+    category: "Applied AI · Retrieval engineering",
+    oneLine: "Research SEC 10-K filings and get answers that cite the filing.",
+    engineered: [
+      "Built a hybrid retriever (Pinecone dense search, BM25, rank fusion, Cohere rerank) that reached 0.88 MRR on a 125-question benchmark.",
+      "Built a resumable SEC EDGAR ingestion pipeline (4,262 chunks) and FastAPI ticker and year scoping with zero cross-company or cross-year leakage.",
+      "Cut median answer time from 7.6s to 2.0s (−74%) by bounding output tokens.",
+    ],
+    chips: ["Python", "FastAPI", "Pinecone", "BM25", "Cohere", "SEC EDGAR"],
+    article: "alphabrief-end-to-end",
+  },
+  "mario-sdk": {
+    category: "Real-time systems · SDK engineering",
+    oneLine: "An npm library for real-time shared state across clients and servers.",
+    engineered: [
+      "Replaced full-state sync with incremental JSON Patch diffs, cutting state-update latency from ~500ms to under 100ms.",
+      "Designed conflict-free merge logic with Yjs CRDTs so concurrent edits and reconnects don't lose updates.",
+      "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift by 30%, and automated npm publishing to trim release time by 15%.",
+    ],
+    chips: ["TypeScript", "Yjs", "JSON Patch", "GitHub Actions", "npm"],
+    article: "mario-sdk-shared-state",
+  },
+  chat: {
+    category: "Distributed systems · Backend engineering",
+    oneLine: "A real-time chat system built across several Go servers, with Kafka buffering writes off the delivery path.",
+    engineered: [
+      "Ran chat across 3 Go Fiber instances behind Nginx, syncing 100 WebSocket connections per room through Redis pub/sub.",
+      "Buffered up to 10,000 messages per second through Kafka, batching consumer writes into Postgres to keep the database off the write-hot path.",
+      "Deployed the Dockerized stack to AWS with Terraform and GitHub Actions CI/CD behind a TLS-terminated Nginx proxy.",
+    ],
+    chips: ["Go", "Redis", "Kafka", "PostgreSQL", "Terraform", "AWS"],
+  },
+  "agent-release-lab": {
+    category: "Applied AI · Evaluation",
+    oneLine: "A release gate for LLM agents: versioned test suites, deterministic graders, and named regressions.",
+    engineered: [
+      "Added a versioned suite of 30 synthetic support-agent cases covering JSON schema, grounded answers, tool selection, escalation and secret refusal.",
+      "Wrote deterministic graders with no model judge, then a release gate (at least 90% pass, 100% secret refusal) that names exactly which cases regressed.",
+      "Locked public mode to recorded runs, with live runs capped and behind a server-side key.",
+    ],
+    chips: ["TypeScript", "Next.js", "LLM evaluation"],
+    article: "release-gates-for-llm-agents",
+  },
+  "invoice-review": {
+    category: "Applied AI · Document processing",
+    oneLine: "Document AI that reconciles invoices against purchase orders and routes mismatches to a human.",
+    engineered: [
+      "Added purchase-order reconciliation using Decimal arithmetic, keeping expected value, observed value and evidence for each check.",
+      "Made mismatches route to human review through a deterministic rule the LLM cannot override, with write-once reviewer decisions.",
+      "Fixed two upstream security issues found while adapting it: a publicly downloadable database and unauthenticated deletion.",
+    ],
+    chips: ["Python", "FastAPI", "React", "OCR"],
+  },
+  "inventory-ops": {
+    category: "Applied AI · Full-stack",
+    oneLine: "An ERP agent that proposes reorders but can't write anything until a manager confirms.",
+    engineered: [
+      "Built an approval-gated reorder plugin that drafts pack-size-aware quantities with per-line justification and writes only after confirmation.",
+      "Added atomic duplicate-confirmation protection, so a second confirm returns 409 with the original order.",
+      "Logged every proposal, confirmation and denial as an audit event, and replaced the shared public demo with session-scoped sandboxes.",
+    ],
+    chips: ["Python", "FastAPI", "React", "TypeScript"],
+  },
+  quoteatlas: {
+    category: "Applied AI · Full-stack",
+    oneLine: "Upload supplier quotations, extract the terms with Claude, and compare offers side by side.",
+    engineered: [
+      "Built AI extraction of 15+ fields per quote, including freight, duties, taxes, Incoterms, payment terms and lead time.",
+      "Compares up to five quotes and warns on missing cost components instead of treating them as zero.",
+      "Stored files in private Supabase Storage with owner-scoped row-level security and short-lived signed links, with Stripe subscriptions.",
+    ],
+    chips: ["TypeScript", "Next.js", "Claude API", "Supabase", "Stripe"],
+  },
+};
+
+export const xp = {
+  metroprint: [
+    "Translated a print shop's workflows into a production Next.js and TypeScript platform with ~97 configurable products, built with Claude Code.",
+    "Automated ingestion of 80 products and 559 pricing rows into Supabase, reconciling counts against the client's data.",
+    "Rebuilt pricing around 559 exact-combination rows, blocking invalid configurations and keeping client and server checkout totals consistent.",
+  ],
+  pencil: [
+    "Built the core sync layer for the Mario SDK, a published TypeScript package, using incremental JSON Patch diffs to cut state-update latency from ~500ms to under 100ms.",
+    "Designed Yjs CRDT merge logic that prevents lost updates and keeps state consistent on reconnect, then integrated the SDK into 10+ apps, cutting cross-client state drift by 30%.",
+    "Automated build, test and npm publish with GitHub Actions and Docker, trimming release cycle time by 15%.",
+  ],
+  vip: [
+    "Built a fintech app with a team of 10 using React, Node.js and AWS for 500+ users, integrating Plaid and Dwolla for secure bank linking and transfers.",
+    "Shipped 15+ Express REST endpoints on AWS, cutting p95 response time about 20% with Redis caching and composite PostgreSQL indexes.",
+    "Raised backend test coverage from ~50% to ~90% with Jest and Cypress in a GitHub Actions CI gate, cutting manual QA about 30%.",
+  ],
+  "99yards": [
+    "Built a TensorFlow two-tower recommender behind Node.js APIs, lifting offline hit-rate@10 by ~25% over a popularity baseline.",
+    "Built PostgreSQL pipelines for training and online scoring, cutting feature-freshness lag from 1 hour to 5 minutes with incremental updates.",
+  ],
+  geico: [
+    "Mentored for a full year by Suresh Vasan, Senior Manager of Staff Software Engineering, in 1:1 system design reviews of production systems.",
+    "Worked through architecture decisions and their trade-offs on GEICO's production systems.",
+  ],
+  ta: [
+    "Led weekly Java recitations for 30+ students.",
+    "Reviewed 200+ data-structures submissions, coaching debugging and Big-O trade-offs.",
+  ],
+};

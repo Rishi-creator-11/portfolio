@@ -1,4 +1,4 @@
-import { projectContent, marioProject, workContent } from "./content.js";
+import { projectContent, marioProject, workContent, minimal, xp } from "./content.js";
 export const person = {
   name: "Rishi",
   legal: "Hrishit Kumar",
@@ -389,6 +389,8 @@ export const featured = ["callpilot", "alphabrief", "mario-sdk"];
 projects.splice(1, 0, marioProject);
 projects.forEach((p) => Object.assign(p, projectContent[p.id] || {}));
 work.forEach((w) => Object.assign(w, workContent[w.id] || {}));
+projects.forEach((p) => Object.assign(p, minimal[p.id] || {}));
+work.forEach((w) => { if (xp[w.id]) w.xp = xp[w.id]; });
 
 export const categories = ["All", "AI/LLM", "Backend", "Full-Stack", "Distributed"];
 

@@ -200,12 +200,15 @@ function Hero() {
 
 function Detail({ item, kind }) {
   const isProject = kind === "projects";
+  const points = isProject ? item.engineered || item.bullets : item.xp || item.bullets;
+  const code = item.links.find((l) => l.label === "Code");
   return (
     <article className="detail" key={item.id} aria-live="polite">
       <header className="detail-head">
         <div>
+          {isProject && item.category && <p className="eyebrow">{item.category}</p>}
           <h3>{item.name}</h3>
-          <p className="detail-sub">{isProject ? item.tagline : `${item.role} · ${item.place}`}</p>
+          <p className="detail-sub">{isProject ? item.oneLine || item.tagline : `${item.role} · ${item.place}`}</p>
           {item.context && <p className="detail-context">{item.context}</p>}
         </div>
         <div className="detail-tags">
@@ -214,137 +217,34 @@ function Detail({ item, kind }) {
         </div>
       </header>
 
-      <p className="detail-summary">{item.intro || item.summary}</p>
-
-      {item.highlights && (
-        <section className="block">
-          <h4>Engineering highlights</h4>
-          <ul className="highlights">
-            {item.highlights.map((h) => (
-              <li key={h.area}>
-                <strong>{h.area}:</strong> {h.text}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {item.problem && (
-        <section className="block">
-          <h4>Technical problem</h4>
-          <p className="detail-summary">{item.problem}</p>
-          {item.why && <p className="detail-note"><strong>Why I built it.</strong> {item.why}</p>}
-        </section>
-      )}
-      {!item.problem && item.why && (
-        <section className="why">
-          <h4>Why I built it</h4>
-          <p>{item.why}</p>
-        </section>
-      )}
-
-      {(item.diagram || item.architecture) && (
-        <section className="block">
-          <h4>System architecture</h4>
-          {item.architecture && <p className="detail-summary">{item.architecture}</p>}
-          {item.diagram && (
-            <div className="diagram-scroll">
-              <Diagram {...item.diagram} label={`Architecture of ${item.name}`} />
-            </div>
-          )}
-        </section>
-      )}
-
-      {item.decisions?.length > 0 && (
-        <section className="block">
-          <h4>Engineering decisions</h4>
-          <ul className="decisions">
-            {item.decisions.map((d) => (
-              <li key={d.q}>
-                <h5>{d.q}</h5>
-                <p>{d.a}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {!item.highlights && (
-        <section className="block">
-          <h4>What I built</h4>
-          <ul className="bullets">
-            {item.bullets.map((b) => (
-              <li key={b}>{b}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {(item.metrics?.length > 0 || item.results?.length > 0) && (
-        <section className="block">
-          <h4>Results and evaluation</h4>
-          {item.metrics?.length > 0 && (
-            <div className="metrics">
-              {item.metrics.map((m) => (
-                <div className="metric" key={m.l}>
-                  <div className="metric-v">{m.v}</div>
-                  <div className="metric-l">{m.l}</div>
-                </div>
-              ))}
-            </div>
-          )}
-          {!(item.metrics?.length > 0) && item.results?.length > 0 && (
-            <table className="results">
-              <tbody>
-                {item.results.map((r) => (
-                  <tr key={r[0]}>
-                    <th scope="row">{r[0]}</th>
-                    <td>{r[1]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </section>
-      )}
-
       <section className="block">
-        <h4>Technology stack</h4>
-        {item.techGroups ? (
-          <div className="tech-groups">
-            {item.techGroups.map((g) => (
-              <div key={g.label} className="tech-group">
-                <h5>{g.label}</h5>
-                <StackTiles names={g.items} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <StackTiles names={item.stack} />
-        )}
+        <h4>{isProject ? "What I engineered" : "What I did"}</h4>
+        <ul className="bullets">
+          {points.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
       </section>
 
-      {(item.images?.length > 0 || item.links.length > 0) && (
-        <section className="block">
-          <h4>Demonstration</h4>
-          {item.images?.length > 0 && (
-            <div className="shots">
-              {item.images.map((src) => (
-                <img key={src} src={src} alt={`${item.name} screenshot`} loading="lazy" />
-              ))}
-            </div>
+      <div className="detail-foot">
+        <ul className="tags" aria-label="Technologies">
+          {(item.chips || item.stack.slice(0, 6)).map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+        <div className="links">
+          {item.links.map((l) => (
+            <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
+              {l.label === "Code" ? "GitHub" : l.label} <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          ))}
+          {item.article && (
+            <a className="btn btn-small" href={`/blog/${item.article}`}>
+              Engineering write-up
+            </a>
           )}
-          {item.links.length > 0 && (
-            <div className="links">
-              {item.links.map((l) => (
-                <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
-                  {l.label} <ArrowUpRight size={14} aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+        </div>
+      </div>
     </article>
   );
 }
@@ -504,39 +404,38 @@ function PageHead({ label, title, children }) {
   );
 }
 
-function ProjectCard({ p, simple }) {
+function ProjectCard({ p }) {
   const code = p.links.find((l) => l.label === "Code");
   return (
     <article className="pcard">
-      <div className="pcard-top">
-        <span className="chip">{p.year}</span>
-        <span className="chip chip-status">{p.status}</span>
-      </div>
+      <p className="pcard-cat">{p.category || p.cats.join(" · ")} · {p.period}</p>
       <h3>
         <a href={`/projects/${p.id}`}>{p.name}</a>
       </h3>
       {p.context && <p className="pcard-context">{p.context}</p>}
-      {simple && p.simple && <p className="pcard-stack">{p.simple}</p>}
-      <p className={simple ? "pcard-sum pcard-simple" : "pcard-sum"}>{simple ? p.plain || p.tagline : p.tagline}</p>
-      {!simple && (
-        <>
-          <div className="pcard-metric">
-            <b>{p.headline.value}</b> <span>{p.headline.label}</span>
-          </div>
-          <ul className="tags" aria-label="Technologies">
-            {p.stack.slice(0, 5).map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul>
-        </>
-      )}
+      <p className="pcard-sum">{p.oneLine || p.tagline}</p>
+      <ul className="pcard-points">
+        {(p.engineered || p.bullets.slice(0, 3)).map((b) => (
+          <li key={b}>{b}</li>
+        ))}
+      </ul>
+      <ul className="tags" aria-label="Technologies">
+        {(p.chips || p.stack.slice(0, 6)).map((t) => (
+          <li key={t}>{t}</li>
+        ))}
+      </ul>
       <div className="pcard-links">
         <a className="btn btn-small" href={`/projects/${p.id}`}>
-          Case study
+          Details
         </a>
         {code && (
           <a className="btn btn-small" href={code.href} target="_blank" rel="noreferrer">
-            Code <ArrowUpRight size={14} aria-hidden="true" />
+            GitHub <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+        )}
+        {p.article && (
+          <a className="btn btn-small" href={`/blog/${p.article}`}>
+            Write-up
           </a>
         )}
       </div>
@@ -561,7 +460,7 @@ function HomePage() {
         </div>
         <div className="pgrid pgrid-3">
           {picks.map((p) => (
-            <ProjectCard key={p.id} p={p} simple />
+            <ProjectCard key={p.id} p={p} />
           ))}
         </div>
       </section>
@@ -743,6 +642,10 @@ function PostPage({ slug }) {
                 <li key={x}>{x}</li>
               ))}
             </ul>
+          ) : b.diagram ? (
+            <div key={i} className="diagram-scroll post-diagram">
+              <Diagram {...projects.find((x) => x.id === b.diagram).diagram} label={`Architecture of ${b.diagram}`} />
+            </div>
           ) : b.code ? (
             <pre key={i}>
               <code>{b.code}</code>
