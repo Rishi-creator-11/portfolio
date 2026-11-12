@@ -52,7 +52,8 @@
     b.onclick = () => go(path);
     nav.appendChild(b);
   });
-  go(location.hash.slice(1) || "/projects/callpilot");
+  const wanted = location.hash.slice(1);
+  go(pages.some((x) => x[1] === wanted) ? wanted : "/projects/callpilot");
 </script>
 </body>
 </html>
