@@ -3,6 +3,15 @@ import { siAnthropic,siBetterauth,siClaude,siCloudflare,siCypress,siDeepgram,siD
 import { stackGroups, extraIcons } from "./stack.js";
 import { projects, work } from "./data.js";
 import { LOGOS } from "./logos.js";
+import { expertise } from "./content.js";
+import { Globe, Boxes, Network, Workflow, Radio, Bot, FileSearch, Database, Terminal, GitBranch, ClipboardCheck, ScanSearch } from "lucide-react";
+
+// Concepts without a brand logo get a clean line icon instead of initials.
+const CONCEPT_ICONS = {
+  "rest apis": Globe, microservices: Boxes, "distributed systems": Network, "data pipelines": Workflow,
+  websockets: Radio, "agentic ai": Bot, rag: FileSearch, "retrieval and extraction pipelines": ScanSearch,
+  "llm evaluation": ClipboardCheck, sql: Database, linux: Terminal, "ci/cd": GitBranch,
+};
 
 const DARK_LOGOS = new Set(["next.js", "express", "vercel"]);
 
@@ -42,6 +51,8 @@ function Logo({ it, size = 20 }) {
       />
     );
   }
+  const Concept = CONCEPT_ICONS[it.name.toLowerCase()];
+  if (Concept) return <Concept className="st-concept" size={size} strokeWidth={1.8} aria-hidden="true" />;
   const ic = it.icon && ICONS[it.icon];
   if (!ic) {
     const mono = it.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2);
@@ -130,4 +141,18 @@ export function StackTiles({ names }) {
 
 export default function Stack() {
   return <Console groups={useStack()} />;
+}
+
+// Home + About: four groups of logo tiles (tools and concepts alike).
+export function ExpertiseRows() {
+  return (
+    <div className="expertise">
+      {expertise.map((g) => (
+        <div className="expertise-row" key={g.group}>
+          <h3>{g.group}</h3>
+          <StackTiles names={[...g.tools, ...g.also]} />
+        </div>
+      ))}
+    </div>
+  );
 }

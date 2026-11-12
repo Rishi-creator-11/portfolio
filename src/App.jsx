@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Diagram from "./Diagram.jsx";
 import About from "./About.jsx";
-import { StackTiles } from "./Stack.jsx";
+import { StackTiles, ExpertiseRows } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
 import { person, stats, projects, work, skills, education, featured, categories } from "./data.js";
 import { skillGroups, homeExperience } from "./content.js";
@@ -529,23 +529,6 @@ function ProjectCard({ p, compact }) {
   );
 }
 
-function Expertise({ heading = "Technical expertise", id = "exp-skills-title" }) {
-  return (
-    <>
-      <h2 id={id}>{heading}</h2>
-      <p className="section-lede">Languages, frameworks, and tools I use to build AI applications and production software.</p>
-      <div className="skills-text">
-        {skillGroups.map((g) => (
-          <div className="skills-text-group" key={g.name}>
-            <h3>{g.name}</h3>
-            <p>{g.items.join(" · ")}</p>
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
-
 function HomePage() {
   const picks = featured.map((id) => projects.find((p) => p.id === id));
   return (
@@ -591,7 +574,9 @@ function HomePage() {
         </ul>
       </section>
       <section className="about-section" aria-labelledby="exp-skills-title">
-        <Expertise />
+        <p className="eyebrow">Technical expertise</p>
+        <h2 id="exp-skills-title">What I work with</h2>
+        <ExpertiseRows />
       </section>
       <section className="about-section" aria-labelledby="latest-title">
         <div className="row-head">

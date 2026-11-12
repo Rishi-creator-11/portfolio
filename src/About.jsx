@@ -1,7 +1,7 @@
 import { GraduationCap, Award, MapPin } from "lucide-react";
 import { person, work, skills, education } from "./data.js";
 import { Terminal } from "./Interactive.jsx";
-import { skillGroups } from "./content.js";
+import { ExpertiseRows } from "./Stack.jsx";
 
 const sections = [
   ["Experience", "experience"],
@@ -67,16 +67,9 @@ export default function About() {
       </section>
 
       <section id="skills" className="about-section" aria-labelledby="skills-title">
-        <h2 id="skills-title">Skills</h2>
-        <p className="section-lede">Languages, frameworks, and tools I use to build AI applications and production software.</p>
-        <div className="skills-text">
-          {skillGroups.map((g) => (
-            <div className="skills-text-group" key={g.name}>
-              <h3>{g.name}</h3>
-              <p>{g.items.join(" · ")}</p>
-            </div>
-          ))}
-        </div>
+        <p className="eyebrow">Skills</p>
+        <h2 id="skills-title">What I work with</h2>
+        <ExpertiseRows />
       </section>
 
       <section id="education" className="about-section" aria-labelledby="rec-title">

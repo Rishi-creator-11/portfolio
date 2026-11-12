@@ -1414,3 +1414,5 @@ html, body { overflow-x: clip; }
 .edu-awards li { display: flex; gap: 8px; align-items: flex-start; color: var(--muted); line-height: 1.5; }
 .edu-awards svg { flex: none; margin-top: 3px; color: var(--cyan); }
 .edu-awards strong { color: var(--text); }
+.st-concept { flex: none; color: var(--muted); }
+.expertise-row .st-tile.static { font-size: 14px; }

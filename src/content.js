@@ -384,22 +384,22 @@ export const expertise = [
   {
     group: "Languages",
     tools: ["Python", "TypeScript", "JavaScript", "Java", "Go"],
-    also: "SQL",
+    also: ["SQL"],
   },
   {
     group: "Backend and data",
     tools: ["FastAPI", "Node.js", "Express", "PostgreSQL", "Redis", "Supabase", "Kafka"],
-    also: "REST APIs, microservices, distributed systems, data pipelines, WebSockets",
+    also: ["REST APIs", "Microservices", "Distributed systems", "Data pipelines", "WebSockets"],
   },
   {
     group: "AI and LLM",
     tools: ["Claude Code", "OpenAI", "Gemini", "Pinecone", "Cohere", "Vapi", "ElevenLabs"],
-    also: "Agentic AI, RAG, retrieval and extraction pipelines, LLM evaluation",
+    also: ["Agentic AI", "RAG", "LLM evaluation"],
   },
   {
     group: "Cloud and DevOps",
     tools: ["AWS", "Docker", "Terraform", "GitHub Actions", "Vercel", "Render", "Git"],
-    also: "Linux, CI/CD",
+    also: ["Linux", "CI/CD"],
   },
 ];
 
