@@ -492,7 +492,7 @@ function HomePage() {
             <li key={w.id}>
               <div>
                 <h3>{w.short.co}</h3>
-                <p className="xp-home-role">{w.short.role} · {w.period}</p>
+                <p className="xp-home-role">{w.short.role} · {w.place} · {w.period}</p>
               </div>
               <p className="xp-home-line">{w.home}</p>
             </li>

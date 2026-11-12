@@ -315,7 +315,7 @@ export const work = [
       { v: "−15%", l: "release cycle time" },
     ],
     bullets: ["Built the sync engine for Mario, a published TypeScript SDK.", "Made live updates 5x faster and stopped lost edits with CRDTs."],
-    short: {"co": "Pencil Learning", "role": "SWE Intern", "loc": "SF", "stats": [{"v": "<100ms", "l": "updates, was ~500ms"}, {"v": "10+", "l": "apps integrated"}, {"v": "−30%", "l": "state drift"}]},
+    short: {"co": "Pencil Spaces", "role": "SWE Intern", "loc": "SF", "stats": [{"v": "<100ms", "l": "updates, was ~500ms"}, {"v": "10+", "l": "apps integrated"}, {"v": "−30%", "l": "state drift"}]},
     stack: ["TypeScript", "Yjs (CRDT)", "JSON Patch", "GitHub Actions", "Docker", "npm"],
     links: [{ label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
   },
