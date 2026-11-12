@@ -1360,3 +1360,10 @@ html, body { overflow-x: clip; }
 .edu-loc { font-size: 1.15rem; font-weight: 600; color: var(--text); margin: 6px 0 20px; gap: 8px; }
 .edu-loc svg { width: 18px; height: 18px; color: var(--cyan); }
 .edu-wide h3 { font-size: 1.5rem; }
+
+/* ---------- homepage expertise: grouped logo rows ---------- */
+.expertise { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.expertise-row { display: grid; grid-template-columns: minmax(170px, 230px) 1fr; gap: 10px 32px; padding: 24px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.expertise-row h3 { font-size: 1.2rem; padding-top: 6px; }
+.expertise-also { margin: 12px 0 0; color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 700px) { .expertise-row { grid-template-columns: 1fr; } }

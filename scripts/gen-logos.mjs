@@ -12,11 +12,11 @@ const MAP = {
   openai: "openai-icon", elevenlabs: "elevenlabs-icon", supabase: "supabase-icon", go: "go", typescript: "typescript-icon",
   "next.js": "nextjs-icon", react: "react", redis: "redis", kafka: "kafka-icon", terraform: "terraform-icon", aws: "aws",
   docker: "docker-icon", nginx: "nginx", npm: "npm-icon", playwright: "playwright",
-  vitest: "vitest", jest: "jest", cypress: "cypress", tensorflow: "tensorflow", "node.js": "nodejs-icon", express: "express",
-  vite: "vitejs", claude: "claude-icon", "claude api": "anthropic-icon", gemini: "google-gemini", cloudflare: "cloudflare-icon",
+  vitest: "vitest", jest: "jest", cypress: "cypress", tensorflow: "tensorflow", "node.js": "nodejs-icon",
+  vite: "vitejs", claude: "claude-icon", "claude api": "anthropic-icon", cloudflare: "cloudflare-icon",
   zod: "zod", resend: "resend-icon", java: "java", javascript: "javascript", pydantic: "pydantic", langchain: "langchain",
   "hugging face": "hugging-face-icon", vercel: "vercel-icon", postman: "postman-icon", groq: "groq", openrouter: "openrouter",
-  "aws (ec2, rds, s3)": "aws", "aws ec2 / rds": "aws", "aws ec2 / lambda": "aws",
+  git: "git-icon", linux: "linux-tux", "aws (ec2, rds, s3)": "aws", "aws ec2 / rds": "aws", "aws ec2 / lambda": "aws",
 };
 const out = {};
 for (const [name, key] of Object.entries(MAP)) {

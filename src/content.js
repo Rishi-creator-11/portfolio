@@ -377,3 +377,28 @@ export const xp = {
     "Reviewed 200+ data-structures submissions, coaching debugging and Big-O trade-offs.",
   ],
 };
+
+
+/* Homepage "What I work with": tools as logo tiles, concepts as a plain line. */
+export const expertise = [
+  {
+    group: "Languages",
+    tools: ["Python", "TypeScript", "JavaScript", "Java", "Go"],
+    also: "SQL",
+  },
+  {
+    group: "Backend and data",
+    tools: ["FastAPI", "Node.js", "Express", "PostgreSQL", "Redis", "Supabase", "Kafka"],
+    also: "REST APIs, microservices, distributed systems, data pipelines, WebSockets",
+  },
+  {
+    group: "AI and LLM",
+    tools: ["Claude Code", "OpenAI", "Gemini", "Pinecone", "Cohere", "Vapi", "ElevenLabs"],
+    also: "Agentic AI, RAG, retrieval and extraction pipelines, LLM evaluation",
+  },
+  {
+    group: "Cloud and DevOps",
+    tools: ["AWS", "Docker", "Terraform", "GitHub Actions", "Vercel", "Render", "Git"],
+    also: "Linux, CI/CD",
+  },
+];

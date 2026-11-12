@@ -20,6 +20,7 @@ import About from "./About.jsx";
 import { StackTiles } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
 import { person, stats, projects, work, skills, education, featured, categories } from "./data.js";
+import { expertise } from "./content.js";
 import { posts } from "./blog.js";
 
 function useCountUp(target, decimals = 0, duration = 1400) {
@@ -508,11 +509,14 @@ function HomePage() {
       <section className="about-section" aria-labelledby="exp-skills-title">
         <p className="eyebrow">Technical expertise</p>
         <h2 id="exp-skills-title">What I work with</h2>
-        <div className="skill-grid">
-          {skills.map((g) => (
-            <div className="skill-card" key={g.group}>
+        <div className="expertise">
+          {expertise.map((g) => (
+            <div className="expertise-row" key={g.group}>
               <h3>{g.group}</h3>
-              <p className="skill-line">{g.items.join(", ")}</p>
+              <div>
+                <StackTiles names={g.tools} />
+                <p className="expertise-also">Also: {g.also}</p>
+              </div>
             </div>
           ))}
         </div>
