@@ -1,4 +1,4 @@
-import { GraduationCap, Award } from "lucide-react";
+import { GraduationCap, Award, MapPin } from "lucide-react";
 import { person, work, skills, education } from "./data.js";
 import Stack from "./Stack.jsx";
 
@@ -85,20 +85,25 @@ export default function About() {
         <h2 id="rec-title">Education and awards</h2>
         <div className="skill-card edu edu-wide">
           <h3>
-            <GraduationCap size={16} aria-hidden="true" /> {education.school}
+            <GraduationCap size={18} aria-hidden="true" /> {education.school}
           </h3>
-          <p>{education.degree}</p>
-          <p className="edu-meta">
-            {education.grad}. GPA {education.gpa}.
+          <p className="edu-loc">
+            <MapPin size={14} aria-hidden="true" /> {education.location}
           </p>
+          <div className="edu-tiles">
+            <div className="edu-tile"><span>Degree</span><b>B.S. Computer Science</b></div>
+            <div className="edu-tile"><span>Specialization</span><b>AI and Data Science</b></div>
+            <div className="edu-tile"><span>Years</span><b>{education.years}</b></div>
+            <div className="edu-tile"><span>GPA</span><b>{education.gpa}</b></div>
+          </div>
         </div>
         <div className="skill-grid">
           {education.awards.map((a) => (
-            <div className="skill-card award" key={a}>
+            <div className="skill-card award" key={a.name}>
               <h3>
-                <Award size={16} aria-hidden="true" /> {a}
+                <Award size={16} aria-hidden="true" /> {a.name}
               </h3>
-              <p className="edu-meta">{education.school}</p>
+              <p className="edu-meta">{a.why}</p>
             </div>
           ))}
         </div>

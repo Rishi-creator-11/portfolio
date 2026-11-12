@@ -240,11 +240,7 @@ function Detail({ item, kind }) {
       </section>
 
       <div className="detail-foot">
-        <ul className="tags" aria-label="Technologies">
-          {(item.chips || item.stack.slice(0, 6)).map((t) => (
-            <li key={t}>{t}</li>
-          ))}
-        </ul>
+        <StackTiles names={item.chips || item.stack.slice(0, 6)} />
         <div className="links">
           {item.links.map((l) => (
             <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
@@ -372,7 +368,7 @@ function Toolbox() {
           </p>
           <ul className="tags">
             {education.awards.map((a) => (
-              <li key={a}>{a}</li>
+              <li key={a.name}>{a.name}</li>
             ))}
           </ul>
         </div>
@@ -432,11 +428,7 @@ function ProjectCard({ p }) {
           <li key={b}>{b}</li>
         ))}
       </ul>
-      <ul className="tags" aria-label="Technologies">
-        {(p.chips || p.stack.slice(0, 6)).map((t) => (
-          <li key={t}>{t}</li>
-        ))}
-      </ul>
+      <StackTiles names={p.chips || p.stack.slice(0, 6)} />
       <div className="pcard-links">
         <a className="btn btn-small" href={`/projects/${p.id}`}>
           Details

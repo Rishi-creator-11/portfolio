@@ -2,6 +2,9 @@ import { useMemo, useState } from "react";
 import { siAnthropic,siBetterauth,siClaude,siCloudflare,siCypress,siDeepgram,siDocker,siDrizzle,siElevenlabs,siExpress,siFastapi,siFramer,siGithubactions,siGo,siGooglegemini,siHuggingface,siJavascript,siJest,siLangchain,siLanggraph,siLivekit,siMistralai,siModelcontextprotocol,siN8n,siNeon,siNetlify,siNextdotjs,siNodedotjs,siOllama,siOpenjdk,siOpentelemetry,siPostgresql,siPosthog,siPytest,siPython,siRailway,siReact,siReactquery,siRedis,siRender,siReplicate,siResend,siShadcnui,siSqlalchemy,siStripe,siSupabase,siTailwindcss,siTensorflow,siTerraform,siTypescript,siVercel,siVite,siVitest,siX,siZapier,siZod,siPydantic,siGooglecalendar,siNginx,siNpm,siApachekafka,siPostman } from "simple-icons";
 import { stackGroups, extraIcons } from "./stack.js";
 import { projects, work } from "./data.js";
+import { LOGOS } from "./logos.js";
+
+const DARK_LOGOS = new Set(["next.js", "express", "vercel"]);
 
 const ICONS = Object.fromEntries(
   [siPostman,siPydantic,siGooglecalendar,siNginx,siNpm,siApachekafka,siAnthropic,siBetterauth,siClaude,siCloudflare,siCypress,siDeepgram,siDocker,siDrizzle,siElevenlabs,siExpress,siFastapi,siFramer,siGithubactions,siGo,siGooglegemini,siHuggingface,siJavascript,siJest,siLangchain,siLanggraph,siLivekit,siMistralai,siModelcontextprotocol,siN8n,siNeon,siNetlify,siNextdotjs,siNodedotjs,siOllama,siOpenjdk,siOpentelemetry,siPostgresql,siPosthog,siPytest,siPython,siRailway,siReact,siReactquery,siRedis,siRender,siReplicate,siResend,siShadcnui,siSqlalchemy,siStripe,siSupabase,siTailwindcss,siTensorflow,siTerraform,siTypescript,siVercel,siVite,siVitest,siX,siZapier,siZod].map((i) => [i.slug, i])
@@ -26,6 +29,19 @@ function useStack() {
 }
 
 function Logo({ it, size = 20 }) {
+  const full = LOGOS[it.name.toLowerCase()];
+  if (full) {
+    return (
+      <svg
+        className={"st-logo" + (DARK_LOGOS.has(it.name.toLowerCase()) ? " st-logo-dark" : "")}
+        width={size}
+        height={size}
+        viewBox={`0 0 ${full.w} ${full.h}`}
+        aria-hidden="true"
+        dangerouslySetInnerHTML={{ __html: full.body }}
+      />
+    );
+  }
   const ic = it.icon && ICONS[it.icon];
   if (!ic) {
     const mono = it.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2);

@@ -406,5 +406,11 @@ export const education = {
   degree: "B.S. in Computer Science, specialized in Artificial Intelligence and Data Science",
   grad: "2022 – 2026, graduated May 2026",
   gpa: "3.6 / 4.0",
-  awards: ["Dean's List, 6 semesters", "Far Beyond Scholarship", "Grumman Engineering Scholarship"],
+  location: "Stony Brook, Long Island, New York",
+  years: "2022 – 2026",
+  awards: [
+    { name: "Dean's List, 6 semesters", why: "Recognized for top academic standing across six semesters." },
+    { name: "Far Beyond Scholarship", why: "Scholarship awarded at Stony Brook University." },
+    { name: "Grumman Engineering Scholarship", why: "Engineering scholarship awarded at Stony Brook University." },
+  ],
 };
