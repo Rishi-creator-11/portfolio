@@ -419,7 +419,7 @@ export const education = {
   years: "2022 – 2026",
   awards: [
     { name: "Dean's List, 6 semesters", why: "Recognized for top academic standing across six semesters." },
-    { name: "Far Beyond Scholarship", why: "Scholarship awarded at Stony Brook University." },
-    { name: "Grumman Engineering Scholarship", why: "Engineering scholarship awarded at Stony Brook University." },
+    { name: "Far Beyond Scholarship", why: "Awarded for strong academic performance at Stony Brook, and for maintaining it." },
+    { name: "Grumman Engineering Scholarship", why: "Awarded for strong academic performance in the College of Engineering and Applied Sciences." },
   ],
 };
