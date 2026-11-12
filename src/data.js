@@ -392,6 +392,15 @@ work.forEach((w) => Object.assign(w, workContent[w.id] || {}));
 projects.forEach((p) => Object.assign(p, minimal[p.id] || {}));
 work.forEach((w) => { if (xp[w.id]) w.xp = xp[w.id]; });
 
+// Each project lives in exactly one category, so the filter counts add up to the total.
+const PRIMARY_CATEGORY = {
+  callpilot: "AI/LLM", alphabrief: "AI/LLM", "agent-release-lab": "AI/LLM",
+  "invoice-review": "Backend", "inventory-ops": "Backend",
+  quoteatlas: "Full-Stack",
+  chat: "Distributed", "mario-sdk": "Distributed",
+};
+projects.forEach((p) => { if (PRIMARY_CATEGORY[p.id]) p.cats = [PRIMARY_CATEGORY[p.id]]; });
+
 export const categories = ["All", "AI/LLM", "Backend", "Full-Stack", "Distributed"];
 
 export const skills = [
