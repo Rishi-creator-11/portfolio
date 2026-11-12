@@ -293,7 +293,7 @@ function Detail({ item, kind }) {
               ))}
             </div>
           )}
-          {item.results?.length > 0 && (
+          {!(item.metrics?.length > 0) && item.results?.length > 0 && (
             <table className="results">
               <tbody>
                 {item.results.map((r) => (

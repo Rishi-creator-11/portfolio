@@ -6,32 +6,23 @@ export const projectContent = {
     plain: "Multi-tenant AI voice assistant for business calls: semantic retrieval over approved knowledge, scheduling, and usage management.",
     simple: "Multi-tenant · pgvector retrieval · Vapi, Stripe, Google Calendar",
     intro:
-      "Built an AI phone-assistant platform that turns business-approved knowledge into conversational responses and connects calls to scheduling, lead capture, and subscription-based usage management. Each business gets an isolated workspace to approve its knowledge, review calls, and manage billing.",
+      "Built an AI phone-assistant platform that turns business-approved knowledge into conversational responses and connects calls to scheduling, lead capture, and subscription-based usage management.",
+    why: "It started with a business owner spending real money on staff just to answer his phones. I wanted an assistant that knows the business and only says what the owner approved.",
     highlights: [
-      { area: "Knowledge-grounded responses", text: "Implemented semantic retrieval over owner-approved business information with pgvector and gte-small embeddings, re-ranking candidates by term overlap and intent. Similarity and margin thresholds route ambiguous or unsupported questions to a fallback instead of a guess." },
-      { area: "Multi-tenant architecture", text: "Built isolated business workspaces on Supabase Postgres with row-level security, JWT authentication, and owner, admin and viewer roles. A FastAPI backend with 220+ endpoints checks workspace membership on every request." },
-      { area: "Voice orchestration", text: "Integrated Vapi through authenticated webhooks and tool calls for knowledge lookup, lead capture, availability checks and booking. Each call's assistant is verified against the workspace it claims, so a call can never act on another business's data." },
-      { area: "Booking workflows", text: "Implemented Google Calendar OAuth scheduling (free/busy, create, reschedule, cancel). Idempotency keys on booking requests mean a retried tool call cannot double-book a slot." },
+      { area: "Knowledge-grounded responses", text: "Implemented semantic retrieval over owner-approved business information with pgvector and gte-small embeddings, re-ranked by term overlap and intent. Similarity and margin thresholds send ambiguous or unsupported questions to a fallback instead of a guess." },
+      { area: "Multi-tenant architecture", text: "Built isolated business workspaces on Supabase Postgres with row-level security, JWT authentication and owner, admin and viewer roles. A 220+ endpoint FastAPI backend checks workspace membership on every request." },
+      { area: "Voice and booking workflows", text: "Integrated Vapi through authenticated webhooks and tool calls for knowledge lookup, lead capture and booking, with Google Calendar OAuth scheduling. Idempotency keys stop a retried tool call from double-booking a slot." },
       { area: "Billing and usage controls", text: "Integrated Stripe subscriptions with signature-verified, de-duplicated webhooks, plus a call-minute usage ledger with 80, 95 and 100 percent alerts and a 240-second per-call cap enforced through the voice provider." },
-      { area: "Automated onboarding", text: "Built an SSRF-safe website and PDF importer so a business can bring its existing content into the platform without exposing the backend to arbitrary URLs." },
-      { area: "Reliability and validation", text: "Maintained 36 Supabase migrations, 280+ pytest cases and GitHub Actions CI that includes live read-only smoke tests against the deployed app." },
+      { area: "Reliability and onboarding", text: "36 Supabase migrations, 280+ pytest cases and GitHub Actions CI with live read-only smoke tests, plus an SSRF-safe website and PDF importer for onboarding." },
     ],
     problem:
-      "A phone assistant that improvises will quote wrong prices, claim bookings that never happened, or surface one business's information to another. The engineering problem is deciding when retrieved knowledge is reliable enough to say to a caller, isolating each business's data, and keeping booking and billing correct when calls retry or providers fail.",
+      "A phone assistant that improvises will quote wrong prices, claim bookings that never happened, or surface one business's data to another. The work is deciding when retrieved knowledge is reliable enough to say aloud, isolating each business, and keeping booking and billing correct when calls retry.",
     architecture:
-      "A caller reaches a Vapi voice agent, which calls FastAPI tool webhooks. The backend resolves the workspace, retrieves approved knowledge from Supabase Postgres with pgvector, and either answers from it or falls back. Bookings go to Google Calendar through idempotent reservations, and call minutes feed a usage ledger tied to Stripe subscriptions.",
+      "A caller reaches a Vapi voice agent, which calls FastAPI tool webhooks. The backend resolves the workspace, retrieves approved knowledge from Supabase Postgres with pgvector, and either answers from it or falls back. Bookings go to Google Calendar, and call minutes feed a usage ledger tied to Stripe.",
     decisions: [
-      { q: "Retrieval with thresholds instead of free generation", a: "A match must clear a similarity threshold and beat the runner-up by a margin. When two approved answers are close the question is ambiguous, so the agent asks or escalates rather than picking one." },
-      { q: "Tenant isolation enforced on the server", a: "Records carry an organization ID, client access to tables is denied, and every request and voice webhook is checked against workspace membership or assistant ownership. Isolation does not depend on the voice provider behaving." },
-      { q: "Idempotent bookings", a: "Booking requests carry a key derived from the workspace, call, start time, duration, name and service. A retry returns the original result and a taken slot returns a conflict." },
-      { q: "Limits at the provider, not only in the app", a: "The 240-second cap is sent to the voice provider as a call limit, and the usage ledger blocks inbound calls once a workspace's allowance is spent." },
-    ],
-    results: [
-      ["Scale of the system", "220+ FastAPI endpoints across isolated business workspaces"],
-      ["Testing", "280+ pytest cases in CI, plus live read-only smoke tests"],
-      ["Schema", "36 Supabase migrations"],
-      ["Safeguards", "240-second per-call cap; 80, 95 and 100 percent usage alerts"],
-      ["Stage", "Supervised pilot"],
+      { q: "Retrieval with thresholds instead of free generation", a: "A match must clear a similarity threshold and beat the runner-up by a margin. When two approved answers are close the question is ambiguous, so the agent asks or escalates." },
+      { q: "Tenant isolation enforced on the server", a: "Records carry an organization ID, client table access is denied, and every request and voice webhook is checked against workspace membership or assistant ownership." },
+      { q: "Idempotent bookings", a: "Booking requests carry a key derived from the workspace, call, start time, duration, name and service, so a retry returns the original result and a taken slot returns a conflict." },
     ],
     techGroups: [
       { label: "Languages and frameworks", items: ["Python", "FastAPI", "Uvicorn", "Pydantic", "httpx"] },
@@ -50,11 +41,9 @@ export const projectContent = {
     highlights: [
       { area: "Hybrid retrieval", text: "Built a Python retriever that combines Pinecone dense search with BM25 keyword search, merges the rankings with reciprocal rank fusion, and reranks with Cohere. It scores 0.88 MRR, 0.70 Recall@10 and 0.62 Precision@5 on a 125-question benchmark." },
       { area: "Evaluation harness", text: "Built the benchmark and a regression harness around it: golden cases, adversarial cases designed to fail, a check on every pull request and a nightly live evaluation." },
-      { area: "SEC data ingestion", text: "Built a resumable EDGAR ingestion pipeline that processed 4,262 Pinecone chunks, with index-parity checks so a crashed run resumes without reprocessing filings or leaving the index out of sync." },
-      { area: "Retrieval isolation", text: "Added ticker and year scope filtering in FastAPI before generation, giving full comparison coverage with zero cross-company or cross-year leakage." },
-      { area: "Source attribution", text: "Answers cite the exact filing text they were built from, so every claim can be checked against the 10-K." },
+      { area: "SEC data ingestion", text: "Built a resumable EDGAR ingestion pipeline that processed 4,262 Pinecone chunks, with index-parity checks so a crashed run resumes safely. Covered by 320 automated tests." },
+      { area: "Retrieval isolation", text: "Added ticker and year scope filtering in FastAPI before generation, giving full comparison coverage with zero cross-company or cross-year leakage. Answers cite the exact filing text." },
       { area: "Latency", text: "Cut median answer time from 7.6s to 2.0s (end-to-end p95 from 19.5s to 5.4s), a 74% reduction, by bounding output tokens." },
-      { area: "Testing", text: "Backed the system with 320 automated tests." },
     ],
     problem:
       "Generic AI answers about companies sound confident but cannot be traced to a source, and a comparison across companies or years can quietly mix them up. A useful system needs retrieval that finds the right passages, scope control that prevents mixing, and a way to prove both with measurements.",
@@ -64,14 +53,6 @@ export const projectContent = {
       { q: "Hybrid retrieval over vector search alone", a: "Filings are full of exact terms such as product names, risk factors and tickers that embeddings blur. Dense plus BM25, fused with reciprocal rank fusion and reranked, covers both meaning and exact wording." },
       { q: "Scope filtering before generation", a: "Filtering by ticker and year in the retrieval layer means the generator only sees passages from the requested scope, which is what prevents cross-company and cross-year leakage." },
       { q: "Resumable ingestion with parity checks", a: "EDGAR ingestion is long and fails partway. Parity checks between the source and the index let a run resume safely." },
-      { q: "Bounded output tokens", a: "Capping generation length was the lever that cut median answer time from 7.6s to 2.0s without touching retrieval quality." },
-    ],
-    results: [
-      ["Retrieval quality", "0.88 MRR, 0.70 Recall@10, 0.62 Precision@5 on 125 questions"],
-      ["Answer latency", "Median 7.6s to 2.0s; p95 19.5s to 5.4s (−74%)"],
-      ["Corpus", "4,262 Pinecone chunks indexed"],
-      ["Scope control", "Zero cross-company and cross-year leakage"],
-      ["Testing", "320 automated tests"],
     ],
     techGroups: [
       { label: "Languages and frameworks", items: ["Python", "FastAPI", "Pydantic", "TypeScript", "Next.js", "React"] },
@@ -99,11 +80,6 @@ export const projectContent = {
       { q: "Kafka between the servers and Postgres", a: "Persistence becomes asynchronous and batched, so message delivery is limited by the network and not by database write latency." },
       { q: "Only the proxy is exposed", a: "Everything except the TLS-terminated Nginx proxy stays on the private network." },
     ],
-    results: [
-      ["Instances", "3 Go Fiber servers behind Nginx"],
-      ["Per-room connections", "100 WebSocket connections synced via Redis pub/sub"],
-      ["Write throughput", "Kafka buffering up to 10,000 messages per second"],
-    ],
     techGroups: [
       { label: "Languages and frameworks", items: ["Go", "Fiber", "WebSockets"] },
       { label: "Messaging and data", items: ["Redis", "Kafka", "PostgreSQL"] },
@@ -122,10 +98,6 @@ export const projectContent = {
     ],
     problem:
       "A single average score can say a new prompt is better while hiding the specific cases that got worse. Shipping an agent needs a repeatable decision rule and a list of exactly what regressed.",
-    results: [
-      ["Evaluation cases", "30 synthetic business-agent cases across 2 prompt versions"],
-      ["Release criteria", "At least 90% pass rate and 100% secret refusal"],
-    ],
     techGroups: [
       { label: "Languages and frameworks", items: ["TypeScript", "Next.js"] },
       { label: "AI and evaluation", items: ["LLM evaluation", "Groq", "Gemini"] },
@@ -144,11 +116,6 @@ export const projectContent = {
     ],
     problem:
       "OCR and a language model can produce a confident approval for an invoice whose quantities or totals do not match the purchase order. The decision needs to be rule-based, explainable and impossible for the model to override.",
-    results: [
-      ["Tests", "63 (43 upstream plus 20 new)"],
-      ["Total tolerance", "1 cent, using Decimal math"],
-      ["Fixtures", "2 original synthetic fixtures"],
-    ],
     techGroups: [
       { label: "Languages and frameworks", items: ["Python", "FastAPI", "React", "Vite"] },
       { label: "AI and document processing", items: ["OCR", "OpenRouter"] },
@@ -167,10 +134,6 @@ export const projectContent = {
     ],
     problem:
       "An agent that can write purchase orders directly is a liability. The workflow needs a human checkpoint, protection against the same proposal being confirmed twice, and a record of every decision.",
-    results: [
-      ["Confirmation", "One confirm per proposal, enforced by an atomic claim (409 on duplicate)"],
-      ["Sandbox", "8 seeded print-supply items; 0 writes to shared data from the public sandbox"],
-    ],
     techGroups: [
       { label: "Languages and frameworks", items: ["Python", "FastAPI", "React", "TypeScript"] },
       { label: "AI", items: ["LLM tool calling"] },
@@ -188,11 +151,6 @@ export const projectContent = {
     ],
     problem:
       "Supplier quotes list costs in different shapes, and a missing freight or duty line quietly makes an offer look cheaper than it is.",
-    results: [
-      ["Comparison", "5 quotes side by side"],
-      ["Extraction", "15+ fields extracted per quote"],
-      ["Storage", "Owner-scoped row-level security"],
-    ],
     techGroups: [
       { label: "Languages and frameworks", items: ["TypeScript", "Next.js", "React", "Zod"] },
       { label: "AI", items: ["Claude API"] },
