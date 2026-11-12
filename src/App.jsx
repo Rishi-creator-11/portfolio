@@ -249,7 +249,7 @@ function Detail({ item, kind }) {
           ))}
           {item.article && (
             <a className="btn btn-small" href={`/blog/${item.article}`}>
-              Engineering write-up
+              How it's built
             </a>
           )}
         </div>
@@ -415,13 +415,37 @@ function PageHead({ label, title, children }) {
 
 function ProjectCard({ p, compact }) {
   const code = p.links.find((l) => l.label === "Code");
+  const links = (
+    <div className={compact ? "pcard-links" : "pcard-links pcard-links-top"}>
+      {compact && (
+        <a className="btn btn-small" href={`/projects/${p.id}`}>
+          Details
+        </a>
+      )}
+      {code && (
+        <a className="btn btn-small" href={code.href} target="_blank" rel="noreferrer">
+          GitHub <ArrowUpRight size={14} aria-hidden="true" />
+        </a>
+      )}
+      {p.article && (
+        <a className="btn btn-small" href={`/blog/${p.article}`}>
+          How it's built
+        </a>
+      )}
+    </div>
+  );
   return (
-    <article className="pcard">
-      <p className="pcard-cat">{p.category || p.cats.join(" · ")} · {p.period}</p>
-      <h3>
-        <a href={`/projects/${p.id}`}>{p.name}</a>
-      </h3>
-      {p.context && <p className="pcard-context">{p.context}</p>}
+    <article className={compact ? "pcard" : "pcard pcard-wide"}>
+      <div className="pcard-head">
+        <div>
+          <p className="pcard-cat">{p.category || p.cats.join(" · ")} · {p.period}</p>
+          <h3>
+            <a href={`/projects/${p.id}`}>{p.name}</a>
+          </h3>
+          {p.context && <p className="pcard-context">{p.context}</p>}
+        </div>
+        {!compact && links}
+      </div>
       <p className="pcard-sum">{p.oneLine || p.tagline}</p>
       {compact && p.teaser ? (
         <p className="pcard-teaser">{p.teaser}</p>
@@ -433,21 +457,7 @@ function ProjectCard({ p, compact }) {
         </ul>
       )}
       <StackTiles names={(p.chips || p.stack).slice(0, compact ? 4 : 6)} />
-      <div className="pcard-links">
-        <a className="btn btn-small" href={`/projects/${p.id}`}>
-          Details
-        </a>
-        {code && (
-          <a className="btn btn-small" href={code.href} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
-        )}
-        {p.article && (
-          <a className="btn btn-small" href={`/blog/${p.article}`}>
-            Write-up
-          </a>
-        )}
-      </div>
+      {compact && links}
     </article>
   );
 }
@@ -564,7 +574,7 @@ function ProjectsPage() {
           </button>
         ))}
       </div>
-      <div className="pgrid">
+      <div className="pgrid pgrid-list">
         {list.map((p) => (
           <ProjectCard key={p.id} p={p} />
         ))}

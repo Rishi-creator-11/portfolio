@@ -1345,3 +1345,12 @@ html, body { overflow-x: clip; }
 .st-console .st-foot { padding: 18px 26px; font-size: 14px; }
 @media (max-width: 640px) { .st-console .st-tabs, .st-console .st-body, .st-console .st-bar, .st-console .st-foot { padding-left: 16px; padding-right: 16px; } .st-console .st-tile { padding: 11px 14px 11px 12px; font-size: 14px; } }
 .pcard-teaser { margin: 0; color: var(--text); font-size: 0.95rem; line-height: 1.5; }
+
+/* ---------- projects page: vertical list, links at the top of each card ---------- */
+.pgrid.pgrid-list { grid-template-columns: 1fr; gap: 18px; }
+.pcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.pcard-links-top { display: flex; gap: 8px; flex-wrap: wrap; margin: 0; }
+.pcard-wide { padding: 26px 30px; }
+.pcard-wide .pcard-sum { max-width: 75ch; }
+.pcard-wide .pcard-points { max-width: 80ch; }
+@media (max-width: 640px) { .pcard-wide { padding: 20px 18px; } }
