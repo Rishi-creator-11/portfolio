@@ -24,25 +24,20 @@ export const projects = [
     year: "2026",
     name: "AlphaBrief",
     why: "I wanted answers about public companies that I could check against the filing, not confident answers from nowhere. So I built AlphaBrief, then spent most of the time trying to break it with golden test cases and cases built to fail on purpose.",
-    plain: "Ask a question about a public company and get an answer that cites the exact filing text. 0.88 MRR on a 125-question benchmark.",
+    plain: "Ask a question about a public company and get an answer that cites the exact filing text. 0.86 MRR on a 125-question benchmark.",
     simple: "Hybrid retrieval · Evaluation · Source attribution",
     tagline: "Research SEC 10-K filings and get answers that cite the filing.",
     status: "Live",
     period: "Apr 2026 – Present",
-    headline: { value: "0.88", label: "MRR" },
+    headline: { value: "0.86", label: "MRR" },
     summary:
       "A retrieval system over SEC 10-K filings that answers multi-year company questions with citations back to the filing. Most of the engineering went into retrieval quality and measuring it, not into the LLM call.",
     problem:
       "Generic AI answers about companies sound confident but can't be traced to a source, and a comparison across companies or years can quietly mix them up. I needed answers a reader could check, and a way to prove the retrieval was actually finding the right passages.",
-    metrics: [
-      { v: "0.88", l: "MRR, 125-question benchmark" },
-      { v: "−74%", l: "median answer time (7.6s to 2.0s)" },
-      { v: "0", l: "cross-company or cross-year leakage in tests" },
-    ],
     decisions: [
       {
         q: "Why hybrid retrieval instead of vector search alone?",
-        a: "Filings are full of exact terms (product names, risk factors, tickers) that dense embeddings blur. Pinecone dense search plus BM25 keyword search, merged with rank fusion and reranked by Cohere, covers both meaning and exact wording.",
+        a: "Filings are full of exact terms (product names, risk factors, tickers) that dense embeddings blur. Dense Pinecone search plus BM25, merged with rank fusion and reranked by Cohere, covers both meaning and exact wording.",
       },
       {
         q: "Why filter by ticker and year before generation?",
@@ -54,26 +49,25 @@ export const projects = [
       },
     ],
     bullets: [
-      "Built the hybrid retriever (Pinecone dense search, BM25, rank fusion, Cohere rerank) and a 125-question benchmark to score it.",
-      "Built a resumable SEC EDGAR ingestion pipeline that indexed 4,262 chunks, with index-parity checks and 320 automated tests.",
-      "Added ticker and year scope filtering in FastAPI before generation, giving full comparison coverage with no cross-company or cross-year leakage in tests.",
-      "Cut median answer time from 7.6s to 2.0s (p95 from 19.5s to 5.4s) by bounding output tokens.",
+      "Built the hybrid retriever (dense Pinecone search, BM25, rank fusion, Cohere rerank) and the benchmark used to score it.",
+      "Built a resumable SEC EDGAR ingestion pipeline with index-parity checks, now covering 92 companies and 274 filings.",
+      "Applied ticker and year filters in FastAPI before retrieval, backed by tests asserting zero cross-company and cross-year leakage.",
     ],
     results: [
-      ["MRR / Recall@10 / Precision@5", "0.88 / 0.70 / 0.62"],
-      ["Benchmark", "125 questions, one evaluation run (figures are not mixed across runs)"],
-      ["Corpus", "4,262 chunks indexed from SEC 10-K filings"],
-      ["Answer latency", "median 7.6s to 2.0s, p95 19.5s to 5.4s"],
-      ["Automated tests", "320"],
+      ["Current retrieval benchmark", "MRR 0.86, Recall@10 0.66, Precision@5 0.60 on benchmark_v3_repool (125 questions, 8 companies), scored 2026-09-29 against the full 92-company corpus"],
+      ["Earlier checkpoint", "MRR 0.88, Recall@10 0.70, Precision@5 0.62 when the corpus was 10 companies. The drop tracks BM25 scoring across a corpus about 10x larger"],
+      ["Scope and leakage", "Asserted by tests, not sampled from the benchmark: 0 cross-company and 0 cross-year leakage"],
+      ["Test suite", "362 backend tests"],
     ],
     limits: [
-      "Benchmark relevance judgments are LLM-assisted, not human-labeled.",
-      "Built for research support and disclosure analysis. It is not investment advice.",
+      "Relevance judgments are model-assisted, not human-labeled.",
+      "The question set covers 8 of the 92 companies. Extending it is ongoing work.",
+      "Research support and disclosure analysis, not investment advice.",
     ],
-    stack: ["Python", "FastAPI", "Pydantic", "SQLAlchemy", "Alembic", "PostgreSQL", "pgvector", "Pinecone", "BM25", "Cohere Rerank", "OpenAI", "Redis", "BeautifulSoup", "yfinance", "SEC EDGAR", "Pytest", "Next.js", "React", "TypeScript", "Playwright", "Vitest"],
+    stack: ["Python", "FastAPI", "Pinecone", "BM25", "Cohere Rerank", "SEC EDGAR", "Pytest"],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app/" },
-      { label: "Code", href: "https://github.com/Rishi-creator-11/Alphabrief" },
+      { label: "Code", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
     ],
     images: ["/projects/alphabrief-hero.webp", "/projects/alphabrief-panel.webp"],
     diagram: {
@@ -100,23 +94,22 @@ export const projects = [
     cats: ["Distributed", "Backend"],
     year: "2025",
     name: "Distributed Chat Platform",
-    tagline: "Real-time chat that stays up when one server dies and absorbs traffic spikes.",
+    tagline: "Real-time chat across several Go servers, with Kafka keeping database writes off the delivery path.",
     status: "Deployed on AWS",
     period: "Sep 2025 – Dec 2025",
-    headline: { value: "10K/s", label: "msgs via Kafka" },
+    headline: { value: "3", label: "Go instances" },
     summary:
-      "A chat system built across several servers instead of one. Messages fan out between instances in real time, and the database is kept off the hot path so a burst of writes can't slow delivery down.",
-    metrics: [
-      { v: "3", l: "Go Fiber instances" },
-      { v: "100", l: "WebSocket connections per room" },
-      { v: "10K/s", l: "messages buffered through Kafka" },
+      "A chat system built across several servers instead of one. Messages fan out between instances through Redis pub/sub, and Kafka lets the database absorb writes in batches so a burst can't slow delivery.",
+    limits: [
+      "The 10,000 messages per second figure is the buffering capacity I designed and configured for. I have not published a load test, so treat it as a design target.",
+      "I haven't tested failover, and there is no public repository or live demo for this project.",
     ],
     bullets: [
-      "Runs chat across 3 Go Fiber instances behind Nginx, syncing 100 WebSocket connections per room through Redis pub/sub.",
-      "Kafka absorbs up to 10,000 messages per second. A consumer batches writes into Postgres so the database stays off the write-hot path.",
-      "Dockerized stack deployed to AWS (EC2, S3) with Terraform and GitHub Actions CI/CD. Only a TLS-terminated Nginx proxy is exposed.",
+      "Ran chat across 3 Go Fiber instances behind Nginx, syncing 100 WebSocket connections per room through Redis pub/sub.",
+      "Put Kafka in front of Postgres, with a consumer that batches writes so the database stays off the write-hot path.",
+      "Deployed the Dockerized stack to AWS (EC2, S3) with Terraform and GitHub Actions CI/CD, exposing only a TLS-terminated Nginx proxy.",
     ],
-    stack: ["Go", "Fiber", "WebSockets", "Redis", "Kafka", "PostgreSQL", "Nginx", "Docker", "Terraform", "AWS"],
+    stack: ["Go", "Fiber", "WebSockets", "Redis", "Kafka", "PostgreSQL", "Nginx", "Terraform", "AWS"],
     links: [],
     images: [],
     diagram: {
@@ -150,20 +143,15 @@ export const projects = [
     tagline: "Multi-tenant AI voice assistant for business calls, scheduling and customer questions.",
     status: "Supervised pilot",
     period: "Nov 2026 – Present",
-    headline: { value: "4", label: "refusal guards on answers" },
+    headline: { value: "Pilot", label: "stage" },
     summary:
       "A platform where each business approves its own knowledge, and a phone assistant answers callers from that knowledge, captures leads, and books appointments through connected calendars. It is at the supervised-pilot stage.",
     problem:
       "A phone assistant that improvises will quote wrong prices, invent bookings, or leak one business's details to another. The hard part is deciding when retrieved information is reliable enough to say out loud, keeping each business's data isolated, and surviving the failures of the services it depends on.",
-    metrics: [
-      { v: "384-dim", l: "gte-small embeddings in pgvector" },
-      { v: "4", l: "refusal guards before an answer is spoken" },
-      { v: "240s", l: "enforced per-call duration cap" },
-    ],
     decisions: [
       {
         q: "How does it decide whether to answer?",
-        a: "It embeds the caller's question, retrieves approved facts through pgvector, then re-ranks with term overlap and intent. It refuses on low similarity, an unsupported topic, an item that isn't listed, or an ambiguous match. Answers are copied from approved facts rather than generated, so the model can't invent a price.",
+        a: "It embeds the caller's question, retrieves approved facts through pgvector, then re-ranks with term overlap and intent. It refuses on low similarity, an unsupported topic, an item that isn't listed, or an ambiguous match. The lookup returns approved text verbatim or nothing. Whether the voice model stays faithful to that text on live calls hasn't been measured yet.",
       },
       {
         q: "How is one business kept from seeing another's data?",
@@ -179,10 +167,10 @@ export const projects = [
       },
     ],
     bullets: [
-      "Built the FastAPI backend and Supabase Postgres schema for isolated business workspaces, with JWT auth and owner, admin and viewer roles.",
-      "Implemented semantic retrieval over owner-approved knowledge (gte-small embeddings, pgvector, confidence thresholds, re-ranking) with explicit refusal paths.",
-      "Integrated Vapi voice: authenticated webhooks, tool calls for knowledge lookup, lead capture and booking, and idempotent end-of-call reports.",
-      "Added Google Calendar OAuth booking (free/busy, create, reschedule, cancel), Stripe subscription checkout with signed, de-duplicated webhooks, and a call-minute usage ledger.",
+      "Built the FastAPI backend and Supabase schema for isolated business workspaces with JWT auth and owner, admin and viewer roles.",
+      "Implemented semantic retrieval over owner-approved knowledge with confidence thresholds, re-ranking and explicit refusal paths.",
+      "Integrated Vapi voice through authenticated webhooks and tool calls for knowledge lookup, lead capture and booking.",
+      "Added Google Calendar booking, Stripe subscription checkout with signed webhooks, and a call-minute usage ledger.",
     ],
     results: [
       ["Backend test suite", "284 pytest cases across 23 files, run in GitHub Actions"],
@@ -194,7 +182,7 @@ export const projects = [
       "Supervised pilot only: human failover, concurrent calls and Stripe renewal and failed-payment flows still need testing before unsupervised use.",
       "Retrieval thresholds are provisional and will be calibrated against real calls. Usage is tracked in my own ledger, not Stripe metered billing.",
     ],
-    stack: ["Python", "FastAPI", "Pydantic", "Supabase", "PostgreSQL", "pgvector", "Vapi", "OpenAI", "Stripe", "Google Calendar API", "Pytest", "Render", "GitHub Actions"],
+    stack: ["Python", "FastAPI", "Supabase", "PostgreSQL", "pgvector", "Vapi", "Stripe", "Google Calendar API", "Pytest"],
     links: [{ label: "Code", href: "https://github.com/Rishi-creator-11/callpilot" }],
     images: [],
     diagram: {
@@ -232,15 +220,10 @@ export const projects = [
       "Mario is an npm library for sharing state across clients and servers, and I built its core sync layer during my software engineering internship at Pencil Spaces (Pencil Learning Technologies) in San Francisco, the summer between my junior and senior years. It keeps shared state consistent for everyone using an embedded app, and it is integrated into 10+ apps.",
     problem:
       "Shared state was synced by sending the full state on every change. Updates took around 500ms, clients drifted apart, and concurrent edits could overwrite each other, especially around reconnects.",
-    metrics: [
-      { v: "<100ms", l: "state updates, from ~500ms" },
-      { v: "−30%", l: "cross-client state drift" },
-      { v: "10+", l: "apps integrated" },
-    ],
     decisions: [
       {
         q: "Why JSON Patch diffs instead of full state?",
-        a: "Sending only what changed makes every update small. Replacing full-state sync with incremental JSON Patch diffs is what took state updates from about 500ms to under 100ms.",
+        a: "Sending only what changed makes every update small, which is where the drop from about 500ms to under 100ms came from.",
       },
       {
         q: "Why CRDTs for concurrent edits?",
@@ -248,14 +231,14 @@ export const projects = [
       },
       {
         q: "Why put the logic in an SDK?",
-        a: "One shared package replaced per-app sync code. Integrating it into 10+ embedded apps removed about 1K lines of per-app glue.",
+        a: "One shared package replaces per-app sync code, which removed about 1K lines of glue across the apps.",
       },
     ],
     bullets: [
-      "Built the core sync infrastructure for the Mario SDK, cutting state-update latency from ~500ms to under 100ms with incremental JSON Patch diffs.",
-      "Designed conflict-free merge logic with Yjs CRDTs, preventing lost updates and keeping state consistent after reconnects.",
-      "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift by 30% and removing about 1K lines of per-app glue code.",
-      "Automated the typed build, test and npm publish with GitHub Actions and Docker, trimming release cycle time by 15%.",
+      "Built the core sync layer, replacing full-state updates with incremental JSON Patch diffs.",
+      "Designed conflict-free merge logic with Yjs CRDTs so concurrent edits and reconnects don't lose updates.",
+      "Integrated the SDK into 10+ embedded apps in place of per-app sync code.",
+      "Automated the typed build, test and npm publish with GitHub Actions and Docker.",
     ],
     results: [
       ["State-update latency", "~500ms to under 100ms"],
@@ -263,7 +246,7 @@ export const projects = [
       ["Apps integrated", "10+"],
       ["Release cycle time", "−15%"],
     ],
-    limits: ["These numbers come from my Pencil Spaces internship. The host apps belong to Pencil, so there is no public demo to link."],
+    limits: ["These results are the figures I measured and reported during my Pencil Spaces internship. I don't have a public benchmark or demo, because the host apps belong to Pencil."],
     stack: ["TypeScript", "Yjs (CRDT)", "JSON Patch", "GitHub Actions", "Docker", "npm"],
     links: [{ label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
     images: [],
