@@ -1247,3 +1247,26 @@ html, body { overflow-x: clip; }
   .nav-mobile .theme-btn, .nav-mobile .menu-btn { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--text); box-shadow: 0 2px 8px -4px rgba(0,0,0,.2); padding: 0; }
   .nav-mobile .theme-btn svg, .nav-mobile .menu-btn svg { width: 18px; height: 18px; }
 }
+
+/* ---------- case study + home additions ---------- */
+.pgrid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.skill-line { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin: 0; }
+.xp-home { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.xp-home li { display: grid; grid-template-columns: minmax(200px, 280px) 1fr; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.xp-home h3 { font-size: 1.25rem; }
+.xp-home-role { color: var(--muted); font-size: 0.88rem; margin: 4px 0 0; }
+.xp-home-line { margin: 0; max-width: 62ch; }
+.decisions { display: flex; flex-direction: column; gap: 14px; }
+.decisions li { padding: 16px 18px; background: var(--ink); border: 1px solid var(--line); border-radius: 12px; }
+.decisions h5 { margin: 0 0 6px; font: 700 1rem var(--display); letter-spacing: -0.01em; }
+.decisions p { margin: 0; color: var(--muted); max-width: 70ch; }
+.results { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.results th, .results td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.results th { width: 38%; color: var(--muted); font-weight: 500; }
+.results td { font-family: var(--mono); font-size: 0.88rem; }
+.social-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 8px; }
+.social-card { text-decoration: none; display: flex; flex-direction: column; gap: 10px; transition: border-color .15s, transform .15s; }
+.social-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+.social-card p { margin: 0; color: var(--muted); }
+.repo { text-decoration: none; display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 700px) { .xp-home li { grid-template-columns: 1fr; } .results th { width: 45%; } }

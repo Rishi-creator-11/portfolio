@@ -67,6 +67,7 @@ function Nav() {
     ["Blog", "/blog"],
     ["Resume", "/resume"],
     ["Contact", "/contact"],
+    ["Socials", "/socials"],
   ];
   const active = (h) => (h === "/" ? PATH === "/" : PATH.startsWith(h));
   const [open, setOpen] = useState(false);
@@ -148,27 +149,24 @@ function Hero() {
       <div className="hero-copy">
         <p className="status">
           <span className="pulse" aria-hidden="true" />
-          Open to new roles and collabs. Say hi!
+          Open to full-time software engineering roles
         </p>
         <h1>
           Hi, I'm Rishi
         </h1>
         <p className="hero-lede">
-          Welcome! I build AI that thinks fast, cites its sources, and doesn't make stuff up.
+          Software engineer building AI applications and production software.
         </p>
         <p className="hero-sub">
-          I treat AI agents like my own team. I give them real work, supervise every run, and train them until
-          they're better than yesterday. Best part of my day, every day.
+          I'm a Computer Science graduate from Stony Brook, specializing in AI and Data Science. I turn hard technical
+          problems into software people use: retrieval systems, real-time infrastructure, and business applications.
         </p>
         <dl className="hero-lines">
           <div><dt>Retrieval MRR</dt><dd>0.88</dd></div>
-          <div><dt>Kafka throughput</dt><dd>10K msg/s</dd></div>
           <div><dt>Sync latency</dt><dd>&lt;100ms, was ~500</dd></div>
+          <div><dt>SDK integrations</dt><dd>10+ apps</dd></div>
           <div><dt>Products shipped</dt><dd>~97 for a print shop</dd></div>
         </dl>
-        <p className="hero-fact">
-          <span aria-hidden="true">⚡</span> Fun fact: I built this whole site in one night, with my agents working alongside me.
-        </p>
         <div className="hero-cta">
           <a className="btn btn-primary" href="/projects">
             View projects
@@ -202,20 +200,24 @@ function Hero() {
 }
 
 function Detail({ item, kind }) {
+  const isProject = kind === "projects";
   return (
     <article className="detail" key={item.id} aria-live="polite">
       <header className="detail-head">
         <div>
           <h3>{item.name}</h3>
-          <p className="detail-sub">{kind === "projects" ? item.tagline : `${item.role} · ${item.place}`}</p>
+          <p className="detail-sub">{isProject ? item.tagline : `${item.role} · ${item.place}`}</p>
         </div>
         <div className="detail-tags">
-          {kind === "projects" && <span className="chip chip-status">{item.status}</span>}
+          {isProject && <span className="chip chip-status">{item.status}</span>}
           <span className="chip">{item.period}</span>
         </div>
       </header>
 
-      <p className="detail-summary">{item.summary}</p>
+      <section className="block">
+        {isProject && <h4>Summary</h4>}
+        <p className="detail-summary">{item.summary}</p>
+      </section>
 
       {item.why && (
         <section className="why">
@@ -224,21 +226,80 @@ function Detail({ item, kind }) {
         </section>
       )}
 
-      <div className="metrics">
-        {item.metrics.map((m) => (
-          <div className="metric" key={m.l}>
-            <div className="metric-v">{m.v}</div>
-            <div className="metric-l">{m.l}</div>
-          </div>
-        ))}
-      </div>
+      {item.problem && (
+        <section className="block">
+          <h4>The problem</h4>
+          <p className="detail-summary">{item.problem}</p>
+        </section>
+      )}
+
+      {item.metrics?.length > 0 && (
+        <div className="metrics">
+          {item.metrics.map((m) => (
+            <div className="metric" key={m.l}>
+              <div className="metric-v">{m.v}</div>
+              <div className="metric-l">{m.l}</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {item.diagram && (
         <section className="block">
-          <h4>How it works</h4>
+          <h4>Architecture</h4>
           <div className="diagram-scroll">
             <Diagram {...item.diagram} label={`Architecture of ${item.name}`} />
           </div>
+        </section>
+      )}
+
+      {item.decisions?.length > 0 && (
+        <section className="block">
+          <h4>Engineering decisions</h4>
+          <ul className="decisions">
+            {item.decisions.map((d) => (
+              <li key={d.q}>
+                <h5>{d.q}</h5>
+                <p>{d.a}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section className="block">
+        <h4>{isProject ? "What I built" : "What I did"}</h4>
+        <ul className="bullets">
+          {item.bullets.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      </section>
+
+      {item.results?.length > 0 && (
+        <section className="block">
+          <h4>Results and evaluation</h4>
+          <table className="results">
+            <tbody>
+              {item.results.map((r) => (
+                <tr key={r[0]}>
+                  <th scope="row">{r[0]}</th>
+                  <td>{r[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
+
+      {item.limits?.length > 0 && (
+        <section className="block">
+          <h4>Current limitations</h4>
+          <ul className="bullets">
+            {item.limits.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -254,21 +315,11 @@ function Detail({ item, kind }) {
       )}
 
       <section className="block">
-        <h4>What I built</h4>
-        <ul className="bullets">
-          {item.bullets.map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="block">
-        <h4>Built with</h4>
+        <h4>Tech stack</h4>
         <StackTiles names={item.stack} />
       </section>
 
       <div className="detail-foot">
-
         {item.links.length > 0 && (
           <div className="links">
             {item.links.map((l) => (
@@ -492,9 +543,43 @@ function HomePage() {
             See all projects <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
-        <div className="pgrid pgrid-2">
+        <div className="pgrid pgrid-3">
           {picks.map((p) => (
             <ProjectCard key={p.id} p={p} simple />
+          ))}
+        </div>
+      </section>
+      <section className="about-section" aria-labelledby="xp-home-title">
+        <div className="row-head">
+          <div>
+            <p className="eyebrow">Experience</p>
+            <h2 id="xp-home-title">Where I've worked</h2>
+          </div>
+          <a className="see-all" href="/about#experience">
+            Full experience <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <ul className="xp-home">
+          {work.filter((w) => w.home).map((w) => (
+            <li key={w.id}>
+              <div>
+                <h3>{w.short.co}</h3>
+                <p className="xp-home-role">{w.short.role} · {w.period}</p>
+              </div>
+              <p className="xp-home-line">{w.home}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="about-section" aria-labelledby="exp-skills-title">
+        <p className="eyebrow">Technical expertise</p>
+        <h2 id="exp-skills-title">What I work with</h2>
+        <div className="skill-grid">
+          {skills.map((g) => (
+            <div className="skill-card" key={g.group}>
+              <h3>{g.group}</h3>
+              <p className="skill-line">{g.items.join(", ")}</p>
+            </div>
           ))}
         </div>
       </section>
@@ -509,30 +594,6 @@ function HomePage() {
           </a>
         </div>
         <PostList list={posts.slice(0, 2)} />
-      </section>
-      <section className="about-section" aria-labelledby="otc-title">
-        <p className="eyebrow">Off the clock</p>
-        <h2 id="otc-title">Outside of code</h2>
-        <div className="otc">
-          <p className="otc-text">
-            I'm into music, mostly rap, country and house. I like hiking, lifting and catching live music, and I'm a
-            big foodie. Always happy to swap recommendations.
-          </p>
-          <ul className="otc-chips" aria-label="Things I'm into">
-            <li><span aria-hidden="true">🎧</span> Rap, country &amp; house</li>
-            <li><span aria-hidden="true">🎤</span> Live music</li>
-            <li><span aria-hidden="true">🥾</span> Hiking</li>
-            <li><span aria-hidden="true">🏋️</span> Lifting</li>
-            <li><span aria-hidden="true">🍜</span> Foodie</li>
-          </ul>
-        </div>
-      </section>
-      <section className="about-section" aria-labelledby="play-title">
-        <p className="eyebrow">Playground</p>
-        <h2 id="play-title">Poke around</h2>
-        <div className="play-grid">
-          <Terminal />
-        </div>
       </section>
       <Contact />
     </>
@@ -757,6 +818,60 @@ function ContactPage() {
   );
 }
 
+const SHOW_REPOS = ["callpilot", "alphabrief", "sec-rag-engine", "portfolio", "llm-eval-dashboard", "doc-approval-demo", "lambda-erp"];
+
+function SocialsPage() {
+  const [repos, setRepos] = useState(null);
+  useEffect(() => {
+    let live = true;
+    fetch("https://api.github.com/users/Rishi-creator-11/repos?sort=updated&per_page=40")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => live && setRepos(d.filter((x) => SHOW_REPOS.includes(x.name.toLowerCase())).slice(0, 6)))
+      .catch(() => live && setRepos([]));
+    return () => { live = false; };
+  }, []);
+  return (
+    <>
+      <PageHead label="Connect" title="Where I post and build">
+        Code on GitHub, professional updates on LinkedIn.
+      </PageHead>
+      <div className="social-cards">
+        <a className="skill-card social-card" href={person.linkedin} target="_blank" rel="noreferrer">
+          <h3><Linkedin size={18} aria-hidden="true" /> LinkedIn</h3>
+          <p>Hrishit (Rishi) Kumar, software engineer. Follow for project updates.</p>
+          <span className="see-all">View profile <ArrowUpRight size={16} aria-hidden="true" /></span>
+        </a>
+        <a className="skill-card social-card" href={person.github} target="_blank" rel="noreferrer">
+          <h3><Github size={18} aria-hidden="true" /> GitHub</h3>
+          <p>@Rishi-creator-11. Public repositories and open-source work.</p>
+          <span className="see-all">View profile <ArrowUpRight size={16} aria-hidden="true" /></span>
+        </a>
+      </div>
+      <section className="about-section" aria-labelledby="repos-title">
+        <p className="eyebrow">GitHub</p>
+        <h2 id="repos-title">Recent repositories</h2>
+        {repos === null && <p className="hero-sub">Loading repositories…</p>}
+        {repos && repos.length === 0 && (
+          <p className="hero-sub">
+            Repositories could not be loaded right now. <a href={person.github} target="_blank" rel="noreferrer">Open GitHub</a>.
+          </p>
+        )}
+        {repos && repos.length > 0 && (
+          <div className="pgrid">
+            {repos.map((r) => (
+              <a key={r.id} className="pcard repo" href={r.html_url} target="_blank" rel="noreferrer">
+                <h3>{r.name}</h3>
+                <p className="pcard-sum">{r.description || "No description yet."}</p>
+                <p className="post-meta">{[r.language, r.stargazers_count ? `★ ${r.stargazers_count}` : null].filter(Boolean).join(" · ")}</p>
+              </a>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+}
+
 function NotFound() {
   return (
     <PageHead label="404" title="Page not found">
@@ -775,6 +890,7 @@ export default function App() {
   else if (seg === "blog") page = sub ? <PostPage slug={sub} /> : <BlogPage />;
   else if (seg === "resume") page = <ResumePage />;
   else if (seg === "contact") page = <ContactPage />;
+  else if (seg === "socials") page = <SocialsPage />;
   else page = <NotFound />;
   return (
     <>
