@@ -18,7 +18,7 @@ export default function About() {
         </p>
         <h1>About me</h1>
         <p className="hero-sub">
-          I'm {person.name}. 22, Stony Brook CS grad, and I spend most of my days building with AI in New York.
+          I'm {person.name}. 22, Stony Brook Computer Science grad (specialized in AI and Data Science, 2022 – 2026), and I spend most of my days building with AI in New York.
         </p>
         <nav className="about-jump" aria-label="On this page">
           {sections.map(([l, id]) => (

@@ -506,7 +506,7 @@ export function Terminal() {
       case "": break;
       case "help": out = HELP; break;
       case "whoami":
-        out = ["Rishi. 22, building with AI in New York.", "Stony Brook CS (AI and Data Science), May 2026.", "I build AI that has to be right, not just sound right."];
+        out = ["Rishi. 22, building with AI in New York.", "Stony Brook, B.S. Computer Science, specialized in AI and Data Science, 2022 – 2026.", "I build AI that has to be right, not just sound right."];
         break;
       case "ls":
       case "projects":

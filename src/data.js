@@ -403,8 +403,8 @@ export const skills = [
 
 export const education = {
   school: "Stony Brook University",
-  degree: "B.S. Computer Science, specialization in Artificial Intelligence and Data Science",
-  grad: "Graduated May 2026",
+  degree: "B.S. in Computer Science, specialized in Artificial Intelligence and Data Science",
+  grad: "2022 – 2026, graduated May 2026",
   gpa: "3.6 / 4.0",
   awards: ["Dean's List, 6 semesters", "Far Beyond Scholarship", "Grumman Engineering Scholarship"],
 };

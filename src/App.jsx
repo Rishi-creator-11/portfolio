@@ -204,7 +204,7 @@ function Hero() {
         </div>
         <figcaption>
           <strong>{person.name}</strong>
-          <span>B.S. Computer Science · Stony Brook University, New York</span>
+          <span>B.S. in Computer Science, specialized in AI and Data Science · Stony Brook University, New York · 2022 – 2026</span>
         </figcaption>
       </figure>
     </section>
