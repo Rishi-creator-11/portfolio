@@ -494,7 +494,7 @@ function HomePage() {
           </a>
         </div>
         <ul className="xp-home">
-          {work.filter((w) => w.home).map((w) => (
+          {work.filter((w) => w.home).slice(0, 4).map((w) => (
             <li key={w.id}>
               <div>
                 <h3>{w.short.co}</h3>
