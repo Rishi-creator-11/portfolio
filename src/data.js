@@ -323,7 +323,7 @@ export const work = [
     id: "vip",
     name: "Vertically Integrated Program",
     role: "Software Engineer Intern",
-    place: "Stony Brook University",
+    place: "Stony Brook, NY",
     period: "Aug – Dec 2024",
     headline: { value: "500+", label: "users" },
     summary: "A fintech app built by a team of 10, with secure money transfers and real users.",
