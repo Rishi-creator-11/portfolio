@@ -347,7 +347,7 @@ function Detail({ item, kind }) {
 }
 
 function Console() {
-  const [tab, setTab] = useState("projects");
+  const [tab, setTab] = useState("work");
   const [sel, setSel] = useState({ projects: projects[0].id, work: work[0].id });
   const detailRef = useRef(null);
   const list = tab === "projects" ? projects : work;
@@ -376,13 +376,13 @@ function Console() {
     <section className="console" id="console" aria-labelledby="console-title">
       <div className="section-head">
         <h2 id="console-title">Deep dive</h2>
-        <p>Projects and jobs side by side. Pick one on the left for the full breakdown.</p>
+        <p>Work experience and projects. Pick one on the left for the full breakdown.</p>
       </div>
 
       <div className="tabs" role="tablist" aria-label="Work type">
         {[
+          ["work", "Work experience", work.length],
           ["projects", "Projects", projects.length],
-          ["work", "Internships and jobs", work.length],
         ].map(([id, label, n]) => (
           <button
             key={id}
@@ -534,22 +534,6 @@ function HomePage() {
   return (
     <>
       <Hero />
-      <section className="about-section" aria-labelledby="sel-title">
-        <div className="row-head">
-          <div>
-            <h2 id="sel-title">Featured projects</h2>
-            <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
-          </div>
-          <a className="see-all" href="/projects">
-            See all projects <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
-        </div>
-        <div className="pgrid pgrid-3">
-          {picks.map((p) => (
-            <ProjectCard key={p.id} p={p} compact />
-          ))}
-        </div>
-      </section>
       <section className="about-section" aria-labelledby="xp-home-title">
         <div className="row-head">
           <div>
@@ -572,6 +556,22 @@ function HomePage() {
             </li>
           ))}
         </ul>
+      </section>
+      <section className="about-section" aria-labelledby="sel-title">
+        <div className="row-head">
+          <div>
+            <h2 id="sel-title">Featured projects</h2>
+            <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
+          </div>
+          <a className="see-all" href="/projects">
+            See all projects <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="pgrid pgrid-3">
+          {picks.map((p) => (
+            <ProjectCard key={p.id} p={p} compact />
+          ))}
+        </div>
       </section>
       <section className="about-section" aria-labelledby="exp-skills-title">
         <p className="eyebrow">Technical expertise</p>
