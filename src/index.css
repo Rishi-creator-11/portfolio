@@ -1273,5 +1273,3 @@ html, body { overflow-x: clip; }
 .pcard-context { margin: 0; font-weight: 600; font-size: 0.9rem; color: var(--text); }
 .chip-badge { background: var(--text); color: var(--ink); border-color: var(--text); font-weight: 600; }
 .detail-context { margin: 10px 0 0; padding: 6px 12px; display: inline-block; border: 1px solid var(--line); border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
-.stack-line { margin: 0; color: var(--muted); line-height: 1.7; max-width: 70ch; }
-.edge-flow { animation: none !important; stroke-dasharray: none; opacity: 0.9; }

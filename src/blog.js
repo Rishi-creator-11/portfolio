@@ -24,18 +24,18 @@ export const posts = [
   },
   {
     slug: "ai-assistant-that-never-makes-things-up",
-    title: "I built an AI phone assistant that answers only from approved facts",
+    title: "I built an AI assistant that isn't allowed to make things up",
     date: "2026-11-08",
     tags: ["CallPilot", "pgvector", "FastAPI", "Voice AI"],
     excerpt:
-      "If a phone agent guesses a price or says it booked something it didn't, the business pays for it. So CallPilot's lookup returns only what the business has approved, or nothing.",
+      "If a phone agent guesses a price or says it booked something it didn't, the business pays for it. So CallPilot only answers from what the business has told it.",
     body: [
       { p: "The scariest thing a phone agent can do is sound confident and be wrong. Quote the wrong price. Say an appointment is booked when it isn't. So I gave CallPilot one rule: answer with a fact the business owner approved, word for word, or hand the call off." },
       { h: "How it decides what to say" },
       { p: "Every approved FAQ gets embedded (gte-small, 384 dimensions) and stored in Supabase with pgvector. When a caller asks something, the best match has to clear a similarity threshold and also beat the second-best match by a margin. If two answers are close, the question is ambiguous, so the agent asks or escalates instead of picking one." },
       { ul: [
-        "The lookup returns approved text verbatim, or nothing. Keeping the voice model faithful to that text on live calls is what I test next.",
-        "If there's no approved answer about price, the lookup returns nothing instead of an estimate.",
+        "No generated answers. What the caller hears is the text the owner approved.",
+        "If there's no approved answer about price, it won't estimate one.",
         "Calls cap at 240 seconds, with a wrap-up cue at 215.",
       ] },
       { h: "Every business is its own workspace" },

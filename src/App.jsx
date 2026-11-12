@@ -161,6 +161,12 @@ function Hero() {
           I'm a Computer Science graduate from Stony Brook, specializing in AI and Data Science. I turn hard technical
           problems into software people use: retrieval systems, real-time infrastructure, and business applications.
         </p>
+        <dl className="hero-lines">
+          <div><dt>Retrieval MRR</dt><dd>0.88</dd></div>
+          <div><dt>Sync latency</dt><dd>&lt;100ms, was ~500</dd></div>
+          <div><dt>SDK integrations</dt><dd>10+ apps</dd></div>
+          <div><dt>Products shipped</dt><dd>~97 for a print shop</dd></div>
+        </dl>
         <div className="hero-cta">
           <a className="btn btn-primary" href="/projects">
             View projects
@@ -182,6 +188,13 @@ function Hero() {
           <span>B.S. Computer Science · Stony Brook University, New York</span>
         </figcaption>
       </figure>
+      <div className="stats" role="list">
+        {stats.map((s) => (
+          <div role="listitem" key={s.label}>
+            <Stat s={s} />
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
@@ -219,6 +232,17 @@ function Detail({ item, kind }) {
           <h4>The problem</h4>
           <p className="detail-summary">{item.problem}</p>
         </section>
+      )}
+
+      {item.metrics?.length > 0 && (
+        <div className="metrics">
+          {item.metrics.map((m) => (
+            <div className="metric" key={m.l}>
+              <div className="metric-v">{m.v}</div>
+              <div className="metric-l">{m.l}</div>
+            </div>
+          ))}
+        </div>
       )}
 
       {item.diagram && (
@@ -293,7 +317,7 @@ function Detail({ item, kind }) {
 
       <section className="block">
         <h4>Tech stack</h4>
-        <p className="stack-line">{item.stack.join(", ")}</p>
+        <StackTiles names={item.stack} />
       </section>
 
       <div className="detail-foot">
@@ -600,6 +624,7 @@ function ProjectsPage() {
           <ProjectCard key={p.id} p={p} />
         ))}
       </div>
+      <Console />
     </>
   );
 }
@@ -872,6 +897,7 @@ export default function App() {
   else page = <NotFound />;
   return (
     <>
+      <CursorGlow />
       <Nav />
       <CommandPalette />
       <main key={PATH}>{page}</main>
