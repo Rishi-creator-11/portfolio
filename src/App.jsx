@@ -99,7 +99,7 @@ function Nav() {
                 <span className="nav-sub">
                   <a href="#experience">Experience</a>
                   <a href="#skills">Skills</a>
-                  <a href="#education">Education</a>
+                  <a href="#education">Education and awards</a>
                 </span>
               )}
             </span>
