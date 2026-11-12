@@ -18,6 +18,7 @@ import {
 import Diagram from "./Diagram.jsx";
 import About from "./About.jsx";
 import { Console, Detail } from "./Dashboard.jsx";
+import { ProjectCard } from "./Projects.jsx";
 import { StackTiles, ExpertiseRows } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
 import { person, stats, projects, work, skills, education, featured, categories } from "./data.js";
@@ -65,7 +66,7 @@ function Nav() {
   const links = [
     ["Home", "/"],
     ["About", "/about"],
-    ["Projects", "/projects"],
+    ["Experience", "/experience"],
     ["Blog", "/blog"],
     ["Resume", "/resume"],
     ["Contact", "/contact"],
@@ -99,7 +100,7 @@ function Nav() {
               </a>
               {h === "/about" && PATH.startsWith("/about") && (
                 <span className="nav-sub">
-                  <a href="#experience">Experience</a>
+                  <a href="#projects">Projects</a>
                   <a href="#skills">Skills</a>
                   <a href="#education">Education and awards</a>
                 </span>
@@ -183,7 +184,7 @@ function Hero() {
           systems, backend infrastructure, and software that solves real business problems.
         </p>
         <div className="hero-cta">
-          <a className="btn btn-primary" href="/projects">
+          <a className="btn btn-primary" href="/about#projects">
             View projects
           </a>
           <a className="btn" href="/resume">
@@ -281,34 +282,6 @@ function PageHead({ label, title, children }) {
   );
 }
 
-function ProjectCard({ p, compact }) {
-  const c = p.card || {};
-  const links = c.links || p.links.map((l) => ({ label: l.label === "Code" ? "GitHub" : l.label, href: l.href }));
-  return (
-    <article className={compact ? "pcard" : "pcard pcard-wide"}>
-      <p className="pcard-cat">{c.category || p.category}</p>
-      <h3>
-        <a href={`/projects/${p.id}`}>{c.title || p.name}</a>
-      </h3>
-      {compact && p.context && <p className="pcard-context">{p.context}</p>}
-      <p className="pcard-desc">{c.desc || p.oneLine}</p>
-      {!compact && c.metric && <p className="pcard-metric-line">{c.metric}</p>}
-      {!compact && c.attribution && <p className="pcard-attr">{c.attribution}</p>}
-      <p className="pcard-tech">{c.tech}</p>
-      <div className="pcard-links">
-        <a className="btn btn-small btn-primary" href={`/projects/${p.id}`}>
-          Project details
-        </a>
-        {links.map((l) => (
-          <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
-            {l.label} <ArrowUpRight size={14} aria-hidden="true" />
-          </a>
-        ))}
-      </div>
-    </article>
-  );
-}
-
 function HomePage() {
   const picks = featured.map((id) => projects.find((p) => p.id === id));
   return (
@@ -320,7 +293,7 @@ function HomePage() {
             <h2 id="xp-home-title">Where I've worked</h2>
             <p className="section-lede">Software engineering experience across production applications, backend systems, and machine learning.</p>
           </div>
-          <a className="see-all" href="/about#experience">
+          <a className="see-all" href="/experience">
             Full experience <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
@@ -343,7 +316,7 @@ function HomePage() {
             <h2 id="sel-title">Featured projects</h2>
             <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
           </div>
-          <a className="see-all" href="/projects">
+          <a className="see-all" href="/about#projects">
             See all projects <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
@@ -382,28 +355,13 @@ function HomePage() {
   );
 }
 
-function ProjectsPage() {
-  const [cat, setCat] = useState("All");
-  const count = (c) => (c === "All" ? projects.length : projects.filter((p) => p.cats.includes(c)).length);
-  const list = cat === "All" ? projects : projects.filter((p) => p.cats.includes(cat));
+function ExperiencePage() {
   return (
     <>
-      <PageHead label="Portfolio" title="Projects">
-        AI applications, backend systems, and software I've engineered.
+      <PageHead label="Experience" title="Work experience and skills">
+        Where I've worked and what I work with. Pick one on the left for the full breakdown.
       </PageHead>
-      <div className="tabs filters" role="tablist" aria-label="Filter projects">
-        {categories.map((c) => (
-          <button key={c} role="tab" aria-selected={cat === c} className={cat === c ? "tab on" : "tab"} onClick={() => setCat(c)}>
-            {c} <span className="tab-n">{count(c)}</span>
-          </button>
-        ))}
-      </div>
-      <div className="pgrid pgrid-list">
-        {list.map((p) => (
-          <ProjectCard key={p.id} p={p} />
-        ))}
-      </div>
-      <Console />
+      <Console tabs={["work", "skills"]} showHead={false} />
     </>
   );
 }
@@ -413,7 +371,7 @@ function ProjectPage({ id }) {
   if (!p) return <NotFound />;
   return (
     <div className="page-narrow">
-      <a className="back" href="/projects">
+      <a className="back" href="/about#projects">
         <ArrowLeft size={16} aria-hidden="true" /> All projects
       </a>
       <Detail item={p} kind="projects" />
@@ -618,7 +576,8 @@ export default function App() {
   const [, seg, sub] = PATH.split("/");
   if (PATH === "/") page = <HomePage />;
   else if (seg === "about") page = (<><About /><Contact /></>);
-  else if (seg === "projects") page = sub ? <ProjectPage id={sub} /> : <ProjectsPage />;
+  else if (seg === "experience") page = <ExperiencePage />;
+  else if (seg === "projects") page = sub ? <ProjectPage id={sub} /> : (<><About /><Contact /></>);
   else if (seg === "blog") page = sub ? <PostPage slug={sub} /> : <BlogPage />;
   else if (seg === "resume") page = <ResumePage />;
   else if (seg === "contact") page = <ContactPage />;

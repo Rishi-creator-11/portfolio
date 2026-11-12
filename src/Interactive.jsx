@@ -357,7 +357,8 @@ export function useCommands() {
     () => [
       { group: "Pages", label: "Home", href: "/" },
       { group: "Pages", label: "About", href: "/about" },
-      { group: "Pages", label: "Projects", href: "/projects" },
+      { group: "Pages", label: "Experience", href: "/experience" },
+      { group: "Pages", label: "Projects", href: "/about#projects" },
       { group: "Pages", label: "Blog", href: "/blog" },
       { group: "Pages", label: "Resume", href: "/resume" },
       { group: "Pages", label: "Contact", href: "/contact" },

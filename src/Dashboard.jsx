@@ -176,13 +176,17 @@ const TABS = [
 ];
 const HASH_TAB = { "#experience": "work", "#skills": "skills", "#projects": "projects" };
 
-export function Console({ heading = "Deep dive" }) {
-  const [tab, setTab] = useState(() => HASH_TAB[typeof window !== "undefined" ? window.location.hash : ""] || "work");
+export function Console({ heading = "Deep dive", tabs = ["work", "skills", "projects"], showHead = true }) {
+  const allowed = TABS.filter((t) => tabs.includes(t[0]));
+  const [tab, setTab] = useState(() => {
+    const h = HASH_TAB[typeof window !== "undefined" ? window.location.hash : ""];
+    return tabs.includes(h) ? h : tabs[0];
+  });
   const [sel, setSel] = useState({ projects: projects[0].id, work: work[0].id, skills: skillItems[0].id });
   const detailRef = useRef(null);
 
   useEffect(() => {
-    const onHash = () => HASH_TAB[window.location.hash] && setTab(HASH_TAB[window.location.hash]);
+    const onHash = () => tabs.includes(HASH_TAB[window.location.hash]) && setTab(HASH_TAB[window.location.hash]);
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
@@ -211,13 +215,15 @@ export function Console({ heading = "Deep dive" }) {
 
   return (
     <section className="console" id="console" aria-labelledby="console-title">
-      <div className="section-head">
-        <h2 id="console-title">{heading}</h2>
-        <p>Work experience, skills, and projects. Pick one on the left for the full breakdown.</p>
-      </div>
+      {showHead && (
+        <div className="section-head">
+          <h2 id="console-title">{heading}</h2>
+          <p>Pick one on the left for the full breakdown.</p>
+        </div>
+      )}
 
       <div className="tabs" role="tablist" aria-label="Dashboard sections">
-        {TABS.map(([id, label, get]) => (
+        {allowed.map(([id, label, get]) => (
           <button
             key={id}
             role="tab"

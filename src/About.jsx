@@ -1,10 +1,11 @@
 import { GraduationCap, Award, MapPin } from "lucide-react";
 import { person, work, skills, education } from "./data.js";
 import { Terminal } from "./Interactive.jsx";
-import { Console } from "./Dashboard.jsx";
+import { ProjectsSection } from "./Projects.jsx";
+import { ExpertiseRows } from "./Stack.jsx";
 
 const sections = [
-  ["Experience", "experience"],
+  ["Projects", "projects"],
   ["Skills", "skills"],
   ["Education and awards", "education"],
 ];
@@ -22,9 +23,15 @@ export default function About() {
         </nav>
       </header>
 
-      <span id="experience" className="anchor" />
-      <span id="skills" className="anchor" />
-      <Console heading="Experience, skills and projects" />
+      <section id="projects" className="about-section" aria-labelledby="projects-title">
+        <ProjectsSection />
+      </section>
+
+      <section id="skills" className="about-section" aria-labelledby="skills-title">
+        <p className="eyebrow">Skills</p>
+        <h2 id="skills-title">What I work with</h2>
+        <ExpertiseRows />
+      </section>
 
       <section id="education" className="about-section" aria-labelledby="rec-title">
         <p className="eyebrow">Education</p>
