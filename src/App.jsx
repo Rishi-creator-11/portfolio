@@ -505,6 +505,55 @@ function HomePage() {
           ))}
         </ul>
       </section>
+      <section className="about-section" aria-labelledby="exp-skills-title">
+        <p className="eyebrow">Technical expertise</p>
+        <h2 id="exp-skills-title">What I work with</h2>
+        <div className="skill-grid">
+          {skills.map((g) => (
+            <div className="skill-card" key={g.group}>
+              <h3>{g.group}</h3>
+              <p className="skill-line">{g.items.join(", ")}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="about-section" aria-labelledby="latest-title">
+        <div className="row-head">
+          <div>
+            <p className="eyebrow">Writing</p>
+            <h2 id="latest-title">Latest notes</h2>
+          </div>
+          <a className="see-all" href="/blog">
+            All posts <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <PostList list={posts.slice(0, 2)} />
+      </section>
+      <section className="about-section" aria-labelledby="otc-title">
+        <p className="eyebrow">Off the clock</p>
+        <h2 id="otc-title">Outside of code</h2>
+        <div className="otc">
+          <p className="otc-text">
+            I'm into music, mostly rap, country and house. I like hiking, lifting and catching live music, and I'm a
+            big foodie. Always happy to swap recommendations.
+          </p>
+          <ul className="otc-chips" aria-label="Things I'm into">
+            <li><span aria-hidden="true">🎧</span> Rap, country &amp; house</li>
+            <li><span aria-hidden="true">🎤</span> Live music</li>
+            <li><span aria-hidden="true">🥾</span> Hiking</li>
+            <li><span aria-hidden="true">🏋️</span> Lifting</li>
+            <li><span aria-hidden="true">🍜</span> Foodie</li>
+          </ul>
+        </div>
+      </section>
+      <section className="about-section" aria-labelledby="play-title">
+        <p className="eyebrow">Playground</p>
+        <h2 id="play-title">Poke around</h2>
+        <div className="play-grid">
+          <Terminal />
+        </div>
+      </section>
+      <Contact />
     </>
   );
 }
