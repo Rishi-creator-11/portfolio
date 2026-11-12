@@ -88,15 +88,35 @@ function Nav() {
         <span className="nav-dot" aria-hidden="true" />
         Rishi
       </a>
-      <nav aria-label="Main" className="nav-full">
-        {links.map(([l, h]) => (
-          <a key={h} href={h} className={active(h) ? "on" : undefined} aria-current={active(h) ? "page" : undefined}>
-            {l}
-          </a>
-        ))}
-        <ThemeButton />
-        <PaletteButton />
-      </nav>
+      <div className="nav-right nav-full">
+        <nav aria-label="Main" className="nav-links">
+          {links.map(([l, h]) => (
+            <span key={h} className="nav-item">
+              <a href={h} className={active(h) ? "on" : undefined} aria-current={active(h) ? "page" : undefined}>
+                {l}
+              </a>
+              {h === "/about" && PATH.startsWith("/about") && (
+                <span className="nav-sub">
+                  <a href="#experience">Experience</a>
+                  <a href="#skills">Skills</a>
+                  <a href="#education">Education</a>
+                </span>
+              )}
+            </span>
+          ))}
+        </nav>
+        <div className="nav-side-foot">
+          <div className="nav-social">
+            <a href={person.github} target="_blank" rel="noreferrer"><Github size={16} aria-hidden="true" /> GitHub</a>
+            <a href={person.linkedin} target="_blank" rel="noreferrer"><Linkedin size={16} aria-hidden="true" /> LinkedIn</a>
+            <a href={"mailto:" + person.email}><Mail size={16} aria-hidden="true" /> Email</a>
+          </div>
+          <div className="nav-tools">
+            <ThemeButton />
+            <PaletteButton />
+          </div>
+        </div>
+      </div>
       <div className="nav-mobile">
         <ThemeButton />
         <button className="menu-btn" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open}>
