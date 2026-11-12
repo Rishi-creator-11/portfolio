@@ -268,6 +268,7 @@ export const minimal = {
       "Integrated Vapi, Google Calendar and Stripe for voice workflows, scheduling, subscriptions and usage controls.",
     ],
     chips: ["Python", "FastAPI", "PostgreSQL", "pgvector", "Vapi", "Stripe"],
+    teaser: "Isolated workspaces, pgvector retrieval with refusal safeguards, and Vapi, Calendar and Stripe integrations.",
     article: "how-callpilot-works",
   },
   alphabrief: {
@@ -279,6 +280,7 @@ export const minimal = {
       "Cut median answer time from 7.6s to 2.0s (−74%) by bounding output tokens.",
     ],
     chips: ["Python", "FastAPI", "Pinecone", "BM25", "Cohere", "SEC EDGAR"],
+    teaser: "Hybrid retrieval at 0.88 MRR on a 125-question benchmark, with zero cross-company leakage.",
     article: "alphabrief-end-to-end",
   },
   "mario-sdk": {
@@ -290,6 +292,7 @@ export const minimal = {
       "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift by 30%, and automated npm publishing to trim release time by 15%.",
     ],
     chips: ["TypeScript", "Yjs", "JSON Patch", "GitHub Actions", "npm"],
+    teaser: "JSON Patch and Yjs CRDT sync: updates from ~500ms to under 100ms across 10+ apps.",
     article: "mario-sdk-shared-state",
   },
   chat: {

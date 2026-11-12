@@ -1344,3 +1344,4 @@ html, body { overflow-x: clip; }
 .st-console .st-tile.used::after { width: 8px; height: 8px; }
 .st-console .st-foot { padding: 18px 26px; font-size: 14px; }
 @media (max-width: 640px) { .st-console .st-tabs, .st-console .st-body, .st-console .st-bar, .st-console .st-foot { padding-left: 16px; padding-right: 16px; } .st-console .st-tile { padding: 11px 14px 11px 12px; font-size: 14px; } }
+.pcard-teaser { margin: 0; color: var(--text); font-size: 0.95rem; line-height: 1.5; }

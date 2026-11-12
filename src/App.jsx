@@ -413,7 +413,7 @@ function PageHead({ label, title, children }) {
   );
 }
 
-function ProjectCard({ p }) {
+function ProjectCard({ p, compact }) {
   const code = p.links.find((l) => l.label === "Code");
   return (
     <article className="pcard">
@@ -423,12 +423,16 @@ function ProjectCard({ p }) {
       </h3>
       {p.context && <p className="pcard-context">{p.context}</p>}
       <p className="pcard-sum">{p.oneLine || p.tagline}</p>
-      <ul className="pcard-points">
-        {(p.engineered || p.bullets.slice(0, 3)).map((b) => (
-          <li key={b}>{b}</li>
-        ))}
-      </ul>
-      <StackTiles names={p.chips || p.stack.slice(0, 6)} />
+      {compact && p.teaser ? (
+        <p className="pcard-teaser">{p.teaser}</p>
+      ) : (
+        <ul className="pcard-points">
+          {(p.engineered || p.bullets.slice(0, 3)).map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      )}
+      <StackTiles names={(p.chips || p.stack).slice(0, compact ? 4 : 6)} />
       <div className="pcard-links">
         <a className="btn btn-small" href={`/projects/${p.id}`}>
           Details
@@ -465,7 +469,7 @@ function HomePage() {
         </div>
         <div className="pgrid pgrid-3">
           {picks.map((p) => (
-            <ProjectCard key={p.id} p={p} />
+            <ProjectCard key={p.id} p={p} compact />
           ))}
         </div>
       </section>
