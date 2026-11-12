@@ -12,7 +12,7 @@ export const person = {
 export const stats = [
   { value: 0.88, decimals: 2, label: "MRR on a 125-question retrieval benchmark", tone: "cyan" },
   { value: 100, prefix: "<", suffix: "ms", label: "state-update latency, down from ~500ms", tone: "amber" },
-  { value: 10, suffix: "+", label: "apps integrated with the Mario SDK", tone: "cyan" },
+  { value: 10, suffix: "+", label: "apps integrated with the Mario SDK, built at Pencil Spaces", tone: "cyan" },
   { value: 97, prefix: "~", label: "configurable products shipped for a print shop", tone: "amber" },
 ];
 
@@ -220,15 +220,16 @@ export const projects = [
     id: "mario-sdk",
     cats: ["Distributed", "Full-Stack"],
     year: "2025",
-    name: "Mario SDK (Pencil)",
-    plain: "A published TypeScript SDK that keeps shared state consistent across embedded apps. Updates went from ~500ms to under 100ms.",
+    name: "Mario SDK",
+    context: "Built during my Pencil Spaces internship, San Francisco, summer 2025",
+    plain: "The npm library I built at Pencil Spaces in San Francisco to share state across clients and servers. Updates went from ~500ms to under 100ms.",
     simple: "Real-time sync · CRDTs · JSON Patch",
-    tagline: "A TypeScript SDK for real-time shared state across embedded apps.",
+    tagline: "The npm library I built at Pencil Spaces to share state across clients and servers in real time.",
     status: "Published on npm",
     period: "Jun – Aug 2025",
     headline: { value: "<100ms", label: "from ~500ms" },
     summary:
-      "I built the core sync layer of Mario, a published TypeScript SDK at Pencil Learning Technologies. It keeps shared state consistent for everyone using an embedded app, and it is integrated into 10+ apps.",
+      "Mario is an npm library for sharing state across clients and servers, and I built its core sync layer during my software engineering internship at Pencil Spaces (Pencil Learning Technologies) in San Francisco, the summer between my junior and senior years. It keeps shared state consistent for everyone using an embedded app, and it is integrated into 10+ apps.",
     problem:
       "Shared state was synced by sending the full state on every change. Updates took around 500ms, clients drifted apart, and concurrent edits could overwrite each other, especially around reconnects.",
     metrics: [
@@ -262,7 +263,7 @@ export const projects = [
       ["Apps integrated", "10+"],
       ["Release cycle time", "−15%"],
     ],
-    limits: ["These numbers come from my internship work. The host apps belong to Pencil, so there is no public demo to link."],
+    limits: ["These numbers come from my Pencil Spaces internship. The host apps belong to Pencil, so there is no public demo to link."],
     stack: ["TypeScript", "Yjs (CRDT)", "JSON Patch", "GitHub Actions", "Docker", "npm"],
     links: [{ label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
     images: [],
@@ -405,7 +406,7 @@ export const work = [
   },
   {
     id: "pencil",
-    name: "Pencil Learning Technologies",
+    name: "Pencil Spaces",
     role: "Software Engineer Intern",
     place: "San Francisco, CA",
     period: "Jun – Aug 2025",
@@ -419,10 +420,10 @@ export const work = [
       { v: "−15%", l: "release cycle time" },
     ],
     bullets: ["Built the core sync infrastructure for the Mario SDK (a published TypeScript package). Incremental JSON Patch diffs cut state-update latency from ~500ms to under 100ms.", "Designed conflict-free merge logic with Yjs CRDTs, preventing lost updates and keeping state consistent after reconnects.", "Integrated the SDK into 10+ embedded apps, cutting cross-client state drift by 30% and removing about 1K lines of per-app glue code.", "Automated typed build, test and npm publish with GitHub Actions and Docker, trimming release cycle time by 15%."],
-    home: "Cut state-update latency from ~500ms to under 100ms in the Mario SDK using JSON Patch diffs, with Yjs CRDTs keeping 10+ apps consistent.",
-    short: {"co": "Pencil Learning", "role": "SWE Intern", "loc": "SF", "stats": [{"v": "<100ms", "l": "updates, was ~500ms"}, {"v": "10+", "l": "apps integrated"}, {"v": "−30%", "l": "state drift"}]},
+    home: "Built the core sync layer of Mario, an npm library for sharing state across clients and servers: updates went from ~500ms to under 100ms, with Yjs CRDTs keeping 10+ apps consistent.",
+    short: {"co": "Pencil Spaces", "role": "SWE Intern", "loc": "SF", "stats": [{"v": "<100ms", "l": "updates, was ~500ms"}, {"v": "10+", "l": "apps integrated"}, {"v": "−30%", "l": "state drift"}]},
     stack: ["TypeScript", "Yjs (CRDT)", "JSON Patch", "GitHub Actions", "Docker", "npm"],
-    links: [{ label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
+    links: [{ label: "Mario SDK case study", href: "/projects/mario-sdk" }, { label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
   },
   {
     id: "vip",

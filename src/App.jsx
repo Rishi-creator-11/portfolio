@@ -207,6 +207,7 @@ function Detail({ item, kind }) {
         <div>
           <h3>{item.name}</h3>
           <p className="detail-sub">{isProject ? item.tagline : `${item.role} · ${item.place}`}</p>
+          {item.context && <p className="detail-context">{item.context}</p>}
         </div>
         <div className="detail-tags">
           {isProject && <span className="chip chip-status">{item.status}</span>}
@@ -495,11 +496,13 @@ function ProjectCard({ p, simple }) {
     <article className="pcard">
       <div className="pcard-top">
         <span className="chip">{p.year}</span>
+        {p.badge && <span className="chip chip-badge">{p.badge}</span>}
         <span className="chip chip-status">{p.status}</span>
       </div>
       <h3>
         <a href={`/projects/${p.id}`}>{p.name}</a>
       </h3>
+      {p.context && <p className="pcard-context">{p.context}</p>}
       {simple && p.simple && <p className="pcard-stack">{p.simple}</p>}
       <p className={simple ? "pcard-sum pcard-simple" : "pcard-sum"}>{simple ? p.plain || p.tagline : p.tagline}</p>
       {!simple && (

@@ -1270,3 +1270,6 @@ html, body { overflow-x: clip; }
 .social-card p { margin: 0; color: var(--muted); }
 .repo { text-decoration: none; display: flex; flex-direction: column; gap: 8px; }
 @media (max-width: 700px) { .xp-home li { grid-template-columns: 1fr; } .results th { width: 45%; } }
+.pcard-context { margin: 0; font-weight: 600; font-size: 0.9rem; color: var(--text); }
+.chip-badge { background: var(--text); color: var(--ink); border-color: var(--text); font-weight: 600; }
+.detail-context { margin: 10px 0 0; padding: 6px 12px; display: inline-block; border: 1px solid var(--line); border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
