@@ -1356,3 +1356,7 @@ html, body { overflow-x: clip; }
 @media (max-width: 640px) { .pcard-wide { padding: 20px 18px; } }
 .about-hero-tabs { padding-top: 32px; }
 .about-hero-tabs .about-jump { margin: 0; }
+
+.edu-loc { font-size: 1.15rem; font-weight: 600; color: var(--text); margin: 6px 0 20px; gap: 8px; }
+.edu-loc svg { width: 18px; height: 18px; color: var(--cyan); }
+.edu-wide h3 { font-size: 1.5rem; }
