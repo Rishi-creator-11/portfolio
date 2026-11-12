@@ -1367,3 +1367,50 @@ html, body { overflow-x: clip; }
 .expertise-row h3 { font-size: 1.2rem; padding-top: 6px; }
 .expertise-also { margin: 12px 0 0; color: var(--muted); font-size: 0.92rem; }
 @media (max-width: 700px) { .expertise-row { grid-template-columns: 1fr; } }
+
+/* ---------- final content spec ---------- */
+.section-lede { margin: 10px 0 0; color: var(--muted); max-width: 62ch; }
+.row-head .section-lede { margin-top: 8px; }
+
+/* featured / project cards: equal height, links pinned to the bottom */
+.pgrid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+.pgrid-3 .pcard, .pgrid-list .pcard { display: flex; flex-direction: column; }
+.pcard-cat { margin: 0 0 4px; font: 500 0.78rem var(--mono); color: var(--muted); }
+.pcard h3 { margin: 0 0 8px; }
+.pcard-desc { margin: 0 0 12px; color: var(--text); font-size: 0.98rem; line-height: 1.55; }
+.pcard-metric-line { margin: 0 0 8px; color: var(--text); font-weight: 600; font-size: 0.92rem; }
+.pcard-attr { margin: 0 0 8px; color: var(--muted); font-size: 0.85rem; }
+.pcard-tech { margin: 0 0 16px; color: var(--muted); font: 500 0.85rem var(--mono); }
+.pcard .pcard-links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+.pcard-wide .pcard-desc { max-width: 80ch; }
+@media (max-width: 960px) { .pgrid-3 { grid-template-columns: 1fr; } }
+
+/* homepage experience: thin-separator list */
+.xp-home-date { margin: 2px 0 0; color: var(--muted); font-size: 0.82rem; }
+
+/* skills: four plain text groups, two columns on desktop */
+.skills-text { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 22px; border-top: 1px solid var(--line); }
+.skills-text-group { padding: 22px 26px 22px 0; border-bottom: 1px solid var(--line); }
+.skills-text-group:nth-child(odd) { border-right: 1px solid var(--line); }
+.skills-text-group:nth-child(even) { padding-left: 26px; }
+.skills-text-group h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.skills-text-group p { margin: 0; color: var(--muted); font-weight: 400; line-height: 1.7; }
+@media (max-width: 700px) {
+  .skills-text { grid-template-columns: 1fr; }
+  .skills-text-group, .skills-text-group:nth-child(even) { padding: 18px 0; border-right: 0; }
+}
+
+/* beyond engineering: quieter */
+.beyond h2 { font-size: 1.5rem; letter-spacing: -0.02em; }
+.beyond .otc-text { margin: 10px 0 0; max-width: 62ch; color: var(--muted); }
+.beyond-links { margin: 10px 0 0; color: var(--muted); font-size: 0.88rem; }
+
+/* contact: email primary, socials secondary */
+.contact-links-small a { font-size: 0.85rem; }
+
+/* education: one clean card */
+.edu-single .edu-degree { margin: 0 0 4px; font-weight: 600; color: var(--text); }
+.edu-awards { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.edu-awards li { display: flex; gap: 8px; align-items: flex-start; color: var(--muted); line-height: 1.5; }
+.edu-awards svg { flex: none; margin-top: 3px; color: var(--cyan); }
+.edu-awards strong { color: var(--text); }

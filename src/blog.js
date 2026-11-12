@@ -132,7 +132,7 @@ export const posts = [
     date: "2026-10-14",
     tags: ["AlphaBrief", "RAG", "Latency"],
     excerpt:
-      "I was ready to optimize retrieval. Then I timed each step. Cutting answer time from 7.6s to 2.0s took one change in generation.",
+      "How profiling revealed that answer generation—not retrieval—was the latency bottleneck, and how I reduced median response time from 7.6s to 2.0s.",
     body: [
       { p: "AlphaBrief felt slow, and my first guess was retrieval. That's the interesting part, so that's where I wanted the problem to be. Then I timed each stage. Retrieval was already fast. Most of the time went to the model writing much more than the answer needed." },
       { h: "The fix" },

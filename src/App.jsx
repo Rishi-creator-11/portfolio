@@ -20,7 +20,7 @@ import About from "./About.jsx";
 import { StackTiles } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
 import { person, stats, projects, work, skills, education, featured, categories } from "./data.js";
-import { expertise } from "./content.js";
+import { skillGroups, homeExperience } from "./content.js";
 import { posts } from "./blog.js";
 
 function useCountUp(target, decimals = 0, duration = 1400) {
@@ -175,18 +175,12 @@ function Hero() {
           Hi, I'm Rishi
         </h1>
         <p className="hero-lede">
-          Welcome! I build AI that thinks fast, cites its sources, and doesn't make stuff up.
+          Software engineer building AI applications and production software.
         </p>
         <p className="hero-sub">
-          I treat AI agents like my own team. I give them real work, supervise every run, and train them until
-          they're better than yesterday. Best part of my day, every day.
+          I'm a Computer Science graduate from Stony Brook University, specializing in AI and Data Science. I build AI
+          systems, backend infrastructure, and software that solves real business problems.
         </p>
-        <dl className="hero-lines">
-          <div><dt>Retrieval MRR</dt><dd>0.88</dd></div>
-          <div><dt>Kafka throughput</dt><dd>10K msg/s</dd></div>
-          <div><dt>Sync latency</dt><dd>&lt;100ms, was ~500</dd></div>
-          <div><dt>Products shipped</dt><dd>~97 for a print shop</dd></div>
-        </dl>
         <div className="hero-cta">
           <a className="btn btn-primary" href="/projects">
             View projects
@@ -214,14 +208,15 @@ function Hero() {
 
 function Detail({ item, kind }) {
   const isProject = kind === "projects";
-  const points = isProject ? item.engineered || item.bullets : item.xp || item.bullets;
-  const code = item.links.find((l) => l.label === "Code");
+  const title = (item.card && item.card.title) || item.name;
+  const code = item.links || [];
   return (
     <article className="detail" key={item.id} aria-live="polite">
+      {/* 1. Title and concise description */}
       <header className="detail-head">
         <div>
-          {isProject && item.category && <p className="eyebrow">{item.category}</p>}
-          <h3>{item.name}</h3>
+          {isProject && <p className="eyebrow">{(item.card && item.card.category) || item.category}</p>}
+          <h3>{title}</h3>
           <p className="detail-sub">{isProject ? item.oneLine || item.tagline : `${item.role} · ${item.place}`}</p>
           {item.context && <p className="detail-context">{item.context}</p>}
         </div>
@@ -231,30 +226,122 @@ function Detail({ item, kind }) {
         </div>
       </header>
 
+      {/* 2. Strongest engineering highlights */}
       <section className="block">
-        <h4>{isProject ? "What I engineered" : "What I did"}</h4>
-        <ul className="bullets">
-          {points.map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
+        <h4>{isProject ? "Engineering highlights" : "What I did"}</h4>
+        {isProject && item.highlights ? (
+          <ul className="highlights">
+            {item.highlights.map((h) => (
+              <li key={h.area}>
+                <strong>{h.area}:</strong> {h.text}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="bullets">
+            {(item.xp || item.engineered || item.bullets).map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
+        )}
       </section>
 
-      <div className="detail-foot">
-        <StackTiles names={item.chips || item.stack.slice(0, 6)} />
-        <div className="links">
-          {item.links.map((l) => (
-            <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
-              {l.label === "Code" ? "GitHub" : l.label} <ArrowUpRight size={14} aria-hidden="true" />
-            </a>
-          ))}
-          {item.article && (
-            <a className="btn btn-small" href={`/blog/${item.article}`}>
-              How it's built
-            </a>
+      {/* 3. Architecture and engineering decisions */}
+      {(item.problem || item.architecture || item.diagram || item.decisions?.length > 0) && (
+        <section className="block">
+          <h4>Architecture and engineering decisions</h4>
+          {item.problem && <p className="detail-summary">{item.problem}</p>}
+          {item.why && <p className="detail-note"><strong>Why I built it.</strong> {item.why}</p>}
+          {item.architecture && <p className="detail-summary">{item.architecture}</p>}
+          {item.diagram && (
+            <div className="diagram-scroll">
+              <Diagram {...item.diagram} label={`Architecture of ${item.name}`} />
+            </div>
           )}
-        </div>
-      </div>
+          {item.decisions?.length > 0 && (
+            <ul className="decisions">
+              {item.decisions.map((d) => (
+                <li key={d.q}>
+                  <h5>{d.q}</h5>
+                  <p>{d.a}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+
+      {/* 4. Results and technical evaluation */}
+      {(item.metrics?.length > 0 || item.results?.length > 0) && (
+        <section className="block">
+          <h4>Results and evaluation</h4>
+          {item.metrics?.length > 0 && (
+            <div className="metrics">
+              {item.metrics.map((m) => (
+                <div className="metric" key={m.l}>
+                  <div className="metric-v">{m.v}</div>
+                  <div className="metric-l">{m.l}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {!(item.metrics?.length > 0) && item.results?.length > 0 && (
+            <table className="results">
+              <tbody>
+                {item.results.map((r) => (
+                  <tr key={r[0]}>
+                    <th scope="row">{r[0]}</th>
+                    <td>{r[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </section>
+      )}
+
+      {/* 5. Complete technology stack */}
+      <section className="block">
+        <h4>Technology stack</h4>
+        {item.techGroups ? (
+          <div className="tech-groups">
+            {item.techGroups.map((g) => (
+              <div key={g.label} className="tech-group">
+                <h5>{g.label}</h5>
+                <StackTiles names={g.items} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <StackTiles names={item.stack} />
+        )}
+      </section>
+
+      {/* 6. Screenshots, demo and source code */}
+      {(item.images?.length > 0 || code.length > 0 || item.article) && (
+        <section className="block">
+          <h4>Screens, demo and source</h4>
+          {item.images?.length > 0 && (
+            <div className="shots">
+              {item.images.map((src) => (
+                <img key={src} src={src} alt={`${title} screenshot`} loading="lazy" />
+              ))}
+            </div>
+          )}
+          <div className="links">
+            {code.map((l) => (
+              <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
+                {l.label === "Code" ? "GitHub" : l.label} <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
+            ))}
+            {item.article && (
+              <a className="btn btn-small" href={`/blog/${item.article}`}>
+                How it's built
+              </a>
+            )}
+          </div>
+        </section>
+      )}
     </article>
   );
 }
@@ -386,7 +473,7 @@ function Contact() {
       <a className="btn btn-primary btn-big" href={`mailto:${person.email}`}>
         <Mail size={18} aria-hidden="true" /> {person.email}
       </a>
-      <div className="contact-links">
+      <div className="contact-links contact-links-small">
         <a href={person.linkedin} target="_blank" rel="noreferrer">
           <Linkedin size={16} aria-hidden="true" /> LinkedIn
         </a>
@@ -415,51 +502,47 @@ function PageHead({ label, title, children }) {
 }
 
 function ProjectCard({ p, compact }) {
-  const code = p.links.find((l) => l.label === "Code");
-  const links = (
-    <div className={compact ? "pcard-links" : "pcard-links pcard-links-top"}>
-      {compact && (
-        <a className="btn btn-small" href={`/projects/${p.id}`}>
-          Details
-        </a>
-      )}
-      {code && (
-        <a className="btn btn-small" href={code.href} target="_blank" rel="noreferrer">
-          GitHub <ArrowUpRight size={14} aria-hidden="true" />
-        </a>
-      )}
-      {p.article && (
-        <a className="btn btn-small" href={`/blog/${p.article}`}>
-          How it's built
-        </a>
-      )}
-    </div>
-  );
+  const c = p.card || {};
+  const links = c.links || p.links.map((l) => ({ label: l.label === "Code" ? "GitHub" : l.label, href: l.href }));
   return (
     <article className={compact ? "pcard" : "pcard pcard-wide"}>
-      <div className="pcard-head">
-        <div>
-          <p className="pcard-cat">{p.category || p.cats.join(" · ")} · {p.period}</p>
-          <h3>
-            <a href={`/projects/${p.id}`}>{p.name}</a>
-          </h3>
-          {p.context && <p className="pcard-context">{p.context}</p>}
-        </div>
-        {!compact && links}
+      <p className="pcard-cat">{c.category || p.category}</p>
+      <h3>
+        <a href={`/projects/${p.id}`}>{c.title || p.name}</a>
+      </h3>
+      {compact && p.context && <p className="pcard-context">{p.context}</p>}
+      <p className="pcard-desc">{c.desc || p.oneLine}</p>
+      {!compact && c.metric && <p className="pcard-metric-line">{c.metric}</p>}
+      {!compact && c.attribution && <p className="pcard-attr">{c.attribution}</p>}
+      <p className="pcard-tech">{c.tech}</p>
+      <div className="pcard-links">
+        <a className="btn btn-small btn-primary" href={`/projects/${p.id}`}>
+          Project details
+        </a>
+        {links.map((l) => (
+          <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
+            {l.label} <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
+        ))}
       </div>
-      <p className="pcard-sum">{p.oneLine || p.tagline}</p>
-      {compact && p.teaser ? (
-        <p className="pcard-teaser">{p.teaser}</p>
-      ) : (
-        <ul className="pcard-points">
-          {(p.engineered || p.bullets.slice(0, 3)).map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
-      )}
-      <StackTiles names={(p.chips || p.stack).slice(0, compact ? 4 : 6)} />
-      {compact && links}
     </article>
+  );
+}
+
+function Expertise({ heading = "Technical expertise", id = "exp-skills-title" }) {
+  return (
+    <>
+      <h2 id={id}>{heading}</h2>
+      <p className="section-lede">Languages, frameworks, and tools I use to build AI applications and production software.</p>
+      <div className="skills-text">
+        {skillGroups.map((g) => (
+          <div className="skills-text-group" key={g.name}>
+            <h3>{g.name}</h3>
+            <p>{g.items.join(" · ")}</p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -471,8 +554,8 @@ function HomePage() {
       <section className="about-section" aria-labelledby="sel-title">
         <div className="row-head">
           <div>
-            <p className="eyebrow">Selected work</p>
             <h2 id="sel-title">Featured projects</h2>
+            <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
           </div>
           <a className="see-all" href="/projects">
             See all projects <ArrowUpRight size={16} aria-hidden="true" />
@@ -487,44 +570,32 @@ function HomePage() {
       <section className="about-section" aria-labelledby="xp-home-title">
         <div className="row-head">
           <div>
-            <p className="eyebrow">Experience</p>
             <h2 id="xp-home-title">Where I've worked</h2>
+            <p className="section-lede">Software engineering experience across production applications, backend systems, and machine learning.</p>
           </div>
           <a className="see-all" href="/about#experience">
             Full experience <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
         <ul className="xp-home">
-          {work.filter((w) => w.home).slice(0, 4).map((w) => (
+          {homeExperience.map((w) => (
             <li key={w.id}>
               <div>
-                <h3>{w.short.co}</h3>
-                <p className="xp-home-role">{w.short.role} · {w.place} · {w.period}</p>
+                <h3>{w.company}</h3>
+                <p className="xp-home-role">{w.role}</p>
+                <p className="xp-home-date">{w.place} · {w.dates}</p>
               </div>
-              <p className="xp-home-line">{w.home}</p>
+              <p className="xp-home-line">{w.text}</p>
             </li>
           ))}
         </ul>
       </section>
       <section className="about-section" aria-labelledby="exp-skills-title">
-        <p className="eyebrow">Technical expertise</p>
-        <h2 id="exp-skills-title">What I work with</h2>
-        <div className="expertise">
-          {expertise.map((g) => (
-            <div className="expertise-row" key={g.group}>
-              <h3>{g.group}</h3>
-              <div>
-                <StackTiles names={g.tools} />
-                <p className="expertise-also">Also: {g.also}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Expertise />
       </section>
       <section className="about-section" aria-labelledby="latest-title">
         <div className="row-head">
           <div>
-            <p className="eyebrow">Writing</p>
             <h2 id="latest-title">Latest notes</h2>
           </div>
           <a className="see-all" href="/blog">
@@ -533,29 +604,13 @@ function HomePage() {
         </div>
         <PostList list={posts.slice(0, 2)} />
       </section>
-      <section className="about-section" aria-labelledby="otc-title">
-        <p className="eyebrow">Off the clock</p>
-        <h2 id="otc-title">Outside of code</h2>
-        <div className="otc">
-          <p className="otc-text">
-            I'm into music, mostly rap, country and house. I like hiking, lifting and catching live music, and I'm a
-            big foodie. Always happy to swap recommendations.
-          </p>
-          <ul className="otc-chips" aria-label="Things I'm into">
-            <li><span aria-hidden="true">🎧</span> Rap, country &amp; house</li>
-            <li><span aria-hidden="true">🎤</span> Live music</li>
-            <li><span aria-hidden="true">🥾</span> Hiking</li>
-            <li><span aria-hidden="true">🏋️</span> Lifting</li>
-            <li><span aria-hidden="true">🍜</span> Foodie</li>
-          </ul>
-        </div>
-      </section>
-      <section className="about-section" aria-labelledby="play-title">
-        <p className="eyebrow">Playground</p>
-        <h2 id="play-title">Poke around</h2>
-        <div className="play-grid">
-          <Terminal />
-        </div>
+      <section className="about-section beyond" aria-labelledby="otc-title">
+        <h2 id="otc-title">Beyond engineering</h2>
+        <p className="otc-text">
+          I'm into music, mostly rap, country and house. I like hiking, lifting and catching live music, and I'm a big
+          foodie. Always happy to swap recommendations.
+        </p>
+        <p className="beyond-links">Rap, country &amp; house · Live music · Hiking · Lifting · Foodie</p>
       </section>
       <Contact />
     </>
@@ -568,8 +623,8 @@ function ProjectsPage() {
   const list = cat === "All" ? projects : projects.filter((p) => p.cats.includes(cat));
   return (
     <>
-      <PageHead label="Portfolio" title="Selected work">
-        Production systems, AI tools and open-source extensions. Each one has a case study with real numbers.
+      <PageHead label="Portfolio" title="Projects">
+        AI applications, backend systems, and software I've engineered.
       </PageHead>
       <div className="tabs filters" role="tablist" aria-label="Filter projects">
         {categories.map((c) => (
@@ -614,7 +669,7 @@ function PostList({ list }) {
           </p>
           <p className="post-ex">{post.excerpt}</p>
           <ul className="tags">
-            {post.tags.map((t) => (
+            {post.tags.slice(0, 2).map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
@@ -627,8 +682,8 @@ function PostList({ list }) {
 function BlogPage() {
   return (
     <div className="page-narrow">
-      <PageHead label="Writing" title="Notes and project deep-dives">
-        Short write-ups on what I built, what I measured, and what I'd change.
+      <PageHead label="Writing" title="Engineering notes">
+        Technical decisions, performance improvements, and lessons from systems I've built.
       </PageHead>
       <PostList list={posts} />
     </div>

@@ -1,4 +1,4 @@
-import { projectContent, marioProject, workContent, minimal, xp } from "./content.js";
+import { projectContent, marioProject, workContent, minimal, xp, cardSpec, homeExperience, aboutLead } from "./content.js";
 export const person = {
   name: "Rishi",
   legal: "Hrishit Kumar",
@@ -391,6 +391,12 @@ projects.forEach((p) => Object.assign(p, projectContent[p.id] || {}));
 work.forEach((w) => Object.assign(w, workContent[w.id] || {}));
 projects.forEach((p) => Object.assign(p, minimal[p.id] || {}));
 work.forEach((w) => { if (xp[w.id]) w.xp = xp[w.id]; });
+projects.forEach((p) => { if (cardSpec[p.id]) p.card = cardSpec[p.id]; });
+// About page: the exact homepage accomplishment opens each role, followed by the remaining detail.
+work.forEach((w) => {
+  const lead = aboutLead[w.id], home = homeExperience.find((h) => h.id === w.id);
+  if (lead && home && w.xp) w.xp = [home.text, ...lead.keep.map((i) => w.xp[i]).filter(Boolean)];
+});
 
 // Each project lives in exactly one category, so the filter counts add up to the total.
 const PRIMARY_CATEGORY = {

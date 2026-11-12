@@ -402,3 +402,106 @@ export const expertise = [
     also: "Linux, CI/CD",
   },
 ];
+
+/* ---------------- Exact copy from the final content spec ---------------- */
+
+// Project cards (home + projects page). Details live on each project's page.
+export const cardSpec = {
+  callpilot: {
+    category: "Applied AI · Backend Engineering",
+    title: "CallPilot",
+    desc: "Built a multi-tenant AI voice platform using FastAPI, PostgreSQL/pgvector, and Vapi to handle customer inquiries, retrieve business-approved information, and support appointment scheduling and lead capture.",
+    metric: "Answers only from owner-approved knowledge, with refusal safeguards",
+    tech: "FastAPI · PostgreSQL · pgvector · Vapi",
+    links: [{ label: "GitHub", href: "https://github.com/Rishi-creator-11/callpilot" }],
+  },
+  alphabrief: {
+    category: "Applied AI · Retrieval Engineering",
+    title: "AlphaBrief",
+    desc: "Engineered a citation-grounded SEC filing research assistant using hybrid retrieval, rank fusion, and reranking, achieving 0.88 MRR on a 125-question evaluation benchmark.",
+    metric: "Median answer time cut from 7.6s to 2.0s",
+    tech: "Python · Pinecone · BM25 · Cohere",
+    links: [
+      { label: "Live demo", href: "https://secfrontend.vercel.app/" },
+      { label: "GitHub", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
+    ],
+  },
+  "mario-sdk": {
+    category: "Real-Time Systems · SDK Engineering",
+    title: "Mario SDK — Pencil Learning",
+    desc: "Engineered real-time state synchronization for 10+ embedded applications using JSON Patch and Yjs CRDTs, reducing update latency from approximately 500ms to under 100ms.",
+    metric: "Cross-client state drift reduced by 30%",
+    tech: "TypeScript · Yjs · JSON Patch",
+    links: [{ label: "npm package", href: "https://www.npmjs.com/package/@pncl/mario" }],
+  },
+  chat: {
+    category: "Distributed Systems · Backend Engineering",
+    title: "Distributed Chat Platform",
+    desc: "A real-time chat system built across several Go servers, with Kafka buffering writes off the delivery path.",
+    metric: "Kafka buffering up to 10,000 messages per second",
+    tech: "Go · Redis · Kafka · PostgreSQL",
+    links: [],
+  },
+  "agent-release-lab": {
+    category: "Applied AI · Evaluation",
+    title: "Agent Release Lab",
+    desc: "A release gate for LLM agents: versioned test suites, deterministic graders, and named regressions.",
+    metric: "30 synthetic eval cases; 100% secret refusal required to release",
+    tech: "TypeScript · Next.js · LLM evaluation",
+    attribution: "Extends an open-source LLM evaluation dashboard.",
+  },
+  "invoice-review": {
+    category: "Applied AI · Document Processing",
+    title: "Vendor Invoice Review",
+    desc: "Document AI that reconciles invoices against purchase orders and routes mismatches to a human.",
+    metric: "20 new tests added to the upstream suite",
+    tech: "Python · FastAPI · React · OCR",
+    attribution: "Extends an open-source document-decision demo.",
+  },
+  "inventory-ops": {
+    category: "Applied AI · Full-Stack",
+    title: "Inventory Ops Copilot",
+    desc: "An ERP agent that proposes reorders but can't write anything until a manager confirms.",
+    metric: "Atomic duplicate-confirmation protection",
+    tech: "Python · FastAPI · React · TypeScript",
+    attribution: "Extends an open-source ERP.",
+  },
+  quoteatlas: {
+    category: "Applied AI · Full-Stack",
+    title: "QuoteAtlas",
+    desc: "Upload supplier quotations, extract the terms with Claude, and compare offers side by side.",
+    metric: "Compares up to five quotes and flags missing costs",
+    tech: "TypeScript · Next.js · Claude API · Supabase",
+  },
+};
+
+// Homepage experience list (exact accomplishment text).
+export const homeExperience = [
+  { id: "metroprint", company: "MetroPrint USA", role: "Full-Stack Engineer (Contract)", place: "New York, NY", dates: "Jul – Sep 2026",
+    text: "Built a production Next.js ordering platform supporting approximately 97 configurable products, including 559 exact-combination pricing records to keep checkout calculations consistent." },
+  { id: "pencil", company: "Pencil Learning Technologies", role: "Software Engineer Intern", place: "San Francisco, CA", dates: "Jun – Aug 2025",
+    text: "Engineered TypeScript SDK synchronization with JSON Patch and Yjs CRDTs, reducing state-update latency from approximately 500ms to under 100ms across 10+ embedded applications." },
+  { id: "vip", company: "Stony Brook VIP", role: "Software Engineer Intern", place: "Stony Brook, NY", dates: "Aug – Dec 2024",
+    text: "Developed 15+ Node.js/Express APIs on AWS and reduced p95 response time by approximately 20% through Redis caching and PostgreSQL query optimization." },
+  { id: "99yards", company: "99 Yards", role: "Software Engineer Intern", place: "New York, NY", dates: "Jun – Aug 2024",
+    text: "Built a TensorFlow two-tower recommendation system that improved offline hit-rate@10 by 25%, while reducing feature freshness lag from one hour to five minutes." },
+  { id: "ta", company: "Stony Brook University", role: "Teaching Assistant", place: "Stony Brook, NY", dates: "Aug 2024 – May 2025",
+    text: "Led weekly Java and Data Structures recitations for 30+ students and reviewed 200+ submissions, mentoring students in debugging and algorithmic problem-solving." },
+];
+
+// Four-category skills presentation (home + About).
+export const skillGroups = [
+  { name: "Languages", items: ["Python", "TypeScript", "Java", "JavaScript", "SQL", "Go"] },
+  { name: "AI & LLM Engineering", items: ["RAG", "Agentic AI", "LLM Evaluation", "Pinecone", "Cohere", "OpenAI"] },
+  { name: "Backend & Data Systems", items: ["FastAPI", "Node.js", "PostgreSQL", "Supabase", "Redis", "REST APIs", "WebSockets"] },
+  { name: "Cloud & Infrastructure", items: ["AWS", "Docker", "Terraform", "GitHub Actions", "Vercel", "Render", "Linux", "Git"] },
+];
+
+// About page: the home accomplishment leads each role, then the remaining detail.
+export const aboutLead = {
+  metroprint: { keep: [1, 2] },
+  pencil: { keep: [1, 2] },
+  vip: { keep: [0, 2] },
+  "99yards": { keep: [] },
+  ta: { keep: [] },
+};

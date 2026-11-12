@@ -1,6 +1,7 @@
 import { GraduationCap, Award, MapPin } from "lucide-react";
 import { person, work, skills, education } from "./data.js";
-import Stack from "./Stack.jsx";
+import { Terminal } from "./Interactive.jsx";
+import { skillGroups } from "./content.js";
 
 const sections = [
   ["Experience", "experience"],
@@ -66,38 +67,47 @@ export default function About() {
       </section>
 
       <section id="skills" className="about-section" aria-labelledby="skills-title">
-        <p className="eyebrow">Skills</p>
-        <h2 id="skills-title">Tools that made the cut</h2>
-        <p className="st-lede">The ones I reach for most. Every project page lists the full stack it was built with.</p>
-        <Stack />
+        <h2 id="skills-title">Skills</h2>
+        <p className="section-lede">Languages, frameworks, and tools I use to build AI applications and production software.</p>
+        <div className="skills-text">
+          {skillGroups.map((g) => (
+            <div className="skills-text-group" key={g.name}>
+              <h3>{g.name}</h3>
+              <p>{g.items.join(" · ")}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="education" className="about-section" aria-labelledby="rec-title">
         <p className="eyebrow">Education</p>
         <h2 id="rec-title">Education and awards</h2>
-        <div className="skill-card edu edu-wide">
+        <div className="skill-card edu edu-wide edu-single">
           <h3>
             <GraduationCap size={18} aria-hidden="true" /> {education.school}
           </h3>
           <p className="edu-loc">
             <MapPin size={14} aria-hidden="true" /> {education.location}
           </p>
-          <div className="edu-tiles">
-            <div className="edu-tile"><span>Degree</span><b>B.S. Computer Science</b></div>
-            <div className="edu-tile"><span>Specialization</span><b>AI and Data Science</b></div>
-            <div className="edu-tile"><span>Years</span><b>{education.years}</b></div>
-            <div className="edu-tile"><span>GPA</span><b>{education.gpa}</b></div>
-          </div>
+          <p className="edu-degree">B.S. Computer Science — Artificial Intelligence &amp; Data Science</p>
+          <p className="edu-meta">
+            {education.years} · Graduated May 2026 · GPA {education.gpa}
+          </p>
+          <ul className="edu-awards">
+            {education.awards.map((a) => (
+              <li key={a.name}>
+                <Award size={15} aria-hidden="true" /> <strong>{a.name}.</strong> {a.why}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="skill-grid">
-          {education.awards.map((a) => (
-            <div className="skill-card award" key={a.name}>
-              <h3>
-                <Award size={16} aria-hidden="true" /> {a.name}
-              </h3>
-              <p className="edu-meta">{a.why}</p>
-            </div>
-          ))}
+      </section>
+
+      <section className="about-section" aria-labelledby="play-title">
+        <p className="eyebrow">Playground</p>
+        <h2 id="play-title">Poke around</h2>
+        <div className="play-grid">
+          <Terminal />
         </div>
       </section>
     </div>
