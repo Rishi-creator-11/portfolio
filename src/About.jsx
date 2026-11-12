@@ -1,7 +1,7 @@
 import { GraduationCap, Award, MapPin } from "lucide-react";
 import { person, work, skills, education } from "./data.js";
 import { Terminal } from "./Interactive.jsx";
-import { ExpertiseRows } from "./Stack.jsx";
+import { Console } from "./Dashboard.jsx";
 
 const sections = [
   ["Experience", "experience"],
@@ -22,55 +22,9 @@ export default function About() {
         </nav>
       </header>
 
-      <section id="experience" className="about-section" aria-labelledby="exp-title">
-        <p className="eyebrow">Experience</p>
-        <h2 id="exp-title">Work experience</h2>
-        <ol className="timeline">
-          {work.map((w) => (
-            <li key={w.id} className="timeline-item">
-              <div className="timeline-head xp-head">
-                <h3>
-                  <span className="xp-co">{w.short.co}</span>
-                  <span className="xp-dot">·</span>
-                  <span className="xp-role">{w.short.role}</span>
-                  <span className="xp-loc">{w.short.loc}</span>
-                </h3>
-                <p className="xp-meta">{w.period} · {w.short.loc}</p>
-                <span className="xp-period">{w.period}</span>
-              </div>
-              <ul className="xp-stats">
-                {w.short.stats.map((m) => (
-                  <li key={m.l}><b>{m.v}</b> {m.l}</li>
-                ))}
-              </ul>
-              {w.xp ? (
-                <ul className="bullets xp-bullets">
-                  {w.xp.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-              ) : (
-                <ul className="bullets xp-bullets">
-                  {w.bullets.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-              )}
-              <ul className="tags" aria-label="Technologies">
-                {w.stack.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section id="skills" className="about-section" aria-labelledby="skills-title">
-        <p className="eyebrow">Skills</p>
-        <h2 id="skills-title">What I work with</h2>
-        <ExpertiseRows />
-      </section>
+      <span id="experience" className="anchor" />
+      <span id="skills" className="anchor" />
+      <Console heading="Experience, skills and projects" />
 
       <section id="education" className="about-section" aria-labelledby="rec-title">
         <p className="eyebrow">Education</p>

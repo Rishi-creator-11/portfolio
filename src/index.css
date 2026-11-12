@@ -1416,3 +1416,4 @@ html, body { overflow-x: clip; }
 .edu-awards strong { color: var(--text); }
 .st-concept { flex: none; color: var(--muted); }
 .expertise-row .st-tile.static { font-size: 14px; }
+.anchor { display: block; height: 0; scroll-margin-top: 90px; }
