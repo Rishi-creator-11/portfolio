@@ -50,11 +50,21 @@ export default function About() {
                   <li key={m.l}><b>{m.v}</b> {m.l}</li>
                 ))}
               </ul>
-              <ul className="bullets xp-bullets">
-                {w.bullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
+              {w.highlights ? (
+                <ul className="highlights xp-bullets">
+                  {w.highlights.map((h) => (
+                    <li key={h.area}>
+                      <strong>{h.area}:</strong> {h.text}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className="bullets xp-bullets">
+                  {w.bullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              )}
               <ul className="tags" aria-label="Technologies">
                 {w.stack.map((t) => (
                   <li key={t}>{t}</li>

@@ -1247,3 +1247,30 @@ html, body { overflow-x: clip; }
   .nav-mobile .theme-btn, .nav-mobile .menu-btn { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--text); box-shadow: 0 2px 8px -4px rgba(0,0,0,.2); padding: 0; }
   .nav-mobile .theme-btn svg, .nav-mobile .menu-btn svg { width: 18px; height: 18px; }
 }
+
+/* ---------- draft: engineering-manager case study layout ---------- */
+.highlights { display: flex; flex-direction: column; gap: 14px; }
+.highlights li { position: relative; padding-left: 22px; max-width: 76ch; }
+.highlights li::before { content: ""; position: absolute; left: 3px; top: 0.62em; width: 8px; height: 8px; border-radius: 2px; background: var(--cyan); }
+.highlights strong { font-family: var(--display); letter-spacing: -0.01em; }
+.detail-note { margin: 12px 0 0; color: var(--muted); max-width: 70ch; }
+.detail-note strong { color: var(--text); }
+.detail-context { margin: 10px 0 0; padding: 6px 12px; display: inline-block; border: 1px solid var(--line); border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
+.pcard-context { margin: 0; font-weight: 600; font-size: 0.9rem; }
+.decisions { display: flex; flex-direction: column; gap: 12px; }
+.decisions li { padding: 14px 18px; background: var(--ink); border: 1px solid var(--line); border-radius: 12px; }
+.decisions h5 { margin: 0 0 6px; font: 700 1rem var(--display); letter-spacing: -0.01em; }
+.decisions p { margin: 0; color: var(--muted); max-width: 70ch; }
+.results { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin-top: 14px; }
+.results th, .results td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.results th { width: 34%; color: var(--muted); font-weight: 500; }
+.tech-groups { display: flex; flex-direction: column; gap: 16px; }
+.tech-group h5 { margin: 0 0 8px; font: 600 0.82rem var(--body); color: var(--muted); }
+.pgrid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.skill-line { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin: 0; }
+.xp-home { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.xp-home li { display: grid; grid-template-columns: minmax(200px, 280px) 1fr; gap: 8px 32px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.xp-home h3 { font-size: 1.25rem; }
+.xp-home-role { color: var(--muted); font-size: 0.88rem; margin: 4px 0 0; }
+.xp-home-line { margin: 0; max-width: 62ch; }
+@media (max-width: 700px) { .xp-home li { grid-template-columns: 1fr; } }

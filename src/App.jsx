@@ -199,83 +199,152 @@ function Hero() {
 }
 
 function Detail({ item, kind }) {
+  const isProject = kind === "projects";
   return (
     <article className="detail" key={item.id} aria-live="polite">
       <header className="detail-head">
         <div>
           <h3>{item.name}</h3>
-          <p className="detail-sub">{kind === "projects" ? item.tagline : `${item.role} · ${item.place}`}</p>
+          <p className="detail-sub">{isProject ? item.tagline : `${item.role} · ${item.place}`}</p>
+          {item.context && <p className="detail-context">{item.context}</p>}
         </div>
         <div className="detail-tags">
-          {kind === "projects" && <span className="chip chip-status">{item.status}</span>}
+          {isProject && <span className="chip chip-status">{item.status}</span>}
           <span className="chip">{item.period}</span>
         </div>
       </header>
 
-      <p className="detail-summary">{item.summary}</p>
+      <p className="detail-summary">{item.intro || item.summary}</p>
 
-      {item.why && (
+      {item.highlights && (
+        <section className="block">
+          <h4>Engineering highlights</h4>
+          <ul className="highlights">
+            {item.highlights.map((h) => (
+              <li key={h.area}>
+                <strong>{h.area}:</strong> {h.text}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {item.problem && (
+        <section className="block">
+          <h4>Technical problem</h4>
+          <p className="detail-summary">{item.problem}</p>
+          {item.why && <p className="detail-note"><strong>Why I built it.</strong> {item.why}</p>}
+        </section>
+      )}
+      {!item.problem && item.why && (
         <section className="why">
           <h4>Why I built it</h4>
           <p>{item.why}</p>
         </section>
       )}
 
-      <div className="metrics">
-        {item.metrics.map((m) => (
-          <div className="metric" key={m.l}>
-            <div className="metric-v">{m.v}</div>
-            <div className="metric-l">{m.l}</div>
-          </div>
-        ))}
-      </div>
-
-      {item.diagram && (
+      {(item.diagram || item.architecture) && (
         <section className="block">
-          <h4>How it works</h4>
-          <div className="diagram-scroll">
-            <Diagram {...item.diagram} label={`Architecture of ${item.name}`} />
-          </div>
+          <h4>System architecture</h4>
+          {item.architecture && <p className="detail-summary">{item.architecture}</p>}
+          {item.diagram && (
+            <div className="diagram-scroll">
+              <Diagram {...item.diagram} label={`Architecture of ${item.name}`} />
+            </div>
+          )}
         </section>
       )}
 
-      {item.images?.length > 0 && (
+      {item.decisions?.length > 0 && (
         <section className="block">
-          <h4>Screens</h4>
-          <div className="shots">
-            {item.images.map((src) => (
-              <img key={src} src={src} alt={`${item.name} screenshot`} loading="lazy" />
+          <h4>Engineering decisions</h4>
+          <ul className="decisions">
+            {item.decisions.map((d) => (
+              <li key={d.q}>
+                <h5>{d.q}</h5>
+                <p>{d.a}</p>
+              </li>
             ))}
-          </div>
+          </ul>
+        </section>
+      )}
+
+      {!item.highlights && (
+        <section className="block">
+          <h4>What I built</h4>
+          <ul className="bullets">
+            {item.bullets.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {(item.metrics?.length > 0 || item.results?.length > 0) && (
+        <section className="block">
+          <h4>Results and evaluation</h4>
+          {item.metrics?.length > 0 && (
+            <div className="metrics">
+              {item.metrics.map((m) => (
+                <div className="metric" key={m.l}>
+                  <div className="metric-v">{m.v}</div>
+                  <div className="metric-l">{m.l}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {item.results?.length > 0 && (
+            <table className="results">
+              <tbody>
+                {item.results.map((r) => (
+                  <tr key={r[0]}>
+                    <th scope="row">{r[0]}</th>
+                    <td>{r[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </section>
       )}
 
       <section className="block">
-        <h4>What I built</h4>
-        <ul className="bullets">
-          {item.bullets.map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="block">
-        <h4>Built with</h4>
-        <StackTiles names={item.stack} />
-      </section>
-
-      <div className="detail-foot">
-
-        {item.links.length > 0 && (
-          <div className="links">
-            {item.links.map((l) => (
-              <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
-                {l.label} <ArrowUpRight size={14} aria-hidden="true" />
-              </a>
+        <h4>Technology stack</h4>
+        {item.techGroups ? (
+          <div className="tech-groups">
+            {item.techGroups.map((g) => (
+              <div key={g.label} className="tech-group">
+                <h5>{g.label}</h5>
+                <StackTiles names={g.items} />
+              </div>
             ))}
           </div>
+        ) : (
+          <StackTiles names={item.stack} />
         )}
-      </div>
+      </section>
+
+      {(item.images?.length > 0 || item.links.length > 0) && (
+        <section className="block">
+          <h4>Demonstration</h4>
+          {item.images?.length > 0 && (
+            <div className="shots">
+              {item.images.map((src) => (
+                <img key={src} src={src} alt={`${item.name} screenshot`} loading="lazy" />
+              ))}
+            </div>
+          )}
+          {item.links.length > 0 && (
+            <div className="links">
+              {item.links.map((l) => (
+                <a key={l.href} className="btn btn-small" href={l.href} target="_blank" rel="noreferrer">
+                  {l.label} <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
     </article>
   );
 }
@@ -446,6 +515,7 @@ function ProjectCard({ p, simple }) {
       <h3>
         <a href={`/projects/${p.id}`}>{p.name}</a>
       </h3>
+      {p.context && <p className="pcard-context">{p.context}</p>}
       {simple && p.simple && <p className="pcard-stack">{p.simple}</p>}
       <p className={simple ? "pcard-sum pcard-simple" : "pcard-sum"}>{simple ? p.plain || p.tagline : p.tagline}</p>
       {!simple && (
@@ -489,9 +559,43 @@ function HomePage() {
             See all projects <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
-        <div className="pgrid pgrid-2">
+        <div className="pgrid pgrid-3">
           {picks.map((p) => (
             <ProjectCard key={p.id} p={p} simple />
+          ))}
+        </div>
+      </section>
+      <section className="about-section" aria-labelledby="xp-home-title">
+        <div className="row-head">
+          <div>
+            <p className="eyebrow">Experience</p>
+            <h2 id="xp-home-title">Where I've worked</h2>
+          </div>
+          <a className="see-all" href="/about#experience">
+            Full experience <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <ul className="xp-home">
+          {work.filter((w) => w.home).map((w) => (
+            <li key={w.id}>
+              <div>
+                <h3>{w.short.co}</h3>
+                <p className="xp-home-role">{w.short.role} · {w.period}</p>
+              </div>
+              <p className="xp-home-line">{w.home}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="about-section" aria-labelledby="exp-skills-title">
+        <p className="eyebrow">Technical expertise</p>
+        <h2 id="exp-skills-title">What I work with</h2>
+        <div className="skill-grid">
+          {skills.map((g) => (
+            <div className="skill-card" key={g.group}>
+              <h3>{g.group}</h3>
+              <p className="skill-line">{g.items.join(", ")}</p>
+            </div>
           ))}
         </div>
       </section>
