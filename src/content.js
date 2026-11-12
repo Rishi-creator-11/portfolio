@@ -166,7 +166,7 @@ export const marioProject = {
   cats: ["Distributed", "Full-Stack"],
   year: "2025",
   name: "Mario SDK",
-  context: "Built during my Pencil Spaces internship, San Francisco, summer 2025",
+  context: "Pencil Spaces · SWE Intern · San Francisco · Summer 2025",
   plain: "The npm library I built at Pencil Spaces to share state across clients and servers. Updates went from ~500ms to under 100ms across 10+ apps.",
   simple: "TypeScript SDK · JSON Patch · Yjs CRDTs",
   tagline: "An npm library for real-time shared state across clients and servers.",
