@@ -207,13 +207,6 @@ function Hero() {
           <span>B.S. Computer Science · Stony Brook University, New York</span>
         </figcaption>
       </figure>
-      <div className="stats" role="list">
-        {stats.map((s) => (
-          <div role="listitem" key={s.label}>
-            <Stat s={s} />
-          </div>
-        ))}
-      </div>
     </section>
   );
 }
