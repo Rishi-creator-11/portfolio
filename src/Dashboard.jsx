@@ -184,6 +184,14 @@ export function Console({ heading = "Deep dive", tabs = ["work", "skills", "proj
   });
   const [sel, setSel] = useState({ projects: projects[0].id, work: work[0].id, skills: skillItems[0].id });
   const detailRef = useRef(null);
+  const [narrow, setNarrow] = useState(() => typeof window !== "undefined" && window.innerWidth < 960);
+  const [openId, setOpenId] = useState(null);
+  useEffect(() => {
+    const onResize = () => setNarrow(window.innerWidth < 960);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  useEffect(() => setOpenId(null), [tab]);
 
   useEffect(() => {
     const onHash = () => tabs.includes(HASH_TAB[window.location.hash]) && setTab(HASH_TAB[window.location.hash]);
@@ -196,10 +204,13 @@ export function Console({ heading = "Deep dive", tabs = ["work", "skills", "proj
 
   const choose = (id) => {
     setSel((s) => ({ ...s, [tab]: id }));
-    if (window.innerWidth < 960) {
-      requestAnimationFrame(() =>
-        detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-      );
+    if (narrow) {
+      const opening = openId !== id;
+      setOpenId(opening ? id : null);
+      if (opening)
+        requestAnimationFrame(() =>
+          document.getElementById(`item-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" })
+        );
     }
   };
 
@@ -242,8 +253,9 @@ export function Console({ heading = "Deep dive", tabs = ["work", "skills", "proj
             <li key={i.id}>
               <button
                 id={`item-${i.id}`}
-                className={i.id === item.id ? "rail-item on" : "rail-item"}
+                className={i.id === item.id && (!narrow || openId === i.id) ? "rail-item on" : "rail-item"}
                 aria-pressed={i.id === item.id}
+                aria-expanded={narrow ? openId === i.id : undefined}
                 onClick={() => choose(i.id)}
               >
                 <span className="rail-main">
@@ -258,12 +270,19 @@ export function Console({ heading = "Deep dive", tabs = ["work", "skills", "proj
                   </span>
                 )}
               </button>
+              {narrow && openId === i.id && (
+                <div className="rail-inline">
+                  {tab === "skills" ? <SkillDetail item={i} /> : <Detail item={i} kind={tab} />}
+                </div>
+              )}
             </li>
           ))}
         </ul>
-        <div ref={detailRef} className="detail-wrap">
-          {tab === "skills" ? <SkillDetail item={item} /> : <Detail item={item} kind={tab} />}
-        </div>
+        {!narrow && (
+          <div ref={detailRef} className="detail-wrap">
+            {tab === "skills" ? <SkillDetail item={item} /> : <Detail item={item} kind={tab} />}
+          </div>
+        )}
       </div>
     </section>
   );

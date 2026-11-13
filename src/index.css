@@ -1417,3 +1417,5 @@ html, body { overflow-x: clip; }
 .st-concept { flex: none; color: var(--muted); }
 .expertise-row .st-tile.static { font-size: 14px; }
 .anchor { display: block; height: 0; scroll-margin-top: 90px; }
+
+.rail-inline{margin:8px 0 14px;min-width:0}
