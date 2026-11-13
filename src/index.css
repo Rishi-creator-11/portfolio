@@ -1419,3 +1419,5 @@ html, body { overflow-x: clip; }
 .anchor { display: block; height: 0; scroll-margin-top: 90px; }
 
 .rail-inline{margin:8px 0 14px;min-width:0}
+
+.exp-stack{display:grid;gap:18px;min-width:0}

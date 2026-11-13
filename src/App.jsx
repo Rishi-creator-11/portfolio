@@ -358,10 +358,14 @@ function HomePage() {
 function ExperiencePage() {
   return (
     <>
-      <PageHead label="Experience" title="Work experience and skills">
-        Where I've worked and what I work with. Pick one on the left for the full breakdown.
+      <PageHead label="Experience" title="Work experience">
+        Where I've worked and what I did there.
       </PageHead>
-      <Console tabs={["work", "skills"]} showHead={false} />
+      <section className="exp-stack">
+        {work.map((w) => (
+          <Detail key={w.id} item={w} kind="work" />
+        ))}
+      </section>
     </>
   );
 }
