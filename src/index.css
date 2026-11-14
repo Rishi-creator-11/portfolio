@@ -1428,3 +1428,7 @@ html, body { overflow-x: clip; }
 .detail-titles{min-width:0;flex:1}
 .xp-home-co{display:flex;gap:14px;align-items:flex-start}
 .xp-home-co h3{margin-top:0}
+
+/* project card buttons: one per line */
+.pcard .pcard-links{flex-direction:column;align-items:center;flex-wrap:nowrap;gap:10px;padding-top:18px}
+.pcard .pcard-links .btn{min-width:190px;justify-content:center}
