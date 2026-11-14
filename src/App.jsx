@@ -272,7 +272,6 @@ function Contact() {
         <Mail size={18} aria-hidden="true" /> {person.email}
       </a>
       <div className="mail-alt">
-        <span>No mail app? </span>
         <a className="btn btn-small" href={gmailUrl(person.email, "Hello from your portfolio", "")} target="_blank" rel="noreferrer">Open in Gmail</a>
         <CopyEmail text={person.email} />
       </div>
