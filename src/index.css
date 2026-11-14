@@ -1421,3 +1421,10 @@ html, body { overflow-x: clip; }
 .rail-inline{margin:8px 0 14px;min-width:0}
 
 .exp-stack{display:grid;gap:18px;min-width:0}
+
+.co-logo{border-radius:10px;object-fit:cover;flex:none;background:#fff;border:1px solid var(--line,rgba(0,0,0,.1))}
+.co-mono{display:inline-grid;place-items:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#0a7bb5,#18a999);font-size:18px}
+.detail-head{align-items:flex-start}
+.detail-titles{min-width:0;flex:1}
+.xp-home-co{display:flex;gap:14px;align-items:flex-start}
+.xp-home-co h3{margin-top:0}

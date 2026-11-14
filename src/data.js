@@ -297,6 +297,7 @@ export const work = [
     bullets: ["Turned a print shop's daily workflow into a live ordering site with Claude Code.", "Loaded 80 products and 559 price combos, so checkout totals always match."],
     short: {"co": "MetroPrint", "role": "Full-Stack Engineer (Contract)", "loc": "New York, NY", "stats": [{"v": "~97", "l": "products"}, {"v": "559", "l": "price rows"}, {"v": "80", "l": "products loaded"}]},
     stack: ["Next.js", "TypeScript", "Supabase", "Claude Code"],
+    logo: null,
     links: [],
   },
   {
@@ -317,7 +318,8 @@ export const work = [
     bullets: ["Built the sync engine for Mario, a published TypeScript SDK.", "Made live updates 5x faster and stopped lost edits with CRDTs."],
     short: {"co": "Pencil Spaces", "role": "SWE Intern", "loc": "San Francisco, CA", "stats": [{"v": "<100ms", "l": "updates, was ~500ms"}, {"v": "10+", "l": "apps integrated"}, {"v": "−30%", "l": "state drift"}]},
     stack: ["TypeScript", "Yjs (CRDT)", "JSON Patch", "GitHub Actions", "Docker", "npm"],
-    links: [{ label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
+    logo: "/logos/pencil.png",
+    links: [{ label: "Pencil Spaces", href: "https://www.pencilspaces.com" }, { label: "Mario SDK on npm", href: "https://www.npmjs.com/package/@pncl/mario" }],
   },
   {
     id: "vip",
@@ -331,7 +333,8 @@ export const work = [
     bullets: ["Built a fintech app with a team of 10 using React, Node.js and AWS, used by 500+ people.", "Wired up Plaid and Dwolla so users could link banks and move money securely."],
     short: {"co": "Stony Brook VIP", "role": "SWE Intern", "loc": "Stony Brook, NY", "stats": [{"v": "500+", "l": "users"}, {"v": "10", "l": "person team"}, {"v": "+30%", "l": "transaction transparency"}]},
     stack: ["React", "Node.js", "AWS EC2 / Lambda", "Plaid", "Dwolla", "Jest", "Postman"],
-    links: [],
+    logo: "/logos/sbu.png",
+    links: [{ label: "Stony Brook VIP program", href: "https://www.stonybrook.edu/commcms/vertically-integrated-projects/" }],
   },
   {
     id: "99yards",
@@ -348,7 +351,8 @@ export const work = [
     bullets: ["Built a two-tower recommender in TensorFlow.", "Sped up data pipelines so recommendations stay fresh."],
     short: {"co": "99 Yards", "role": "SWE Intern", "loc": "New York, NY", "stats": [{"v": "+25%", "l": "hit-rate@10"}, {"v": "1h→5m", "l": "data freshness"}]},
     stack: ["TensorFlow", "Node.js", "PostgreSQL", "Data pipelines"],
-    links: [],
+    logo: "/logos/99yards.jpg",
+    links: [{ label: "99 Yards on the App Store", href: "https://apps.apple.com/us/app/99-yards/id6499562420" }],
   },
   {
     id: "geico",
@@ -362,7 +366,8 @@ export const work = [
     bullets: ["Mentored for a full year by Suresh Vasan, Senior Manager of Staff Software Engineering.", "Did system design reviews together on GEICO's production systems, talking through architecture tradeoffs."],
     short: {"co": "GEICO", "role": "SWE Extern", "loc": "New York, NY", "stats": [{"v": "12 mo", "l": "1:1 mentorship"}, {"v": "Prod", "l": "system design reviews"}]},
     stack: ["System design", "Architecture reviews", "Production systems"],
-    links: [],
+    logo: "/logos/geico.jpg",
+    links: [{ label: "GEICO", href: "https://www.geico.com" }],
   },
   {
     id: "ta",
@@ -379,7 +384,8 @@ export const work = [
     bullets: ["Led weekly Java recitations for 30+ students.", "Reviewed 200+ data structures assignments and helped students debug their code."],
     short: {"co": "Stony Brook", "role": "Teaching Assistant", "loc": "Stony Brook, NY", "stats": [{"v": "30+", "l": "students/week"}, {"v": "200+", "l": "submissions reviewed"}]},
     stack: ["Java", "Data structures"],
-    links: [],
+    logo: "/logos/sbu.png",
+    links: [{ label: "Stony Brook University", href: "https://www.stonybrook.edu" }],
   },
 ];
 

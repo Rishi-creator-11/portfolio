@@ -485,6 +485,8 @@ export const homeExperience = [
     text: "Developed 15+ Node.js/Express APIs on AWS and reduced p95 response time by approximately 20% through Redis caching and PostgreSQL query optimization." },
   { id: "99yards", company: "99 Yards", role: "Software Engineer Intern", place: "New York, NY", dates: "Jun – Aug 2024",
     text: "Built a TensorFlow two-tower recommendation system that improved offline hit-rate@10 by 25%, while reducing feature freshness lag from one hour to five minutes." },
+  { id: "geico", company: "GEICO", role: "Software Engineer Externship Program", place: "New York, NY", dates: "Mar 2024 – Mar 2025",
+    text: "Year-long externship with 1:1 mentorship from a GEICO engineering leader, including system design reviews on production systems." },
   { id: "ta", company: "Stony Brook University", role: "Teaching Assistant", place: "Stony Brook, NY", dates: "Aug 2024 – May 2025",
     text: "Led weekly Java and Data Structures recitations for 30+ students and reviewed 200+ submissions, mentoring students in debugging and algorithmic problem-solving." },
 ];

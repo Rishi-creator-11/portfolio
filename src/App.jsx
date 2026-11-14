@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Diagram from "./Diagram.jsx";
 import About from "./About.jsx";
-import { Console, Detail } from "./Dashboard.jsx";
+import { Console, Detail, CoLogo } from "./Dashboard.jsx";
 import { ProjectCard, ProjectsSection } from "./Projects.jsx";
 import { StackTiles, ExpertiseRows } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
@@ -316,10 +316,13 @@ function HomePage() {
         <ul className="xp-home">
           {homeExperience.map((w) => (
             <li key={w.id}>
-              <div>
+              <div className="xp-home-co">
+                <CoLogo item={{ ...w, ...work.find((x) => x.id === w.id) }} size={40} />
+                <div>
                 <h3>{w.company}</h3>
                 <p className="xp-home-role">{w.role}</p>
                 <p className="xp-home-date">{w.place} · {w.dates}</p>
+                </div>
               </div>
               <p className="xp-home-line">{w.text}</p>
             </li>

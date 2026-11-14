@@ -13,6 +13,16 @@ const skillItems = expertise.map((g) => ({
   names: [...g.tools, ...g.also],
 }));
 
+export function CoLogo({ item, size = 44 }) {
+  const [bad, setBad] = useState(false);
+  const mono = (item.name || item.company || "?").trim().charAt(0).toUpperCase();
+  return item.logo && !bad ? (
+    <img className="co-logo" src={item.logo} alt="" width={size} height={size} onError={() => setBad(true)} />
+  ) : (
+    <span className="co-logo co-mono" style={{ width: size, height: size }} aria-hidden="true">{mono}</span>
+  );
+}
+
 export function Detail({ item, kind }) {
   const isProject = kind === "projects";
   const title = (item.card && item.card.title) || item.name;
@@ -21,7 +31,8 @@ export function Detail({ item, kind }) {
     <article className="detail" key={item.id} aria-live="polite">
       {/* 1. Title and concise description */}
       <header className="detail-head">
-        <div>
+        {!isProject && <CoLogo item={item} />}
+        <div className="detail-titles">
           {isProject && <p className="eyebrow">{(item.card && item.card.category) || item.category}</p>}
           <h3>{title}</h3>
           <p className="detail-sub">{isProject ? item.oneLine || item.tagline : `${item.role} · ${item.place}`}</p>
@@ -127,7 +138,7 @@ export function Detail({ item, kind }) {
       {/* 6. Screenshots, demo and source code */}
       {(item.images?.length > 0 || code.length > 0 || item.article) && (
         <section className="block">
-          <h4>Screens, demo and source</h4>
+          <h4>{isProject ? "Screens, demo and source" : "Links"}</h4>
           {item.images?.length > 0 && (
             <div className="shots">
               {item.images.map((src) => (
