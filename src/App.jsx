@@ -60,6 +60,23 @@ function Stat({ s }) {
   );
 }
 
+const gmailUrl = (to, subject, body) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const mailtoUrl = (to, subject, body) => `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+function CopyEmail({ text, label = "Copy email" }) {
+  const [done, setDone] = useState(false);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(text); }
+    catch {
+      const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select();
+      try { document.execCommand("copy"); } catch {} t.remove();
+    }
+    setDone(true); setTimeout(() => setDone(false), 2000);
+  };
+  return <button type="button" className="btn btn-small" onClick={copy}>{done ? "Copied" : label}</button>;
+}
+
 const PATH = window.location.pathname.replace(/\/+$/, "") || "/";
 
 function Nav() {
@@ -254,6 +271,11 @@ function Contact() {
       <a className="btn btn-primary btn-big" href={`mailto:${person.email}`}>
         <Mail size={18} aria-hidden="true" /> {person.email}
       </a>
+      <div className="mail-alt">
+        <span>No mail app? </span>
+        <a className="btn btn-small" href={gmailUrl(person.email, "Hello from your portfolio", "")} target="_blank" rel="noreferrer">Open in Gmail</a>
+        <CopyEmail text={person.email} />
+      </div>
       <div className="contact-links contact-links-small">
         <a href={person.linkedin} target="_blank" rel="noreferrer">
           <Linkedin size={16} aria-hidden="true" /> LinkedIn
@@ -504,10 +526,11 @@ function ResumePage() {
 function MailForm({ title, intro, fields, subject }) {
   const [vals, setVals] = useState({});
   const [msgLen, setMsgLen] = useState(0);
+  const [ready, setReady] = useState(false);
+  const body = fields.map((f) => `${f.label}: ${vals[f.name] || ""}`).join("\n");
   const submit = (e) => {
     e.preventDefault();
-    const body = fields.map((f) => `${f.label}: ${vals[f.name] || ""}`).join("\n");
-    window.location.href = `mailto:${person.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setReady(true);
   };
   return (
     <form className="mail-form" onSubmit={submit}>
@@ -541,8 +564,18 @@ function MailForm({ title, intro, fields, subject }) {
         </label>
       ))}
       <button className="btn btn-primary" type="submit">
-        <Mail size={16} aria-hidden="true" /> Open in my email app
+        <Mail size={16} aria-hidden="true" /> Send my message
       </button>
+      {ready && (
+        <div className="send-options" role="status">
+          <p>Your message is ready. Pick how to send it:</p>
+          <div className="send-row">
+            <a className="btn btn-small btn-primary" href={gmailUrl(person.email, subject, body)} target="_blank" rel="noreferrer">Send with Gmail</a>
+            <a className="btn btn-small" href={mailtoUrl(person.email, subject, body)}>Default mail app</a>
+            <CopyEmail text={`To: ${person.email}\nSubject: ${subject}\n\n${body}`} label="Copy message" />
+          </div>
+        </div>
+      )}
     </form>
   );
 }
@@ -556,7 +589,7 @@ function ContactPage() {
       <div className="contact-grid">
         <MailForm
           title="Get in touch"
-          intro="Write your note here and the button below opens it in your email app, ready to send."
+          intro="Write your note, then choose Gmail, your mail app, or copy it."
           subject="Hello from your portfolio"
           fields={[
             { name: "name", label: "Name", required: true },
