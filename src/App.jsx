@@ -6,8 +6,6 @@ import {
   ArrowLeft,
   FileText,
   Download,
-  Github,
-  Linkedin,
   Mail,
   MapPin,
   Phone,
@@ -16,6 +14,7 @@ import {
   X,
 } from "lucide-react";
 import Diagram from "./Diagram.jsx";
+import { GitHubMark, LinkedInMark } from "./Brand.jsx";
 import About from "./About.jsx";
 import { Console, Detail, CoLogo } from "./Dashboard.jsx";
 import { ProjectCard, ProjectsSection } from "./Projects.jsx";
@@ -127,8 +126,8 @@ function Nav() {
         </nav>
         <div className="nav-side-foot">
           <div className="nav-social">
-            <a href={person.github} target="_blank" rel="noreferrer"><Github size={16} aria-hidden="true" /> GitHub</a>
-            <a href={person.linkedin} target="_blank" rel="noreferrer"><Linkedin size={16} aria-hidden="true" /> LinkedIn</a>
+            <a href={person.github} target="_blank" rel="noreferrer"><GitHubMark size={16} /> GitHub</a>
+            <a href={person.linkedin} target="_blank" rel="noreferrer"><LinkedInMark size={16} /> LinkedIn</a>
             <a href={"mailto:" + person.email}><Mail size={16} aria-hidden="true" /> Email</a>
           </div>
           <div className="nav-tools">
@@ -159,8 +158,8 @@ function Nav() {
           ))}
         </nav>
         <div className="drawer-foot">
-          <a href={person.github} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}><Github size={16} aria-hidden="true" /> GitHub</a>
-          <a href={person.linkedin} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}><Linkedin size={16} aria-hidden="true" /> LinkedIn</a>
+          <a href={person.github} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}><GitHubMark size={16} /> GitHub</a>
+          <a href={person.linkedin} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}><LinkedInMark size={16} /> LinkedIn</a>
           <a href={"mailto:" + person.email} tabIndex={open ? 0 : -1}><Mail size={16} aria-hidden="true" /> Email</a>
         </div>
       </aside>
@@ -277,10 +276,10 @@ function Contact() {
       </div>
       <div className="contact-links contact-links-small">
         <a href={person.linkedin} target="_blank" rel="noreferrer">
-          <Linkedin size={16} aria-hidden="true" /> LinkedIn
+          <LinkedInMark size={16} /> LinkedIn
         </a>
         <a href={person.github} target="_blank" rel="noreferrer">
-          <Github size={16} aria-hidden="true" /> GitHub
+          <GitHubMark size={16} /> GitHub
         </a>
         <a href={`tel:${person.phone.replace(/\D/g, "")}`}>
           <Phone size={16} aria-hidden="true" /> {person.phone}
