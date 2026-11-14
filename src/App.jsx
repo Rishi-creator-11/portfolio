@@ -18,7 +18,7 @@ import {
 import Diagram from "./Diagram.jsx";
 import About from "./About.jsx";
 import { Console, Detail } from "./Dashboard.jsx";
-import { ProjectCard } from "./Projects.jsx";
+import { ProjectCard, ProjectsSection } from "./Projects.jsx";
 import { StackTiles, ExpertiseRows } from "./Stack.jsx";
 import { NeuralPortrait, CommandPalette, PaletteButton, Terminal, ReadingProgress, CursorGlow, useAmbient } from "./Interactive.jsx";
 import { person, stats, projects, work, skills, education, featured, categories } from "./data.js";
@@ -65,8 +65,9 @@ const PATH = window.location.pathname.replace(/\/+$/, "") || "/";
 function Nav() {
   const links = [
     ["Home", "/"],
-    ["About", "/about"],
+    ["Projects", "/projects"],
     ["Experience", "/experience"],
+    ["About", "/about"],
     ["Blog", "/blog"],
     ["Resume", "/resume"],
     ["Contact", "/contact"],
@@ -100,7 +101,6 @@ function Nav() {
               </a>
               {h === "/about" && PATH.startsWith("/about") && (
                 <span className="nav-sub">
-                  <a href="#projects">Projects</a>
                   <a href="#skills">Skills</a>
                   <a href="#education">Education and awards</a>
                 </span>
@@ -184,7 +184,7 @@ function Hero() {
           systems, backend infrastructure, and software that solves real business problems.
         </p>
         <div className="hero-cta">
-          <a className="btn btn-primary" href="/about#projects">
+          <a className="btn btn-primary" href="/projects">
             View projects
           </a>
           <a className="btn" href="/resume">
@@ -287,6 +287,22 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <section className="about-section" aria-labelledby="sel-title">
+        <div className="row-head">
+          <div>
+            <h2 id="sel-title">Featured projects</h2>
+            <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
+          </div>
+          <a className="see-all" href="/projects">
+            See all projects <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="pgrid pgrid-3">
+          {picks.map((p) => (
+            <ProjectCard key={p.id} p={p} compact />
+          ))}
+        </div>
+      </section>
       <section className="about-section" aria-labelledby="xp-home-title">
         <div className="row-head">
           <div>
@@ -309,22 +325,6 @@ function HomePage() {
             </li>
           ))}
         </ul>
-      </section>
-      <section className="about-section" aria-labelledby="sel-title">
-        <div className="row-head">
-          <div>
-            <h2 id="sel-title">Featured projects</h2>
-            <p className="section-lede">Selected work in applied AI, backend engineering, and real-time systems.</p>
-          </div>
-          <a className="see-all" href="/about#projects">
-            See all projects <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
-        </div>
-        <div className="pgrid pgrid-3">
-          {picks.map((p) => (
-            <ProjectCard key={p.id} p={p} compact />
-          ))}
-        </div>
       </section>
       <section className="about-section" aria-labelledby="exp-skills-title">
         <p className="eyebrow">Technical expertise</p>
@@ -370,12 +370,25 @@ function ExperiencePage() {
   );
 }
 
+function ProjectsPage() {
+  return (
+    <>
+      <PageHead label="Projects" title="Projects">
+        AI applications, backend systems, and software I've engineered.
+      </PageHead>
+      <section className="about-section" aria-label="All projects">
+        <ProjectsSection />
+      </section>
+    </>
+  );
+}
+
 function ProjectPage({ id }) {
   const p = projects.find((x) => x.id === id);
   if (!p) return <NotFound />;
   return (
     <div className="page-narrow">
-      <a className="back" href="/about#projects">
+      <a className="back" href="/projects">
         <ArrowLeft size={16} aria-hidden="true" /> All projects
       </a>
       <Detail item={p} kind="projects" />
@@ -525,7 +538,7 @@ function MailForm({ title, intro, fields, subject }) {
         </label>
       ))}
       <button className="btn btn-primary" type="submit">
-        <Mail size={16} aria-hidden="true" /> Send via email
+        <Mail size={16} aria-hidden="true" /> Open in my email app
       </button>
     </form>
   );
@@ -540,7 +553,7 @@ function ContactPage() {
       <div className="contact-grid">
         <MailForm
           title="Get in touch"
-          intro="Send a note and it opens in your email app."
+          intro="Write your note here and the button below opens it in your email app, ready to send."
           subject="Hello from your portfolio"
           fields={[
             { name: "name", label: "Name", required: true },
@@ -581,7 +594,7 @@ export default function App() {
   if (PATH === "/") page = <HomePage />;
   else if (seg === "about") page = (<><About /><Contact /></>);
   else if (seg === "experience") page = <ExperiencePage />;
-  else if (seg === "projects") page = sub ? <ProjectPage id={sub} /> : (<><About /><Contact /></>);
+  else if (seg === "projects") page = sub ? <ProjectPage id={sub} /> : <ProjectsPage />;
   else if (seg === "blog") page = sub ? <PostPage slug={sub} /> : <BlogPage />;
   else if (seg === "resume") page = <ResumePage />;
   else if (seg === "contact") page = <ContactPage />;

@@ -37,8 +37,6 @@ export function ProjectsSection() {
   const list = cat === "All" ? projects : projects.filter((p) => p.cats.includes(cat));
   return (
     <>
-      <h2 id="projects-title">Projects</h2>
-      <p className="section-lede">AI applications, backend systems, and software I've engineered.</p>
       <div className="tabs filters" role="tablist" aria-label="Filter projects">
         {categories.map((c) => (
           <button key={c} role="tab" aria-selected={cat === c} className={cat === c ? "tab on" : "tab"} onClick={() => setCat(c)}>

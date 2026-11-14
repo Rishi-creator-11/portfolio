@@ -34,14 +34,14 @@ export const projectContent = {
   },
 
   alphabrief: {
-    plain: "Retrieval over SEC 10-K filings with cited answers. Hybrid Pinecone, BM25 and Cohere rerank scored 0.88 MRR on a 125-question benchmark.",
+    plain: "Retrieval over SEC 10-K filings with cited answers. Hybrid Pinecone, BM25 and Cohere rerank scored 0.86 MRR on a 125-question benchmark.",
     simple: "RAG · Hybrid retrieval · Evaluation",
     intro:
       "Built a retrieval system over SEC 10-K filings that answers multi-year company questions with citations back to the filing text. Most of the engineering went into retrieval quality, scoped retrieval and measuring both, rather than into the LLM call.",
     highlights: [
-      { area: "Hybrid retrieval", text: "Built a Python retriever that combines Pinecone dense search with BM25 keyword search, merges the rankings with reciprocal rank fusion, and reranks with Cohere. It scores 0.88 MRR, 0.70 Recall@10 and 0.62 Precision@5 on a 125-question benchmark." },
+      { area: "Hybrid retrieval", text: "Built a Python retriever that combines Pinecone dense search with BM25 keyword search, merges the rankings with reciprocal rank fusion, and reranks with Cohere. It scores 0.86 MRR, 0.66 Recall@10 and 0.60 Precision@5 on a 125-question benchmark scored against the full 92-company corpus." },
       { area: "Evaluation harness", text: "Built the benchmark and a regression harness around it: golden cases, adversarial cases designed to fail, a check on every pull request and a nightly live evaluation." },
-      { area: "SEC data ingestion", text: "Built a resumable EDGAR ingestion pipeline that processed 4,262 Pinecone chunks, with index-parity checks so a crashed run resumes safely. Covered by 320 automated tests." },
+      { area: "SEC data ingestion", text: "Built a resumable EDGAR ingestion pipeline that processed 4,262 Pinecone chunks, with index-parity checks so a crashed run resumes safely. Covered by 362 automated tests." },
       { area: "Retrieval isolation", text: "Added ticker and year scope filtering in FastAPI before generation, giving full comparison coverage with zero cross-company or cross-year leakage. Answers cite the exact filing text." },
       { area: "Latency", text: "Cut median answer time from 7.6s to 2.0s (end-to-end p95 from 19.5s to 5.4s), a 74% reduction, by bounding output tokens." },
     ],
@@ -275,12 +275,12 @@ export const minimal = {
     category: "Applied AI · Retrieval engineering",
     oneLine: "Research SEC 10-K filings and get answers that cite the filing.",
     engineered: [
-      "Built a hybrid retriever (Pinecone dense search, BM25, rank fusion, Cohere rerank) that reached 0.88 MRR on a 125-question benchmark.",
+      "Built a hybrid retriever (Pinecone dense search, BM25, rank fusion, Cohere rerank) that reached 0.86 MRR on a 125-question benchmark.",
       "Built a resumable SEC EDGAR ingestion pipeline (4,262 chunks) and FastAPI ticker and year scoping with zero cross-company or cross-year leakage.",
       "Cut median answer time from 7.6s to 2.0s (−74%) by bounding output tokens.",
     ],
     chips: ["Python", "FastAPI", "Pinecone", "BM25", "Cohere", "SEC EDGAR"],
-    teaser: "Hybrid retrieval at 0.88 MRR on a 125-question benchmark, with zero cross-company leakage.",
+    teaser: "Hybrid retrieval at 0.86 MRR on a 125-question benchmark, with zero cross-company leakage.",
     article: "alphabrief-end-to-end",
   },
   "mario-sdk": {
@@ -410,7 +410,7 @@ export const cardSpec = {
   callpilot: {
     category: "Applied AI · Backend Engineering",
     title: "CallPilot",
-    desc: "Built a multi-tenant AI voice platform using FastAPI, PostgreSQL/pgvector, and Vapi to handle customer inquiries, retrieve business-approved information, and support appointment scheduling and lead capture.",
+    desc: "An AI receptionist for small businesses. It answers calls from information the owner approved, books appointments on Google Calendar, captures leads, and bills by subscription. Built on FastAPI, PostgreSQL/pgvector and Vapi.",
     metric: "Answers only from owner-approved knowledge, with refusal safeguards",
     tech: "FastAPI · PostgreSQL · pgvector · Vapi",
     links: [{ label: "GitHub", href: "https://github.com/Rishi-creator-11/callpilot" }],
@@ -418,7 +418,7 @@ export const cardSpec = {
   alphabrief: {
     category: "Applied AI · Retrieval Engineering",
     title: "AlphaBrief",
-    desc: "Engineered a citation-grounded SEC filing research assistant using hybrid retrieval, rank fusion, and reranking, achieving 0.88 MRR on a 125-question evaluation benchmark.",
+    desc: "Engineered a citation-grounded SEC filing research assistant using hybrid retrieval, rank fusion, and reranking, achieving 0.86 MRR on a 125-question benchmark scored against a 92-company corpus.",
     metric: "Median answer time cut from 7.6s to 2.0s",
     tech: "Python · Pinecone · BM25 · Cohere",
     links: [

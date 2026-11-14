@@ -11,7 +11,7 @@ export const person = {
 };
 
 export const stats = [
-  { value: 0.88, decimals: 2, label: "MRR on a 125-question retrieval benchmark", tone: "cyan" },
+  { value: 0.86, decimals: 2, label: "MRR on a 125-question retrieval benchmark", tone: "cyan" },
   { value: 10, suffix: "K", label: "messages per second buffered through Kafka", tone: "amber" },
   { value: 100, prefix: "<", suffix: "ms", label: "state-update latency, down from ~500ms", tone: "cyan" },
   { value: 97, prefix: "~", label: "configurable products shipped for a print shop", tone: "amber" },
@@ -26,20 +26,20 @@ export const projects = [
     name: "AlphaBrief",
     why: "I've always been into markets, and I got tired of AI answers about companies that sounded confident but came from nowhere. I wanted answers I could actually check, straight from the 10-K. So I built AlphaBrief, then spent most of my time trying to break it. It has 19 golden test cases, like 'did it catch Micron's HBM story' or 'did it flag Apple's tariff risk', plus 8 cases built to fail on purpose, like an inventory quote pretending to back up a claim about export controls. Every PR gets checked against them, and a live eval runs every night.",
     plain: "Research any public company at the speed of a question. Every claim backed by the filing itself.",
-    simple: "Hybrid RAG over SEC filings · Pinecone + BM25 + Cohere rerank · cited answers · 0.88 MRR",
+    simple: "Hybrid RAG over SEC filings · Pinecone + BM25 + Cohere rerank · cited answers · 0.86 MRR",
     tagline: "Research SEC 10-K filings and get answers that cite the filing.",
     status: "Live",
     period: "Apr 2026 – Present",
-    headline: { value: "0.88", label: "MRR" },
+    headline: { value: "0.86", label: "MRR" },
     summary:
       "Ask a question about a public company and get a multi-year answer with citations back to the exact filing text. Retrieval is the hard part, so most of the work went into measuring it.",
     metrics: [
-      { v: "0.88", l: "MRR" },
-      { v: "0.70", l: "Recall@10" },
-      { v: "0.62", l: "Precision@5" },
+      { v: "0.86", l: "MRR" },
+      { v: "0.66", l: "Recall@10" },
+      { v: "0.60", l: "Precision@5" },
       { v: "−74%", l: "answer latency (7.6s to 2.0s)" },
       { v: "4,262", l: "chunks indexed" },
-      { v: "320", l: "automated tests" },
+      { v: "362", l: "automated tests" },
     ],
     bullets: [
       "Hybrid retriever: Pinecone dense search plus BM25, merged with rank fusion and reranked by Cohere. Scored on a 125-question benchmark.",
@@ -50,7 +50,7 @@ export const projects = [
     stack: ["Python", "FastAPI", "Pydantic", "SQLAlchemy", "Alembic", "PostgreSQL", "pgvector", "Pinecone", "BM25", "Cohere Rerank", "OpenAI", "Redis", "BeautifulSoup", "yfinance", "SEC EDGAR", "Pytest", "Next.js", "React", "TypeScript", "Playwright", "Vitest"],
     links: [
       { label: "Live demo", href: "https://secfrontend.vercel.app/" },
-      { label: "Code", href: "https://github.com/Rishi-creator-11/Alphabrief" },
+      { label: "Code", href: "https://github.com/Rishi-creator-11/sec-rag-engine" },
     ],
     images: ["/projects/alphabrief-hero.webp", "/projects/alphabrief-panel.webp"],
     diagram: {
