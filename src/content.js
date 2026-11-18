@@ -207,12 +207,12 @@ export const marioProject = {
 };
 
 export const workContent = {
-  metroprint: {
-    home: "Turned a print shop's workflows into a production ordering platform: ~97 configurable products and 559 exact-combination prices, with checkout totals that match on client and server.",
+  "callpilot-eng": {
+    home: "Built a multi-tenant voice AI receptionist SaaS that automates calls, bookings and lead capture for small businesses.",
     highlights: [
-      { area: "Product configuration", text: "Translated a print-shop owner's workflows into a production Next.js and TypeScript platform supporting ~97 configurable products, built with Claude Code and AI-assisted development." },
-      { area: "Data ingestion", text: "Automated ingestion of 80 products and 559 pricing rows into Supabase, translating client data and reconciling counts against the source." },
-      { area: "Pricing integrity", text: "Rebuilt pricing around 559 exact-combination rows instead of formulas, which blocks invalid configurations and keeps client and server checkout totals from drifting apart." },
+      { area: "Voice AI SaaS", text: "Built a voice AI agent SaaS that automates calls, bookings and lead capture for small businesses." },
+      { area: "Agent runtime", text: "Engineered a stateful agent runtime with WebSocket tool delegation, request serialization and race-condition handling." },
+      { area: "LLM performance", text: "Optimized LLM performance with deterministic tool execution, reducing redundant calls and tracking latency and cost." },
     ],
   },
   pencil: {
@@ -349,10 +349,10 @@ export const minimal = {
 };
 
 export const xp = {
-  metroprint: [
-    "Translated a print shop's workflows into a production Next.js and TypeScript platform with ~97 configurable products, built with Claude Code.",
-    "Automated ingestion of 80 products and 559 pricing rows into Supabase, reconciling counts against the client's data.",
-    "Rebuilt pricing around 559 exact-combination rows, blocking invalid configurations and keeping client and server checkout totals consistent.",
+  "callpilot-eng": [
+    "Built a voice AI agent SaaS that automates calls, bookings and lead capture for small businesses.",
+    "Engineered a stateful agent runtime with WebSocket tool delegation, request serialization and race-condition handling.",
+    "Optimized LLM performance with deterministic tool execution, reducing redundant calls and tracking latency and cost.",
   ],
   pencil: [
     "Built the core sync layer for the Mario SDK, a published TypeScript package, using incremental JSON Patch diffs to cut state-update latency from ~500ms to under 100ms.",
@@ -477,8 +477,8 @@ export const cardSpec = {
 
 // Homepage experience list (exact accomplishment text).
 export const homeExperience = [
-  { id: "metroprint", company: "MetroPrint USA", role: "Full-Stack Engineer (Contract)", place: "New York, NY", dates: "Jul – Sep 2026",
-    text: "Built a production Next.js ordering platform supporting approximately 97 configurable products, including 559 exact-combination pricing records to keep checkout calculations consistent." },
+  { id: "callpilot-eng", company: "CallPilot", role: "Contract AI Engineer", place: "New York, NY", dates: "May – Nov 2026",
+    text: "Built a multi-tenant voice AI receptionist SaaS that automates calls, bookings and lead capture for small businesses." },
   { id: "pencil", company: "Pencil Spaces", role: "Software Engineer Intern", place: "San Francisco, CA", dates: "Jun – Aug 2025",
     text: "Engineered TypeScript SDK synchronization with JSON Patch and Yjs CRDTs, reducing state-update latency from approximately 500ms to under 100ms across 10+ embedded applications." },
   { id: "vip", company: "Stony Brook VIP", role: "Software Engineer Intern", place: "Stony Brook, NY", dates: "Aug – Dec 2024",
@@ -501,7 +501,7 @@ export const skillGroups = [
 
 // About page: the home accomplishment leads each role, then the remaining detail.
 export const aboutLead = {
-  metroprint: { keep: [1, 2] },
+  "callpilot-eng": { keep: [1, 2] },
   pencil: { keep: [1, 2] },
   vip: { keep: [0, 2] },
   "99yards": { keep: [] },

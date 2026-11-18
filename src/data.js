@@ -281,24 +281,24 @@ export const projects = [
 
 export const work = [
   {
-    id: "metroprint",
-    name: "MetroPrint USA",
-    role: "Contract Full-Stack Engineer",
+    id: "callpilot-eng",
+    name: "CallPilot",
+    role: "Contract AI Engineer",
     place: "New York, NY",
-    period: "Jul – Sep 2026",
-    headline: { value: "~97", label: "products" },
+    period: "May – Nov 2026",
+    headline: { value: "Voice AI", label: "agent SaaS" },
     summary:
-      "Turned a print-shop owner's day-to-day workflows into a production web platform that customers can order from.",
+      "Built a multi-tenant AI voice receptionist that answers calls, books appointments and captures leads for small businesses.",
     metrics: [
-      { v: "~97", l: "configurable products" },
-      { v: "80", l: "products ingested" },
-      { v: "559", l: "exact-combination pricing rows" },
+      { v: "Multi-tenant", l: "SaaS" },
+      { v: "WebSocket", l: "tool delegation" },
+      { v: "Deterministic", l: "tool execution" },
     ],
-    bullets: ["Turned a print shop's daily workflow into a live ordering site with Claude Code.", "Loaded 80 products and 559 price combos, so checkout totals always match."],
-    short: {"co": "MetroPrint", "role": "Full-Stack Engineer (Contract)", "loc": "New York, NY", "stats": [{"v": "~97", "l": "products"}, {"v": "559", "l": "price rows"}, {"v": "80", "l": "products loaded"}]},
-    stack: ["Next.js", "TypeScript", "Supabase", "Claude Code"],
+    bullets: ["Built a voice AI receptionist SaaS that automates calls, bookings and lead capture.", "Engineered a stateful agent runtime with WebSocket tool delegation and race-condition handling."],
+    short: {"co": "CallPilot", "role": "Contract AI Engineer", "loc": "New York, NY", "stats": [{"v": "Voice AI", "l": "agent SaaS"}, {"v": "Stateful", "l": "agent runtime"}, {"v": "Multi-tenant", "l": "architecture"}]},
+    stack: ["Python", "FastAPI", "Supabase", "WebSockets"],
     logo: null,
-    links: [],
+    links: [{ label: "Code", href: "https://github.com/Rishi-creator-11/callpilot" }],
   },
   {
     id: "pencil",
