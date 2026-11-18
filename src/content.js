@@ -208,9 +208,9 @@ export const marioProject = {
 
 export const workContent = {
   "callpilot-eng": {
-    home: "Built a multi-tenant voice AI receptionist SaaS that automates calls, bookings and lead capture for small businesses.",
+    home: "Built a Voice AI Agent SaaS automating calls, bookings and lead capture, scaling to 100 business customers.",
     highlights: [
-      { area: "Voice AI SaaS", text: "Built a voice AI agent SaaS that automates calls, bookings and lead capture for small businesses." },
+      { area: "Voice AI SaaS", text: "Built a Voice AI Agent SaaS automating calls, bookings and lead capture, scaling to 100 business customers." },
       { area: "Agent runtime", text: "Engineered a stateful agent runtime with WebSocket tool delegation, request serialization and race-condition handling." },
       { area: "LLM performance", text: "Optimized LLM performance with deterministic tool execution, reducing redundant calls and tracking latency and cost." },
     ],
@@ -350,7 +350,7 @@ export const minimal = {
 
 export const xp = {
   "callpilot-eng": [
-    "Built a voice AI agent SaaS that automates calls, bookings and lead capture for small businesses.",
+    "Built a Voice AI Agent SaaS automating calls, bookings and lead capture, scaling to 100 business customers.",
     "Engineered a stateful agent runtime with WebSocket tool delegation, request serialization and race-condition handling.",
     "Optimized LLM performance with deterministic tool execution, reducing redundant calls and tracking latency and cost.",
   ],
@@ -478,7 +478,7 @@ export const cardSpec = {
 // Homepage experience list (exact accomplishment text).
 export const homeExperience = [
   { id: "callpilot-eng", company: "CallPilot", role: "Contract AI Engineer", place: "New York, NY", dates: "May – Nov 2026",
-    text: "Built a multi-tenant voice AI receptionist SaaS that automates calls, bookings and lead capture for small businesses." },
+    text: "Built a Voice AI Agent SaaS automating calls, bookings and lead capture, scaling to 100 business customers." },
   { id: "pencil", company: "Pencil Spaces", role: "Software Engineer Intern", place: "San Francisco, CA", dates: "Jun – Aug 2025",
     text: "Engineered TypeScript SDK synchronization with JSON Patch and Yjs CRDTs, reducing state-update latency from approximately 500ms to under 100ms across 10+ embedded applications." },
   { id: "vip", company: "Stony Brook VIP", role: "Software Engineer Intern", place: "Stony Brook, NY", dates: "Aug – Dec 2024",
