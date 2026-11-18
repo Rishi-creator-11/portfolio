@@ -67,7 +67,7 @@ export const posts = [
     excerpt:
       "What I built during my Pencil Spaces internship: a published npm library that shares state across clients and servers.",
     body: [
-      { p: "In summer 2025 I was a software engineering intern at Pencil Spaces (Pencil Learning Technologies) in San Francisco. I built the core sync layer of Mario, a published TypeScript package for sharing state across clients and servers in embedded apps." },
+      { p: "In summer 2025 I was a software engineering intern at Pencil Spaces in San Francisco. I built the core sync layer of Mario, a published TypeScript package for sharing state across clients and servers in embedded apps." },
       { h: "The engineering problem" },
       { p: "Shared state was synced by sending the full state on every change. Updates took around 500ms, clients drifted apart, and concurrent edits could overwrite each other, particularly around reconnects." },
       { h: "Sending diffs instead of state" },

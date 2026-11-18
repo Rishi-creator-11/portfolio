@@ -175,7 +175,7 @@ export const marioProject = {
   headline: { value: "<100ms", label: "from ~500ms" },
   summary: "",
   intro:
-    "Built the core sync layer of Mario, a published TypeScript SDK, during my software engineering internship at Pencil Spaces (Pencil Learning Technologies) in San Francisco, the summer before my senior year. Mario keeps shared state consistent between clients and servers for embedded apps.",
+    "Built the core sync layer of Mario, a published TypeScript SDK, during my software engineering internship at Pencil Spaces in San Francisco, the summer before my senior year. Mario keeps shared state consistent between clients and servers for embedded apps.",
   highlights: [
     { area: "Real-time synchronization", text: "Replaced full-state sync with incremental JSON Patch diffs, cutting state-update latency from ~500ms to under 100ms." },
     { area: "Concurrent state consistency", text: "Designed conflict-free merge logic with Yjs CRDTs, preventing lost updates and keeping state consistent when a client reconnects." },
@@ -428,7 +428,7 @@ export const cardSpec = {
   },
   "mario-sdk": {
     category: "Real-Time Systems · SDK Engineering",
-    title: "Mario SDK — Pencil Learning",
+    title: "Mario SDK — Pencil Spaces",
     desc: "Engineered real-time state synchronization for 10+ embedded applications using JSON Patch and Yjs CRDTs, reducing update latency from approximately 500ms to under 100ms.",
     metric: "Cross-client state drift reduced by 30%",
     tech: "TypeScript · Yjs · JSON Patch",
@@ -479,7 +479,7 @@ export const cardSpec = {
 export const homeExperience = [
   { id: "metroprint", company: "MetroPrint USA", role: "Full-Stack Engineer (Contract)", place: "New York, NY", dates: "Jul – Sep 2026",
     text: "Built a production Next.js ordering platform supporting approximately 97 configurable products, including 559 exact-combination pricing records to keep checkout calculations consistent." },
-  { id: "pencil", company: "Pencil Learning Technologies", role: "Software Engineer Intern", place: "San Francisco, CA", dates: "Jun – Aug 2025",
+  { id: "pencil", company: "Pencil Spaces", role: "Software Engineer Intern", place: "San Francisco, CA", dates: "Jun – Aug 2025",
     text: "Engineered TypeScript SDK synchronization with JSON Patch and Yjs CRDTs, reducing state-update latency from approximately 500ms to under 100ms across 10+ embedded applications." },
   { id: "vip", company: "Stony Brook VIP", role: "Software Engineer Intern", place: "Stony Brook, NY", dates: "Aug – Dec 2024",
     text: "Developed 15+ Node.js/Express APIs on AWS and reduced p95 response time by approximately 20% through Redis caching and PostgreSQL query optimization." },

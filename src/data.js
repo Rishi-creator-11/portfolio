@@ -302,7 +302,7 @@ export const work = [
   },
   {
     id: "pencil",
-    name: "Pencil Learning Technologies",
+    name: "Pencil Spaces",
     role: "Software Engineer Intern",
     place: "San Francisco, CA",
     period: "Jun – Aug 2025",
